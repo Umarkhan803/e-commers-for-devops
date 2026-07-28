@@ -1,145 +1,193 @@
-# Nova — Premium E-Commerce Storefront UI
+# Nova Commerce
 
-A production-style, component-driven e-commerce front end built with React, Vite and Tailwind CSS
-v4. It covers the full shopping journey: browsing and faceted filtering, product detail, cart,
-authentication, and a validated multi-step checkout.
+Full-stack premium e-commerce storefront with a React + Vite frontend, Express + MongoDB + Redis
+API, and Nginx reverse proxy. Product imagery is real Apple, Samsung, boAt and Noise catalogue
+photos downloaded locally and served by the API.
 
-Everything runs client-side against an in-memory catalogue, so there is no backend to start and no
-network calls to mock. Product artwork is generated as inline SVG, which keeps the app fully offline
-and every card visually consistent.
-
-## Getting started
-
-```bash
-npm install
-npm run dev
+```
+nova-commerce/
+├── frontend/          React 19 + Vite + Tailwind CSS v4 SPA
+├── backend/           Express API, Mongoose models, Redis cache, seed scripts
+├── nginx/             SPA + /api + /images reverse proxy
+└── docker-compose.yml Mongo (replica set) · Redis · API · Nginx
 ```
 
-The dev server prints a local URL (default `http://localhost:5173`) and opens it automatically.
+## Quick start (Docker)
 
-| Script            | Purpose                                  |
-| ----------------- | ---------------------------------------- |
-| `npm run dev`     | Start the Vite dev server with HMR       |
-| `npm run build`   | Production build into `dist/`            |
-| `npm run preview` | Serve the production build locally       |
+Requires Docker Desktop. From the project root:
 
-Requires Node 18 or newer.
+```bash
+docker compose up -d --build
+docker compose --profile seed run --rm seed
+```
 
-## Screens
+| Service | URL |
+| ------- | --- |
+| Storefront (Nginx) | http://localhost:8081 |
+| API (direct) | http://localhost:4000/api/v1 |
+| MongoDB | `localhost:27017` |
+| Redis | `localhost:6379` |
 
-| Home | Shop with filters |
-| --- | --- |
-| ![Home page](docs/screenshots/home.png) | ![Shop page](docs/screenshots/shop.png) |
+> Port **8081** is used for the web container because **8080** is often already taken on Windows.
+> Change it in `docker-compose.yml` if you prefer another host port.
 
-| Product detail | Checkout |
-| --- | --- |
-| ![Product detail](docs/screenshots/product-detail.png) | ![Checkout payment step](docs/screenshots/checkout.png) |
+Demo account created by the seed:
+
+- Email: `demo@nova.test`
+- Password: `Password123`
+
+Promo codes: `NOVA10`, `WELCOME15`, `FREESHIP`, `SAVE25`.
+
+Stop everything with `docker compose down`. Wipe volumes with `docker compose down -v`.
+
+### API smoke test
+
+```bash
+docker compose exec -T api node src/scripts/smoke-api.mjs
+```
+
+## Local development (without Docker for the SPA)
+
+1. Keep Mongo + Redis running via Compose:
+
+```bash
+docker compose up -d mongo mongo-init redis
+```
+
+2. Backend:
+
+```bash
+cd backend
+cp .env.example .env
+npm install
+npm run seed          # loads catalogue.json into Mongo
+npm run dev           # http://localhost:4000
+```
+
+3. Frontend (proxies `/api` and `/images` to the API via Vite):
+
+```bash
+cd frontend
+npm install
+npm run dev           # http://localhost:5173
+```
+
+Refresh the product catalogue (images + `catalogue.json`) with:
+
+```bash
+cd backend
+npm run catalogue:fetch
+npm run seed:fresh
+```
 
 ## Architecture
 
-The app is split by **section** (a functional area of the store) and by **component** (reusable UI
-building blocks). Sections own page-level state and routing; components stay presentational and
-reusable across sections.
-
 ```
-src/
-├── main.jsx                 Entry point — mounts the provider stack
-├── App.jsx                  Route map, grouped by section
-│
-├── sections/                ── Application sections ──
-│   ├── public/              Marketing surface: Hero, TrustBar, CategoryRail,
-│   │                        DealsSection, FeaturedTabs, PromoSplit, Testimonials, NotFound
-│   ├── auth/                AuthLayout shell + Login + Signup
-│   ├── shop/                Shop (filtering) + ProductDetail
-│   ├── cart/                CartPage
-│   └── checkout/            Checkout (3 steps) + OrderConfirmation
-│
-├── components/              ── Reusable components ──
-│   ├── ui/                  Button, Badge, Rating, Field (inputs/select/checkbox/radio),
-│   │                        Modal, Drawer, QuantityStepper, Misc (PriceTag, EmptyState, …)
-│   ├── layout/              Navbar, SearchBar, Footer, StoreLayout
-│   ├── product/             ProductCard, ProductGrid, FilterPanel, ShopToolbar,
-│   │                        QuickViewModal, Reviews
-│   ├── cart/                CartDrawer, CartLineItem, OrderSummary
-│   └── checkout/            CheckoutSteps, CheckoutForms (shipping/payment/review)
-│
-├── context/                 ── State layer ──
-│   ├── CartContext.jsx      Lines, totals maths, shipping method, promo codes, drawer
-│   ├── AuthContext.jsx      Simulated session with localStorage persistence
-│   ├── WishlistContext.jsx  Saved product IDs
-│   └── ToastContext.jsx     Notification queue + renderer
-│
-├── lib/
-│   ├── filtering.js         Search matching, sorting, facet counts, URL serialisation
-│   ├── productImage.js      SVG product artwork generator
-│   └── utils.js             Currency formatting, class joining, storage helpers
-│
-├── hooks/useOverlay.js      Scroll lock, escape key, focus trap
-├── data/products.js         Catalogue: 29 products, 8 categories, 10 brands, reviews
-└── index.css                Design tokens (@theme), keyframes, component classes
+Browser ──► Nginx (:80 / host :8081)
+              ├─ /            → React SPA (built assets)
+              ├─ /api/*       → Express API (:4000)
+              └─ /images/*    → Express static (product photos)
+
+Express
+  ├─ MongoDB   products, users, carts, orders, reviews (replica set for transactions)
+  └─ Redis     response cache, rate limits, refresh-token whitelist
 ```
 
-### Sections and routes
+### Frontend sections
 
-| Section          | Routes                             | Notes                                              |
-| ---------------- | ---------------------------------- | -------------------------------------------------- |
-| Public           | `/`                                | Hero, categories, flash deals, featured, reviews   |
-| Product browsing | `/shop`, `/product/:productId`     | Faceted filtering; detail with specs and reviews   |
-| Authentication   | `/login`, `/signup`                | Rendered outside store chrome in a split layout    |
-| Cart             | `/cart` + slide-over drawer        | Quantity, removal, live totals                     |
-| Checkout         | `/checkout`, `/order-confirmed`    | Shipping → payment → review, validated per step    |
+| Section | Routes | Notes |
+| ------- | ------ | ----- |
+| Public | `/` | Hero, categories, deals, featured tabs — all API-driven |
+| Shop | `/shop`, `/product/:slug` | Faceted filters, suggestions, related products |
+| Auth | `/login`, `/signup` | JWT access token + httpOnly refresh cookie |
+| Cart | `/cart` + drawer | Server-priced totals, promo codes, shipping |
+| Checkout | `/checkout`, `/order-confirmed` | Validated multi-step; `POST /orders` |
 
-## How the main features work
+### Backend layers
 
-**Instant search.** The header `SearchBar` filters the catalogue on every keystroke and shows the
-top six matches with keyboard navigation (arrows, Enter, Escape). Press `/` anywhere to focus it.
-Submitting sends you to `/shop?q=…`.
+```
+backend/src/
+├── config/        env, mongo, redis
+├── models/        Product, Category, Brand, User, Cart, Order, Review
+├── services/      product filters, pricing, cache, JWT tokens
+├── controllers/   products, auth, cart, orders, wishlist
+├── middleware/    auth, validate (Zod), cache, rateLimit, errors
+├── routes/        /api/v1/*
+├── seed/          catalogue.json + seed.js
+└── scripts/       fetch-catalogue.mjs, smoke-api.mjs
+```
 
-**Filters.** Category, brand, price range, minimum rating, availability, free delivery and sort are
-all combined with the keyword in `filterAndSortProducts`. The filter panel shows a live result count
-next to each facet value, computed with that facet excluded so the numbers reflect what each option
-would actually yield.
+## Key APIs
 
-**URL as state.** Shop filters serialise to the query string, so any filtered view is linkable,
-shareable, and works with the browser back button. Deep links like
-`/shop?category=audio&rating=4&availability=in-stock&sort=price-asc` render directly.
+Base path: `/api/v1` (also aliased at `/api`).
 
-**Cart maths.** `CartContext` derives subtotal, product savings, promo discount, shipping and tax
-(8.25%) from the line items. Standard shipping is free above $250, with a progress meter nudging
-toward the threshold. Try promo codes `NOVA10`, `WELCOME25` or `SHIPFREE`.
+### Catalogue
 
-**Checkout validation.** Each step has its own validator. Continuing runs it and blocks on failure,
-marking every offending field and raising a toast. Card entry is formatted as you type and the
-expiry is checked against the current date. The confirm button additionally gates on accepting the
-terms.
+| Method | Path | Purpose |
+| ------ | ---- | ------- |
+| `GET` | `/products` | Fetch-all with combined filters, sort, pagination. Query: `q`, `category`, `brand`, `minPrice`, `maxPrice`, `minRating`, `inStock`, `onSale`, `tags`, `sort`, `page`, `limit`, `facets` |
+| `GET` | `/products/filters` | Live facet metadata + counts for the current selection |
+| `GET` | `/products/suggest?q=` | Lightweight typeahead suggestions |
+| `GET` | `/products/:slug` | Product detail |
+| `GET` | `/products/:slug/related` | Related products |
+| `GET` | `/products/:slug/reviews` | Reviews |
+| `POST` | `/products/:slug/reviews` | Create review (auth) |
+| `GET` | `/categories` | Category taxonomy |
+| `GET` | `/brands` | Brand taxonomy |
+| `GET` | `/promotions` | Available promo codes |
 
-**Authentication.** Login accepts any valid email with a 6+ character password; signup includes a
-live password-strength meter and requirement checklist. The session persists in `localStorage`, and
-checkout prefills from it. Signed-out users see a login prompt inside the checkout flow.
+### Auth / account
 
-## Design system
+| Method | Path | Purpose |
+| ------ | ---- | ------- |
+| `POST` | `/auth/register` | Create account + issue tokens |
+| `POST` | `/auth/login` | Sign in (merges guest cart) |
+| `POST` | `/auth/refresh` | Rotate refresh cookie → new access token |
+| `POST` | `/auth/logout` | Revoke refresh token |
+| `GET` | `/auth/me` | Current user |
+| `POST` | `/auth/addresses` | Add a shipping address |
 
-Tokens live in the `@theme` block of `src/index.css`, so Tailwind generates utilities from them
-directly:
+### Cart / wishlist / orders
 
-- **Palettes** — `ink` (neutral), `brand` (indigo), `accent` (sky), plus semantic emerald/amber/rose
-- **Typography** — Plus Jakarta Sans for headings, Inter for body
+| Method | Path | Purpose |
+| ------ | ---- | ------- |
+| `GET/POST/PATCH/DELETE` | `/cart`, `/cart/items`, `/cart/promo`, `/cart/shipping` | Guest (`X-Session-Id`) or member cart |
+| `GET/POST/DELETE` | `/wishlist`, `/wishlist/:slug` | Saved products (auth) |
+| `POST` | `/orders` | Place order (transactional stock decrement) |
+| `GET` | `/orders`, `/orders/:reference` | History / receipt |
+
+### Example: fetch-all with filters
+
+```bash
+curl "http://localhost:4000/api/v1/products?brand=apple,samsung&minRating=4&sort=discount&limit=12&facets=1"
+curl "http://localhost:4000/api/v1/products/filters?category=audio&inStock=true"
+```
+
+Responses wrap payloads as `{ success, data, meta? }` and set `X-Cache: HIT|MISS` on cacheable GETs.
+
+## Frontend design system
+
+Tokens live in `frontend/src/index.css` (`@theme`):
+
+- **Palettes** — `ink`, `brand`, `accent`, plus semantic emerald / amber / rose
+- **Typography** — Plus Jakarta Sans (display), Inter (body)
 - **Elevation** — `shadow-soft`, `shadow-lift`, `shadow-pop`
-- **Motion** — `animate-fade-up`, `animate-scale-in`, `animate-slide-left/right`, `animate-float`
+- **Motion** — respects `prefers-reduced-motion`
 
-Light theme with dark accent surfaces (navbar strip, membership panel, auth brand panel, footer).
-Layouts are responsive from 360px up, with a mobile navigation drawer, a mobile filter sheet, and
-grid-to-rail switches on the deal carousels. All animation respects
-`prefers-reduced-motion`.
+Responsive from ~360px up with a mobile nav drawer and filter sheet.
 
-## Accessibility
+## Environment
 
-Semantic landmarks and a skip link, labelled form fields with `aria-invalid` and error messaging,
-focus trapping and scroll locking in the modal and drawers, Escape to dismiss, `aria-pressed` and
-`aria-selected` on toggles and tabs, visible focus rings throughout, and live-region toasts.
+See `backend/.env.example`. Compose injects production defaults; override JWT secrets in a `.env`
+next to `docker-compose.yml`:
+
+```env
+JWT_ACCESS_SECRET=replace-me
+JWT_REFRESH_SECRET=replace-me-too
+```
 
 ## Notes
 
-This is a front-end UI project. Payments, sessions and orders are simulated in the browser — no card
-data is transmitted or stored, and refreshing clears any in-flight order confirmation.
-# e-commers-for-devops
+- Card payments are simulated — only the last four digits are stored.
+- Redis is optional at runtime: if it is down, caching and rate limiting degrade gracefully.
+- Order placement prefers a MongoDB transaction (replica set) and falls back to sequential writes on a standalone `mongod`.

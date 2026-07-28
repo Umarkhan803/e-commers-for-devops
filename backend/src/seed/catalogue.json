@@ -1,0 +1,1640 @@
+{
+  "generatedAt": "2026-07-28T13:08:04.733Z",
+  "sources": {
+    "wikimedia": "https://commons.wikimedia.org (CC-licensed product photography)",
+    "boAt": "https://www.boat-lifestyle.com/products.json",
+    "Noise": "https://www.gonoise.com/products.json"
+  },
+  "categories": [
+    {
+      "id": "smartphones",
+      "name": "Smartphones",
+      "blurb": "Flagships and foldables",
+      "icon": "smartphone"
+    },
+    {
+      "id": "laptops",
+      "name": "Laptops",
+      "blurb": "Ultrabooks and workstations",
+      "icon": "laptop"
+    },
+    {
+      "id": "tablets",
+      "name": "Tablets",
+      "blurb": "Slates and 2-in-1s",
+      "icon": "tablet"
+    },
+    {
+      "id": "audio",
+      "name": "Audio",
+      "blurb": "Earbuds, headphones, speakers",
+      "icon": "headphones"
+    },
+    {
+      "id": "wearables",
+      "name": "Wearables",
+      "blurb": "Smartwatches and bands",
+      "icon": "watch"
+    },
+    {
+      "id": "smart-home",
+      "name": "Smart Home",
+      "blurb": "Speakers and hubs",
+      "icon": "lamp"
+    },
+    {
+      "id": "accessories",
+      "name": "Accessories",
+      "blurb": "Hubs, cables, chargers",
+      "icon": "router"
+    }
+  ],
+  "brands": [
+    {
+      "id": "apple",
+      "name": "Apple",
+      "origin": "Cupertino, USA",
+      "blurb": "Premium ecosystem hardware."
+    },
+    {
+      "id": "samsung",
+      "name": "Samsung",
+      "origin": "Suwon, South Korea",
+      "blurb": "Displays, silicon and flagships."
+    },
+    {
+      "id": "boat",
+      "name": "boAt",
+      "origin": "Delhi, India",
+      "blurb": "Affordable audio and wearables."
+    },
+    {
+      "id": "noise",
+      "name": "Noise",
+      "origin": "Gurugram, India",
+      "blurb": "Smartwatches and everyday audio."
+    }
+  ],
+  "products": [
+    {
+      "slug": "apple-iphone-15-pro",
+      "sku": "NOV-APPL-IPHONE-15-PRO-C333",
+      "name": "Apple iPhone 15 Pro",
+      "brand": "Apple",
+      "category": "smartphones",
+      "shortDescription": "Titanium-framed flagship with the A17 Pro chip, a 5x telephoto camera and USB-C.",
+      "description": "The iPhone 15 Pro moves to a grade 5 titanium frame, cutting weight noticeably without giving up rigidity. The A17 Pro brings hardware ray tracing to the platform, the customisable Action button replaces the old mute switch, and the port is finally USB-C at USB 3 speeds for fast transfers off the 48MP main sensor.",
+      "highlights": [
+        "A17 Pro chip with hardware-accelerated ray tracing",
+        "48MP main camera with 5x telephoto on the Pro Max",
+        "Grade 5 titanium frame with Ceramic Shield front",
+        "USB-C with USB 3 transfer speeds"
+      ],
+      "specs": {
+        "Display": "6.1\" Super Retina XDR OLED, 120Hz ProMotion",
+        "Chip": "A17 Pro, 6-core CPU, 6-core GPU",
+        "Camera": "48MP main, 12MP ultrawide, 12MP telephoto",
+        "Storage": "128GB / 256GB / 512GB / 1TB",
+        "Build": "Titanium frame, IP68 water resistance",
+        "Battery": "Up to 23 hours video playback",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Natural Titanium",
+        "Blue Titanium",
+        "Black Titanium",
+        "White Titanium"
+      ],
+      "price": 999,
+      "compareAtPrice": 1099,
+      "currency": "USD",
+      "rating": 4.8,
+      "reviewCount": 4218,
+      "stock": 42,
+      "tags": [
+        "bestseller",
+        "featured"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-iphone-15-pro-1.png",
+          "alt": "Apple iPhone 15 Pro — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-iphone-15",
+      "sku": "NOV-APPL-IPHONE-15-04AD",
+      "name": "Apple iPhone 15",
+      "brand": "Apple",
+      "category": "smartphones",
+      "shortDescription": "Dynamic Island, a 48MP main camera and USB-C in the standard iPhone for the first time.",
+      "description": "The iPhone 15 inherits the Dynamic Island and the 48MP main sensor from the previous Pro generation, which means 2x optical-quality zoom by cropping into the sensor. The colour-infused back glass has a soft matte finish, and the switch to USB-C means one cable for phone, iPad and Mac.",
+      "highlights": [
+        "Dynamic Island replaces the notch",
+        "48MP main camera with 2x telephoto crop",
+        "USB-C charging and accessory support",
+        "A16 Bionic chip"
+      ],
+      "specs": {
+        "Display": "6.1\" Super Retina XDR OLED, 60Hz",
+        "Chip": "A16 Bionic",
+        "Camera": "48MP main, 12MP ultrawide",
+        "Storage": "128GB / 256GB / 512GB",
+        "Build": "Aluminium frame, IP68",
+        "Battery": "Up to 20 hours video playback",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Blue",
+        "Pink",
+        "Yellow",
+        "Green",
+        "Black"
+      ],
+      "price": 799,
+      "compareAtPrice": 899,
+      "currency": "USD",
+      "rating": 4.7,
+      "reviewCount": 3106,
+      "stock": 88,
+      "tags": [
+        "bestseller"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-iphone-15-1.png",
+          "alt": "Apple iPhone 15 — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-macbook-air-15-m3",
+      "sku": "NOV-APPL-MACBOOK-AIR-15-M-4753",
+      "name": "Apple MacBook Air 15\" (M3)",
+      "brand": "Apple",
+      "category": "laptops",
+      "shortDescription": "A fanless 15-inch laptop that runs silent under load and still lasts a full working day.",
+      "description": "The 15-inch Air is the machine most people should buy. There is no fan, so it is completely silent no matter what you throw at it, and the M3 handles photo editing, large spreadsheets and a dozen browser tabs without breaking a sweat. The 1.51kg chassis is thin enough to forget in a bag.",
+      "highlights": [
+        "M3 chip with 8-core CPU and 10-core GPU",
+        "Completely fanless — zero noise under load",
+        "Up to 18 hours of battery life",
+        "15.3\" Liquid Retina display, 500 nits"
+      ],
+      "specs": {
+        "Display": "15.3\" Liquid Retina, 2880x1864, 500 nits",
+        "Chip": "Apple M3, 8-core CPU, 10-core GPU",
+        "Memory": "8GB / 16GB / 24GB unified memory",
+        "Storage": "256GB / 512GB / 1TB / 2TB SSD",
+        "Ports": "2x Thunderbolt / USB 4, MagSafe 3, 3.5mm",
+        "Weight": "1.51 kg",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Midnight",
+        "Starlight",
+        "Space Grey",
+        "Silver"
+      ],
+      "price": 1299,
+      "compareAtPrice": 1499,
+      "currency": "USD",
+      "rating": 4.9,
+      "reviewCount": 1874,
+      "stock": 24,
+      "tags": [
+        "bestseller",
+        "featured"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-macbook-air-15-m3-1.jpg",
+          "alt": "Apple MacBook Air 15\" (M3) — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-macbook-pro-16-m3-pro",
+      "sku": "NOV-APPL-MACBOOK-PRO-16-M-2160",
+      "name": "Apple MacBook Pro 16\" (M3 Pro)",
+      "brand": "Apple",
+      "category": "laptops",
+      "shortDescription": "Mini-LED XDR display, full port selection and enough sustained performance for real production work.",
+      "description": "Where the Air throttles under long exports, the 16-inch Pro holds its clocks. The XDR mini-LED panel hits 1600 nits peak for HDR grading, and the port selection — HDMI, SD, three Thunderbolt and MagSafe — means the dock stays at home. Battery life stays respectable even with the discrete-class GPU working.",
+      "highlights": [
+        "M3 Pro with up to 18-core GPU",
+        "Liquid Retina XDR mini-LED, 1600 nits peak HDR",
+        "HDMI 2.1, SDXC and 3x Thunderbolt 4",
+        "Up to 22 hours battery life"
+      ],
+      "specs": {
+        "Display": "16.2\" Liquid Retina XDR, 120Hz ProMotion",
+        "Chip": "Apple M3 Pro, 12-core CPU, 18-core GPU",
+        "Memory": "18GB / 36GB unified memory",
+        "Storage": "512GB - 4TB SSD",
+        "Ports": "3x Thunderbolt 4, HDMI, SDXC, MagSafe 3, 3.5mm",
+        "Weight": "2.14 kg",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Space Black",
+        "Silver"
+      ],
+      "price": 2499,
+      "compareAtPrice": 2699,
+      "currency": "USD",
+      "rating": 4.9,
+      "reviewCount": 962,
+      "stock": 11,
+      "tags": [
+        "featured"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-macbook-pro-16-m3-pro-1.jpg",
+          "alt": "Apple MacBook Pro 16\" (M3 Pro) — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-ipad-pro-12-9",
+      "sku": "NOV-APPL-IPAD-PRO-12-9-0A2A",
+      "name": "Apple iPad Pro 12.9\"",
+      "brand": "Apple",
+      "category": "tablets",
+      "shortDescription": "A tandem-OLED tablet that doubles as a drawing surface, a reference monitor and a laptop.",
+      "description": "The 12.9-inch Pro is the closest a tablet gets to replacing a laptop. Paired with the Magic Keyboard it handles a full day of writing and email, and with the Apple Pencil it becomes a genuinely pressure-sensitive drawing surface. The display is bright and accurate enough to grade footage on.",
+      "highlights": [
+        "Ultra Retina XDR display with ProMotion",
+        "Apple Pencil Pro support with squeeze and roll",
+        "Thunderbolt port for external displays and drives",
+        "Face ID and quad-speaker audio"
+      ],
+      "specs": {
+        "Display": "12.9\" Ultra Retina XDR, 120Hz",
+        "Chip": "Apple M-series",
+        "Camera": "12MP wide, 10MP ultrawide, LiDAR",
+        "Storage": "256GB - 2TB",
+        "Connectivity": "Wi-Fi 6E, optional 5G, Thunderbolt",
+        "Weight": "682 g",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Space Grey",
+        "Silver"
+      ],
+      "price": 1099,
+      "compareAtPrice": 1199,
+      "currency": "USD",
+      "rating": 4.8,
+      "reviewCount": 1420,
+      "stock": 30,
+      "tags": [
+        "featured"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-ipad-pro-12-9-1.jpg",
+          "alt": "Apple iPad Pro 12.9\" — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-ipad-air",
+      "sku": "NOV-APPL-IPAD-AIR-8DBD",
+      "name": "Apple iPad Air",
+      "brand": "Apple",
+      "category": "tablets",
+      "shortDescription": "The sweet spot in the iPad range — laminated display, Pencil support, half the Pro price.",
+      "description": "For everything short of professional colour work, the Air does what the Pro does. The display is laminated so the Pencil feels like it is drawing on the glass rather than under it, Touch ID lives in the power button, and it drives the same keyboard cases.",
+      "highlights": [
+        "Laminated Liquid Retina display",
+        "Apple Pencil and Magic Keyboard support",
+        "Touch ID in the top button",
+        "USB-C with fast charging"
+      ],
+      "specs": {
+        "Display": "11\" Liquid Retina, 2360x1640",
+        "Chip": "Apple M-series",
+        "Camera": "12MP wide rear, 12MP ultrawide front",
+        "Storage": "128GB / 256GB / 512GB / 1TB",
+        "Connectivity": "Wi-Fi 6E, optional 5G",
+        "Weight": "462 g",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Blue",
+        "Purple",
+        "Starlight",
+        "Space Grey"
+      ],
+      "price": 599,
+      "compareAtPrice": 699,
+      "currency": "USD",
+      "rating": 4.7,
+      "reviewCount": 2233,
+      "stock": 64,
+      "tags": [
+        "bestseller"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-ipad-air-1.jpg",
+          "alt": "Apple iPad Air — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-airpods-pro-2nd-gen",
+      "sku": "NOV-APPL-AIRPODS-PRO-2ND-D06E",
+      "name": "Apple AirPods Pro (2nd gen)",
+      "brand": "Apple",
+      "category": "audio",
+      "shortDescription": "Best-in-class noise cancelling in an earbud, with Adaptive Audio that adjusts as you move.",
+      "description": "The second-generation Pro roughly doubled the cancellation of the original, and Adaptive Audio blends transparency and ANC on the fly so you can hear an announcement without pulling a bud out. The stem now takes a swipe for volume, and the case has a speaker and lanyard loop.",
+      "highlights": [
+        "Adaptive Audio blends ANC and transparency live",
+        "Personalised Spatial Audio with head tracking",
+        "Touch stem volume control",
+        "Up to 6 hours ANC playback, 30 hours with case"
+      ],
+      "specs": {
+        "Driver": "Custom high-excursion Apple driver",
+        "Chip": "Apple H2",
+        "Battery": "6 h per charge, 30 h total with case",
+        "Water resistance": "IP54 buds and case",
+        "Case": "MagSafe, USB-C, Precision Finding",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "White"
+      ],
+      "price": 249,
+      "compareAtPrice": 279,
+      "currency": "USD",
+      "rating": 4.7,
+      "reviewCount": 8940,
+      "stock": 150,
+      "tags": [
+        "bestseller",
+        "featured"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-airpods-pro-2nd-gen-1.jpg",
+          "alt": "Apple AirPods Pro (2nd gen) — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-airpods-max",
+      "sku": "NOV-APPL-AIRPODS-MAX-7E24",
+      "name": "Apple AirPods Max",
+      "brand": "Apple",
+      "category": "audio",
+      "shortDescription": "Over-ear cans built from anodised aluminium and stainless steel, with computational audio.",
+      "description": "The Max are unapologetically heavy, and the materials are the reason — anodised aluminium cups, a stainless steel headband, and a breathable knit mesh canopy that spreads the weight across the crown. Nine microphones drive cancellation that holds up on a plane, and the tuning is neutral rather than bass-forward.",
+      "highlights": [
+        "Nine microphones, eight dedicated to ANC",
+        "Computational audio with Adaptive EQ",
+        "Personalised Spatial Audio with dynamic head tracking",
+        "20 hours of listening with ANC on"
+      ],
+      "specs": {
+        "Drivers": "40mm Apple-designed dynamic drivers",
+        "Chip": "Apple H1 in each cup",
+        "Battery": "Up to 20 hours with ANC and Spatial Audio",
+        "Controls": "Digital Crown and noise control button",
+        "Weight": "384.8 g",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Space Grey",
+        "Silver",
+        "Midnight",
+        "Starlight"
+      ],
+      "price": 549,
+      "compareAtPrice": null,
+      "currency": "USD",
+      "rating": 4.6,
+      "reviewCount": 3121,
+      "stock": 18,
+      "tags": [],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-airpods-max-1.jpg",
+          "alt": "Apple AirPods Max — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-watch-series-10",
+      "sku": "NOV-APPL-WATCH-SERIES-10-9ED6",
+      "name": "Apple Watch Series 10",
+      "brand": "Apple",
+      "category": "wearables",
+      "shortDescription": "The thinnest Apple Watch yet, with a wide-angle OLED that stays readable off-axis.",
+      "description": "Series 10 is meaningfully thinner than the watch it replaces while growing the display, and the wide-angle OLED means you can read it with a glance rather than a wrist turn. Sleep apnoea notifications and a faster charge — around 30 minutes to 80% — are the changes you notice day to day.",
+      "highlights": [
+        "Wide-angle OLED, readable off-axis",
+        "Sleep apnoea notifications",
+        "Fast charge to 80% in about 30 minutes",
+        "Water resistant to 50m with depth app"
+      ],
+      "specs": {
+        "Display": "Wide-angle OLED Always-On Retina, 2000 nits",
+        "Chip": "S10 SiP with 4-core Neural Engine",
+        "Sensors": "ECG, blood oxygen, temperature, depth",
+        "Battery": "Up to 18 hours, 36 in low power",
+        "Sizes": "42mm and 46mm",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Jet Black",
+        "Rose Gold",
+        "Silver",
+        "Natural Titanium"
+      ],
+      "price": 399,
+      "compareAtPrice": 429,
+      "currency": "USD",
+      "rating": 4.8,
+      "reviewCount": 5602,
+      "stock": 72,
+      "tags": [
+        "bestseller",
+        "new"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-watch-series-10-1.jpg",
+          "alt": "Apple Watch Series 10 — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-watch-ultra-2",
+      "sku": "NOV-APPL-WATCH-ULTRA-2-D63E",
+      "name": "Apple Watch Ultra 2",
+      "brand": "Apple",
+      "category": "wearables",
+      "shortDescription": "Titanium case, 3000-nit display and 36-hour battery for diving, trail running and expeditions.",
+      "description": "The Ultra 2 is built for conditions the standard watch is not rated for — 100m water resistance with a genuine dive computer, an 86-decibel siren, and a precision dual-frequency GPS that holds a track in canyons. The flat sapphire crystal sits proud of the titanium bezel to take knocks.",
+      "highlights": [
+        "3000-nit display, brightest Apple has shipped",
+        "Dual-frequency GPS for accurate tracks",
+        "Depth gauge and water temperature sensor to 40m",
+        "36-hour battery, 72 in low power mode"
+      ],
+      "specs": {
+        "Display": "49mm flat sapphire Always-On Retina, 3000 nits",
+        "Case": "Grade 5 titanium, 100m water resistant",
+        "Chip": "S9 SiP with double tap gesture",
+        "Battery": "36 hours normal, 72 hours low power",
+        "Extras": "86dB siren, Action button, dive computer",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Natural Titanium",
+        "Black Titanium"
+      ],
+      "price": 799,
+      "compareAtPrice": 849,
+      "currency": "USD",
+      "rating": 4.9,
+      "reviewCount": 1988,
+      "stock": 15,
+      "tags": [
+        "featured"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-watch-ultra-2-1.jpg",
+          "alt": "Apple Watch Ultra 2 — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "apple-homepod-2nd-gen",
+      "sku": "NOV-APPL-HOMEPOD-2ND-GEN-FE97",
+      "name": "Apple HomePod (2nd gen)",
+      "brand": "Apple",
+      "category": "smart-home",
+      "shortDescription": "Room-sensing smart speaker with a 4-inch woofer and five beamforming tweeters.",
+      "description": "The HomePod measures the reflections in your room and re-tunes itself, which is why it sounds far larger than it looks. Stereo pair two and it handles a living room properly. Built-in temperature and humidity sensors let it drive home automations without extra hardware.",
+      "highlights": [
+        "Room sensing with automatic re-tuning",
+        "Five beamforming tweeters and a 4\" woofer",
+        "Built-in temperature and humidity sensors",
+        "Thread and Matter hub for smart home control"
+      ],
+      "specs": {
+        "Drivers": "4\" high-excursion woofer, 5 tweeters",
+        "Chip": "Apple S7",
+        "Microphones": "Four-microphone far-field array",
+        "Connectivity": "Wi-Fi 4, Bluetooth 5.0, Thread, Matter",
+        "Height": "168 mm",
+        "Warranty": "1 year limited warranty"
+      },
+      "colors": [
+        "Midnight",
+        "White"
+      ],
+      "price": 299,
+      "compareAtPrice": null,
+      "currency": "USD",
+      "rating": 4.5,
+      "reviewCount": 1104,
+      "stock": 26,
+      "tags": [],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/apple-homepod-2nd-gen-1.jpg",
+          "alt": "Apple HomePod (2nd gen) — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "samsung-galaxy-s24-ultra",
+      "sku": "NOV-SAMS-GALAXY-S24-ULTRA-6EAD",
+      "name": "Samsung Galaxy S24 Ultra",
+      "brand": "Samsung",
+      "category": "smartphones",
+      "shortDescription": "Titanium flagship with a built-in S Pen, 5x optical zoom and a flat anti-reflective display.",
+      "description": "The S24 Ultra is the phone to buy if you want reach — the 5x optical periscope plus sensor crop covers most of what you would use a telephoto for. The display went flat this generation with an anti-reflective coating that genuinely helps outdoors, and the S Pen still docks in the body.",
+      "highlights": [
+        "Built-in S Pen with low-latency writing",
+        "200MP main sensor with 5x optical periscope",
+        "Flat display with anti-reflective coating",
+        "Seven years of OS and security updates"
+      ],
+      "specs": {
+        "Display": "6.8\" QHD+ Dynamic AMOLED 2X, 1-120Hz, 2600 nits",
+        "Processor": "Snapdragon 8 Gen 3 for Galaxy",
+        "Camera": "200MP main, 50MP 5x periscope, 10MP 3x, 12MP ultrawide",
+        "Memory": "12GB RAM, 256GB - 1TB storage",
+        "Battery": "5000 mAh, 45W wired",
+        "Build": "Titanium frame, Gorilla Armor, IP68",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Titanium Grey",
+        "Titanium Black",
+        "Titanium Violet",
+        "Titanium Yellow"
+      ],
+      "price": 1199,
+      "compareAtPrice": 1299,
+      "currency": "USD",
+      "rating": 4.8,
+      "reviewCount": 5240,
+      "stock": 38,
+      "tags": [
+        "bestseller",
+        "featured"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/samsung-galaxy-s24-ultra-1.jpg",
+          "alt": "Samsung Galaxy S24 Ultra — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "samsung-galaxy-s23",
+      "sku": "NOV-SAMS-GALAXY-S23-C2DA",
+      "name": "Samsung Galaxy S23",
+      "brand": "Samsung",
+      "category": "smartphones",
+      "shortDescription": "A compact flagship that fits one hand without giving up the flagship processor.",
+      "description": "The regular S23 is the one for people who are tired of 6.7-inch phones. It keeps the top-tier Snapdragon, the same colour science as its bigger siblings, and gained a meaningfully larger battery over the S22 that fixed the previous generation's main complaint.",
+      "highlights": [
+        "6.1\" display that works one-handed",
+        "Snapdragon 8 Gen 2 for Galaxy",
+        "50MP main with optical stabilisation",
+        "Four generations of OS upgrades"
+      ],
+      "specs": {
+        "Display": "6.1\" FHD+ Dynamic AMOLED 2X, 48-120Hz",
+        "Processor": "Snapdragon 8 Gen 2 for Galaxy",
+        "Camera": "50MP main, 12MP ultrawide, 10MP 3x telephoto",
+        "Memory": "8GB RAM, 128GB / 256GB storage",
+        "Battery": "3900 mAh, 25W wired",
+        "Build": "Armor Aluminium, Gorilla Glass Victus 2, IP68",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Phantom Black",
+        "Cream",
+        "Green",
+        "Lavender"
+      ],
+      "price": 699,
+      "compareAtPrice": 859,
+      "currency": "USD",
+      "rating": 4.6,
+      "reviewCount": 4477,
+      "stock": 95,
+      "tags": [
+        "deal"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/samsung-galaxy-s23-1.png",
+          "alt": "Samsung Galaxy S23 — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "samsung-galaxy-z-flip-5",
+      "sku": "NOV-SAMS-GALAXY-Z-FLIP-5-0D25",
+      "name": "Samsung Galaxy Z Flip 5",
+      "brand": "Samsung",
+      "category": "smartphones",
+      "shortDescription": "A folding phone that closes to pocket size, with a cover screen big enough to be useful.",
+      "description": "The Flip 5 finally closes completely flat thanks to the redesigned hinge, and the 3.4-inch cover screen is large enough to reply to messages and frame a selfie without opening the phone. Folded, it genuinely disappears into a small pocket.",
+      "highlights": [
+        "3.4\" Flex Window cover display",
+        "Flex Hinge closes with no gap",
+        "Snapdragon 8 Gen 2 for Galaxy",
+        "FlexCam for hands-free angles"
+      ],
+      "specs": {
+        "Display": "6.7\" FHD+ Dynamic AMOLED 2X main, 3.4\" cover",
+        "Processor": "Snapdragon 8 Gen 2 for Galaxy",
+        "Camera": "12MP main, 12MP ultrawide, 10MP front",
+        "Memory": "8GB RAM, 256GB / 512GB storage",
+        "Battery": "3700 mAh, 25W wired",
+        "Build": "Armor Aluminium, IPX8",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Mint",
+        "Graphite",
+        "Cream",
+        "Lavender"
+      ],
+      "price": 899,
+      "compareAtPrice": 999,
+      "currency": "USD",
+      "rating": 4.4,
+      "reviewCount": 2015,
+      "stock": 21,
+      "tags": [
+        "deal"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/samsung-galaxy-z-flip-5-1.jpg",
+          "alt": "Samsung Galaxy Z Flip 5 — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "samsung-galaxy-book-pro-360",
+      "sku": "NOV-SAMS-GALAXY-BOOK-PRO-BD32",
+      "name": "Samsung Galaxy Book Pro 360",
+      "brand": "Samsung",
+      "category": "laptops",
+      "shortDescription": "A convertible with an AMOLED touchscreen, S Pen support and a 360-degree hinge.",
+      "description": "The Book Pro 360 folds all the way back into a tablet, and the AMOLED panel is the reason to pick it over the competition — blacks are genuinely black, which matters when you are reading documents in a dark room. The included S Pen clips magnetically to the lid.",
+      "highlights": [
+        "360-degree hinge, laptop to tablet",
+        "AMOLED touch display with S Pen included",
+        "Under 1.4kg with an aluminium chassis",
+        "Thunderbolt 4 with fast charging"
+      ],
+      "specs": {
+        "Display": "15.6\" FHD AMOLED touch, 120Hz",
+        "Processor": "Intel Core Ultra",
+        "Memory": "16GB LPDDR5",
+        "Storage": "512GB / 1TB NVMe SSD",
+        "Ports": "2x Thunderbolt 4, USB-A, HDMI, microSD",
+        "Weight": "1.39 kg",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Graphite",
+        "Silver"
+      ],
+      "price": 1349,
+      "compareAtPrice": 1549,
+      "currency": "USD",
+      "rating": 4.4,
+      "reviewCount": 486,
+      "stock": 17,
+      "tags": [
+        "deal"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/samsung-galaxy-book-pro-360-1.jpg",
+          "alt": "Samsung Galaxy Book Pro 360 — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "samsung-galaxy-tab-s9-ultra",
+      "sku": "NOV-SAMS-GALAXY-TAB-S9-UL-EEE8",
+      "name": "Samsung Galaxy Tab S9 Ultra",
+      "brand": "Samsung",
+      "category": "tablets",
+      "shortDescription": "A 14.6-inch AMOLED tablet with an S Pen in the box and a proper desktop mode.",
+      "description": "At 14.6 inches this is closer to a portable monitor than a tablet, which makes it excellent for split-screen work and comically good for films. DeX mode gives you real windowed multitasking, and unusually for a tablet this size it is IP68 rated.",
+      "highlights": [
+        "14.6\" Dynamic AMOLED 2X, 120Hz",
+        "S Pen included in the box",
+        "Samsung DeX windowed desktop mode",
+        "IP68 water and dust resistance"
+      ],
+      "specs": {
+        "Display": "14.6\" Dynamic AMOLED 2X, 2960x1848, 120Hz",
+        "Processor": "Snapdragon 8 Gen 2 for Galaxy",
+        "Memory": "12GB RAM, 256GB - 1TB storage",
+        "Battery": "11200 mAh, 45W charging",
+        "Audio": "Quad speakers tuned by AKG",
+        "Weight": "732 g",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Graphite",
+        "Beige"
+      ],
+      "price": 1149,
+      "compareAtPrice": 1249,
+      "currency": "USD",
+      "rating": 4.6,
+      "reviewCount": 731,
+      "stock": 13,
+      "tags": [],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/samsung-galaxy-tab-s9-ultra-1.png",
+          "alt": "Samsung Galaxy Tab S9 Ultra — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "samsung-galaxy-buds3-pro",
+      "sku": "NOV-SAMS-GALAXY-BUDS3-PRO-6A90",
+      "name": "Samsung Galaxy Buds3 Pro",
+      "brand": "Samsung",
+      "category": "audio",
+      "shortDescription": "Two-way speaker earbuds with adaptive ANC and 24-bit Hi-Fi over a Galaxy phone.",
+      "description": "A dedicated planar tweeter and dynamic woofer in each bud give the Buds3 Pro more separation than a single-driver design manages. Paired with a Galaxy phone they carry 24-bit audio, and adaptive noise control drops cancellation when it hears you start talking.",
+      "highlights": [
+        "Two-way drivers: planar tweeter plus woofer",
+        "Adaptive ANC with voice detect",
+        "24-bit Hi-Fi audio on Galaxy devices",
+        "IP57 water and dust resistance"
+      ],
+      "specs": {
+        "Drivers": "10.5mm woofer + 6.1mm planar tweeter",
+        "Battery": "6 h ANC on, 26 h with case",
+        "Codecs": "SSC UHQ, AAC, SBC",
+        "Water resistance": "IP57",
+        "Case": "USB-C and wireless charging",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Silver",
+        "White"
+      ],
+      "price": 249,
+      "compareAtPrice": 279,
+      "currency": "USD",
+      "rating": 4.5,
+      "reviewCount": 3390,
+      "stock": 110,
+      "tags": [
+        "bestseller"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/samsung-galaxy-buds3-pro-1.jpg",
+          "alt": "Samsung Galaxy Buds3 Pro — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "samsung-galaxy-watch-6-classic",
+      "sku": "NOV-SAMS-GALAXY-WATCH-6-C-BAC6",
+      "name": "Samsung Galaxy Watch 6 Classic",
+      "brand": "Samsung",
+      "category": "wearables",
+      "shortDescription": "The rotating bezel is back — the best way to navigate a watch without smearing the screen.",
+      "description": "The physical rotating bezel is the reason to choose the Classic. Scrolling notifications with a thumb flick beats swiping a small touchscreen, particularly with gloves on. Body composition measurement and a genuinely useful sleep coach round it out.",
+      "highlights": [
+        "Physical rotating bezel navigation",
+        "BioActive sensor with body composition",
+        "Sleep coaching with snore detection",
+        "5ATM plus IP68, MIL-STD-810H tested"
+      ],
+      "specs": {
+        "Display": "1.5\" Super AMOLED sapphire crystal, 2000 nits",
+        "Processor": "Exynos W930 dual-core",
+        "Sensors": "Optical HR, ECG, BIA, temperature",
+        "Battery": "425 mAh, up to 40 hours",
+        "Water rating": "5ATM + IP68",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Black",
+        "Silver"
+      ],
+      "price": 399,
+      "compareAtPrice": 449,
+      "currency": "USD",
+      "rating": 4.5,
+      "reviewCount": 2604,
+      "stock": 47,
+      "tags": [
+        "deal"
+      ],
+      "freeShipping": true,
+      "deliveryDays": 2,
+      "images": [
+        {
+          "url": "/images/products/samsung-galaxy-watch-6-classic-1.jpg",
+          "alt": "Samsung Galaxy Watch 6 Classic — view 1",
+          "sourceUrl": ""
+        }
+      ],
+      "imageSource": "wikimedia"
+    },
+    {
+      "slug": "boat-airdopes-141-gen-2",
+      "sku": "NOV-BOAT-AIRDOPES-141-GEN-A307",
+      "name": "boAt Airdopes 141 Gen 2",
+      "brand": "boAt",
+      "category": "audio",
+      "shortDescription": "boAt Airdopes 141 Gen 2 from boAt.",
+      "description": "boAt Airdopes 141 Gen 2, sold and supported by boAt.",
+      "highlights": [
+        "Audio Category",
+        "Bluetooth Earphones",
+        "Gaming Earbuds",
+        "Large Playback Earbuds"
+      ],
+      "specs": {
+        "Color": "Active Black, Active White, Grey, Orange",
+        "Product type": "TWS",
+        "Brand": "boAtlifestylein",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Active Black",
+        "Active White",
+        "Grey",
+        "Orange",
+        "Teal"
+      ],
+      "price": 13.99,
+      "compareAtPrice": 49.99,
+      "currency": "USD",
+      "rating": 4.4,
+      "reviewCount": 1078,
+      "stock": 78,
+      "tags": [
+        "bestseller"
+      ],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/boat-airdopes-141-gen-2-1.png",
+          "alt": "boAt Airdopes 141 Gen 2 — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Artboard3_d312b51f-f7c9-4244-aa99-5b565e23cce4.png?v=1749808725"
+        },
+        {
+          "url": "/images/products/boat-airdopes-141-gen-2-2.png",
+          "alt": "boAt Airdopes 141 Gen 2 — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Artboard_3_c5762ddb-fca3-4ddf-88b3-90d7548adc92.png?v=1750057893"
+        },
+        {
+          "url": "/images/products/boat-airdopes-141-gen-2-3.png",
+          "alt": "boAt Airdopes 141 Gen 2 — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Artboard_3_9c804b17-7870-42fd-963f-c7bb0ccbac6a.png?v=1750057893"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "boat-rockerz-450-pro",
+      "sku": "NOV-BOAT-ROCKERZ-450-PRO-9E69",
+      "name": "boAt Rockerz 450 Pro",
+      "brand": "boAt",
+      "category": "audio",
+      "shortDescription": "Rockerz 450 Pro Wireless Headphone It’s time to rock your lives with Rockerz 450 Pro. Get astounded and feel every beat with these bluetooth headphones that are here",
+      "description": "Rockerz 450 Pro Wireless Headphone It’s time to rock your lives with Rockerz 450 Pro. Get astounded and feel every beat with these bluetooth headphones that are here to make music more fun. With 40mm drivers and the unbeatable boAt Signature sound, groove to your favourite music. Make work and workouts more fun with a mountainous playback time of 70 hours that never gives up on you. With charging just for 10 minutes, enjoy music and your binge sessions non stop for 10 hours! It is time for you to get fresh on fashion and high on comfort with Rockerz 450 Pro. 40mm Drivers: boAt Signature Audio With 40mm drivers experience the boAt’s Signature audio like never before! Feel the beats running through your soul and experience bass that teleports you to another world. Never Run Out Of Good Moves Now with a playback of upto 70 hours make sure you are dancing for the win! Binge on your favorite ",
+      "highlights": [
+        "Audio Category",
+        "Audiophille",
+        "Coupon 100|BIG100",
+        "Headphones for Audiophiles"
+      ],
+      "specs": {
+        "Color": "Hazel Beige, Luscious Black, Aqua Blue, White Purity",
+        "Product type": "Rockerz",
+        "Brand": "boAt Lifestyle",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Hazel Beige",
+        "Luscious Black",
+        "Aqua Blue",
+        "White Purity"
+      ],
+      "price": 19.99,
+      "compareAtPrice": 49.99,
+      "currency": "USD",
+      "rating": 4.2,
+      "reviewCount": 1910,
+      "stock": 0,
+      "tags": [],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/boat-rockerz-450-pro-1.png",
+          "alt": "boAt Rockerz 450 Pro — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Rockerz_450_Pro_16.png?v=1745493053"
+        },
+        {
+          "url": "/images/products/boat-rockerz-450-pro-2.png",
+          "alt": "boAt Rockerz 450 Pro — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Rockerz_450_Pro_15.png?v=1745493419"
+        },
+        {
+          "url": "/images/products/boat-rockerz-450-pro-3.png",
+          "alt": "boAt Rockerz 450 Pro — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Rockerz_450_Pro_14.png?v=1745493419"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "boat-stone-350-pro-plus",
+      "sku": "NOV-BOAT-STONE-350-PRO-PL-0C7C",
+      "name": "boAt Stone 350 Pro Plus",
+      "brand": "boAt",
+      "category": "audio",
+      "shortDescription": "boAt Stone 350 Pro Plus from boAt.",
+      "description": "boAt Stone 350 Pro Plus, sold and supported by boAt.",
+      "highlights": [
+        "Audio Category",
+        "importer details Imagine Marketing Pvt Ltd. E Wing Unit 505 Wing 2 Corporate Avenue Atul Projects Andheri East Mumbai Maharashtra 411093",
+        "meta label just launched",
+        "newlaunch"
+      ],
+      "specs": {
+        "Color": "Carbon Black, Titanium Grey",
+        "Product type": "Speakers",
+        "Brand": "boAtlifestylein",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Carbon Black",
+        "Titanium Grey"
+      ],
+      "price": 19.99,
+      "compareAtPrice": 59.99,
+      "currency": "USD",
+      "rating": 4.5,
+      "reviewCount": 278,
+      "stock": 118,
+      "tags": [
+        "deal"
+      ],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/boat-stone-350-pro-plus-1.png",
+          "alt": "boAt Stone 350 Pro Plus — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/01_f058b433-47a2-4434-a6a7-90f8e1f0f22f.png?v=1784285347"
+        },
+        {
+          "url": "/images/products/boat-stone-350-pro-plus-2.png",
+          "alt": "boAt Stone 350 Pro Plus — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/296.png?v=1784285440"
+        },
+        {
+          "url": "/images/products/boat-stone-350-pro-plus-3.png",
+          "alt": "boAt Stone 350 Pro Plus — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/288.png?v=1784285347"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "boat-wave-sigma-3-curv",
+      "sku": "NOV-BOAT-WAVE-SIGMA-3-CUR-232D",
+      "name": "boAt Wave Sigma 3 Curv",
+      "brand": "boAt",
+      "category": "wearables",
+      "shortDescription": "boAt Wave Sigma 3 Curv from boAt.",
+      "description": "boAt Wave Sigma 3 Curv, sold and supported by boAt.",
+      "highlights": [
+        "All products",
+        "best seller sec",
+        "BTcall",
+        "Country Code: CN"
+      ],
+      "specs": {
+        "Color": "Active Black, Timber Brown, Steel Black, Cyan Blue",
+        "Product type": "Smart",
+        "Brand": "boAtlifestylein",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Active Black",
+        "Timber Brown",
+        "Steel Black",
+        "Cyan Blue"
+      ],
+      "price": 18.99,
+      "compareAtPrice": 69.99,
+      "currency": "USD",
+      "rating": 4.3,
+      "reviewCount": 1302,
+      "stock": 62,
+      "tags": [],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/boat-wave-sigma-3-curv-1.png",
+          "alt": "boAt Wave Sigma 3 Curv — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Feature1_2de511a9-e578-486f-ac5e-977d0529697a.png?v=1773729697"
+        },
+        {
+          "url": "/images/products/boat-wave-sigma-3-curv-2.png",
+          "alt": "boAt Wave Sigma 3 Curv — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Feature_28_d8adbb2c-fe7e-4401-b6d6-2914b94b3d70.png?v=1773730144"
+        },
+        {
+          "url": "/images/products/boat-wave-sigma-3-curv-3.png",
+          "alt": "boAt Wave Sigma 3 Curv — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Feature_10.png?v=1773730522"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "boat-bassheads-900-c-pro",
+      "sku": "NOV-BOAT-BASSHEADS-900-C-1F8D",
+      "name": "boAt Bassheads 900 C Pro",
+      "brand": "boAt",
+      "category": "audio",
+      "shortDescription": "boAt Bassheads 900 C Pro from boAt.",
+      "description": "boAt Bassheads 900 C Pro, sold and supported by boAt.",
+      "highlights": [
+        "Affordable",
+        "All products",
+        "Audio Category",
+        "BassHeads"
+      ],
+      "specs": {
+        "Color": "Black",
+        "Product type": "BH-onear",
+        "Brand": "boAtlifestylein",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Black"
+      ],
+      "price": 14.99,
+      "compareAtPrice": 39.99,
+      "currency": "USD",
+      "rating": 4.7,
+      "reviewCount": 790,
+      "stock": 30,
+      "tags": [
+        "deal"
+      ],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/boat-bassheads-900-c-pro-1.png",
+          "alt": "boAt Bassheads 900 C Pro — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Artboard1_7b5e6425-ce8f-456f-ba4b-53594ff14073.png?v=1772173883"
+        },
+        {
+          "url": "/images/products/boat-bassheads-900-c-pro-2.png",
+          "alt": "boAt Bassheads 900 C Pro — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Artboard4_b9127f33-d4c6-4165-8624-361d15fd6080.png?v=1772173904"
+        },
+        {
+          "url": "/images/products/boat-bassheads-900-c-pro-3.png",
+          "alt": "boAt Bassheads 900 C Pro — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Artboard2_ccdffc8b-eb92-4d26-aba7-e2c0a39f1121.png?v=1772173904"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "boat-nirvana-eutopia-2-anc",
+      "sku": "NOV-BOAT-NIRVANA-EUTOPIA-0205",
+      "name": "boAt Nirvana Eutopia 2 ANC",
+      "brand": "boAt",
+      "category": "audio",
+      "shortDescription": "boAt Nirvana Eutopia 2 ANC from boAt.",
+      "description": "boAt Nirvana Eutopia 2 ANC, sold and supported by boAt.",
+      "highlights": [
+        "Audio Category",
+        "Large Playback Earbuds",
+        "Long Playback Headphones",
+        "meta label just launched"
+      ],
+      "specs": {
+        "Color": "Cosmic Black, Utopian White",
+        "Brand": "boAtlifestylein",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Cosmic Black",
+        "Utopian White"
+      ],
+      "price": 69.99,
+      "compareAtPrice": 119.99,
+      "currency": "USD",
+      "rating": 4.1,
+      "reviewCount": 502,
+      "stock": 102,
+      "tags": [
+        "featured"
+      ],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/boat-nirvana-eutopia-2-anc-1.png",
+          "alt": "boAt Nirvana Eutopia 2 ANC — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Frame1597880962.png?v=1783059568"
+        },
+        {
+          "url": "/images/products/boat-nirvana-eutopia-2-anc-2.png",
+          "alt": "boAt Nirvana Eutopia 2 ANC — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Frame1597880963.png?v=1783059568"
+        },
+        {
+          "url": "/images/products/boat-nirvana-eutopia-2-anc-3.png",
+          "alt": "boAt Nirvana Eutopia 2 ANC — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/Frame1597880954.png?v=1783059568"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "boat-storm-call-4",
+      "sku": "NOV-BOAT-STORM-CALL-4-8F00",
+      "name": "boAt Storm Call 4",
+      "brand": "boAt",
+      "category": "wearables",
+      "shortDescription": "boAt Storm Call 4 from boAt.",
+      "description": "boAt Storm Call 4, sold and supported by boAt.",
+      "highlights": [
+        "All products",
+        "BTcall",
+        "Country Code: CN",
+        "flash sale"
+      ],
+      "specs": {
+        "Color": "Active Black, Steel Black, Navy Blue",
+        "Product type": "Smart",
+        "Brand": "boAtlifestylein",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Active Black",
+        "Steel Black",
+        "Navy Blue"
+      ],
+      "price": 19.99,
+      "compareAtPrice": 79.99,
+      "currency": "USD",
+      "rating": 4.6,
+      "reviewCount": 1974,
+      "stock": 134,
+      "tags": [],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/boat-storm-call-4-1.png",
+          "alt": "boAt Storm Call 4 — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/SMWHMGMQG4CZT2UB_0.png?v=1779888319"
+        },
+        {
+          "url": "/images/products/boat-storm-call-4-2.png",
+          "alt": "boAt Storm Call 4 — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/SMWHMGMQG7YS2FGE_0.png?v=1779888439"
+        },
+        {
+          "url": "/images/products/boat-storm-call-4-3.png",
+          "alt": "boAt Storm Call 4 — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/SMWHMGMQMNZEHGPY_0.png?v=1779888563"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "noise-colorfit-pro-6-max-smart-watch",
+      "sku": "NOV-NOIS-COLORFIT-PRO-6-M-28B0",
+      "name": "Noise ColorFit Pro 6 Max Smart Watch",
+      "brand": "Noise",
+      "category": "wearables",
+      "shortDescription": "Discover the Noise ColorFit Pro 6 Max – a premium smartwatch featuring an AI-powered companion and the largest 1.96\" AMOLED display in the ColorFit series. Intellige",
+      "description": "Discover the Noise ColorFit Pro 6 Max – a premium smartwatch featuring an AI-powered companion and the largest 1.96\" AMOLED display in the ColorFit series. Intelligence meets elegance. Key Features: • 1.96\" AMOLED Display – Stunning, expansive screen with vibrant colors and crystal-clear resolution • AI-Powered Companion – Smart AI features that learn your preferences and provide personalized assistance • Customizable Watch Faces – Hundreds of watch faces to match your style and mood • Bluetooth Calling – Make and receive calls directly from your wrist • Advanced Health Tracking – Monitor heart rate, SpO2, sleep, stress, and comprehensive wellness metrics • Multiple Sports Modes – Track workouts with dedicated activity modes • Long Battery Life – Extended usage for worry-free daily wear • Premium Build Quality – Sleek design with premium materials • Smart Notifications – Stay connected w",
+      "highlights": [
+        "hide share icon",
+        "hide symbo insurance",
+        "hide recently viewed",
+        "new offer widget hide"
+      ],
+      "specs": {
+        "Color": "Pure Titanium, Chrome Black, Blue Titanium, Signature Brown",
+        "Product type": "Smart Watches",
+        "Brand": "Noise",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Pure Titanium",
+        "Chrome Black",
+        "Blue Titanium",
+        "Signature Brown",
+        "Green Titanium"
+      ],
+      "price": 99.99,
+      "compareAtPrice": 129.99,
+      "currency": "USD",
+      "rating": 4.4,
+      "reviewCount": 1195,
+      "stock": 75,
+      "tags": [
+        "bestseller"
+      ],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/noise-colorfit-pro-6-max-smart-watch-1.png",
+          "alt": "Noise ColorFit Pro 6 Max Smart Watch — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Artboard_22_pro6max.webp?v=1755669450"
+        },
+        {
+          "url": "/images/products/noise-colorfit-pro-6-max-smart-watch-2.jpg",
+          "alt": "Noise ColorFit Pro 6 Max Smart Watch — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/1_result_1_8667bb0b-d8d3-42db-aed6-79a11d4cfb16.webp?v=1763618903"
+        },
+        {
+          "url": "/images/products/noise-colorfit-pro-6-max-smart-watch-3.jpg",
+          "alt": "Noise ColorFit Pro 6 Max Smart Watch — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/3.5_result_1.webp?v=1763618903"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "noise-buds-vs102-truly-wireless-earbuds",
+      "sku": "NOV-NOIS-BUDS-VS102-TRULY-BCDF",
+      "name": "Noise Buds VS102 Truly Wireless Earbuds",
+      "brand": "Noise",
+      "category": "audio",
+      "shortDescription": "Get ready to reimagine audio with the newest Noise wireless earbuds – Buds VS102. Featuring eye catching Flybird design, these earbuds play great sound via the 11mm ",
+      "description": "Get ready to reimagine audio with the newest Noise wireless earbuds – Buds VS102. Featuring eye catching Flybird design, these earbuds play great sound via the 11mm speaker driver for a total of 16 hours with the charging case. Additionally, full controls on your fingertips, stable BT v5.1 and an IPX5 water-resistant rating, you get the complete package – utility and entertainment.",
+      "highlights": [
+        " ct product type audio device ",
+        " sms ct Buds VS102",
+        " title ct Buds VS102",
+        " title ct Buds VS102 "
+      ],
+      "specs": {
+        "Color": "Jet Black",
+        "Product type": "Wireless Earbuds",
+        "Brand": "Noise",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Jet Black"
+      ],
+      "price": 34.99,
+      "compareAtPrice": null,
+      "currency": "USD",
+      "rating": 4.7,
+      "reviewCount": 2539,
+      "stock": 99,
+      "tags": [],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/noise-buds-vs102-truly-wireless-earbuds-1.png",
+          "alt": "Noise Buds VS102 Truly Wireless Earbuds — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/1_8846aeac-00e8-4e16-8e64-08947c6f164b.png?v=1682439964"
+        },
+        {
+          "url": "/images/products/noise-buds-vs102-truly-wireless-earbuds-2.png",
+          "alt": "Noise Buds VS102 Truly Wireless Earbuds — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/2_cfa0d379-c1d3-43ff-a28e-ff793eb16fb9.png?v=1682439964"
+        },
+        {
+          "url": "/images/products/noise-buds-vs102-truly-wireless-earbuds-3.png",
+          "alt": "Noise Buds VS102 Truly Wireless Earbuds — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/3_9842354d-14ab-4fd9-992e-772f177bd253.png?v=1682439964"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "noise-air-clips-ows-open-ear-headphone",
+      "sku": "NOV-NOIS-AIR-CLIPS-OWS-OP-2548",
+      "name": "Noise Air Clips OWS Open Ear Headphone",
+      "brand": "Noise",
+      "category": "audio",
+      "shortDescription": "Experience music without isolation with the Noise Air Clips OWS Open Ear Wireless Earbuds – featuring a distinctive chrome finish and open-ear design that keeps you ",
+      "description": "Experience music without isolation with the Noise Air Clips OWS Open Ear Wireless Earbuds – featuring a distinctive chrome finish and open-ear design that keeps you aware of your surroundings while enjoying premium sound. Key Features: • Open Ear Design (OWS) – Stay aware of your surroundings while enjoying music, perfect for outdoor activities and safety • Chrome Finish – Sleek, stylish metallic design that stands out • 12mm Premium Drivers – Powerful audio with Tru Bass™ technology for rich, deep sound • 40 Hours Total Playtime – Extended battery life for all-day listening • IPX4 Water Resistance – Sweat and splash-resistant for workouts, running, and outdoor adventures • Secure Ear Clip Design – Comfortable, stable fit that stays in place during activity • Ultra-Lightweight – Just 5.4 grams per earbud for all-day comfort • Full Touch Controls – Easy music and call management with intu",
+      "highlights": [
+        "hide share icon",
+        "hide symbo insurance",
+        "hide recently viewed",
+        "new offer widget hide"
+      ],
+      "specs": {
+        "Color": "Pearl Black, Pearl White, Pearl Purple",
+        "Product type": "Wireless Earbuds",
+        "Brand": "Noise",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Pearl Black",
+        "Pearl White",
+        "Pearl Purple"
+      ],
+      "price": 34.99,
+      "compareAtPrice": 49.99,
+      "currency": "USD",
+      "rating": 4.3,
+      "reviewCount": 939,
+      "stock": 59,
+      "tags": [
+        "new"
+      ],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/noise-air-clips-ows-open-ear-headphone-1.png",
+          "alt": "Noise Air Clips OWS Open Ear Headphone — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/AirClipsBlack_5.webp?v=1732867997"
+        },
+        {
+          "url": "/images/products/noise-air-clips-ows-open-ear-headphone-2.png",
+          "alt": "Noise Air Clips OWS Open Ear Headphone — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Noise_Air_Buds_Black_1__compressedwebp85.webp?v=1763616863"
+        },
+        {
+          "url": "/images/products/noise-air-clips-ows-open-ear-headphone-3.png",
+          "alt": "Noise Air Clips OWS Open Ear Headphone — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/1_result_2a05f72e-8633-4145-aa05-8863fc89f6f9.webp?v=1763616863"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "noise-power-7-in-1-usb-hub",
+      "sku": "NOV-NOIS-POWER-7-IN-1-USB-DBE3",
+      "name": "Noise Power 7 in 1 USB Hub",
+      "brand": "Noise",
+      "category": "accessories",
+      "shortDescription": "Noise Power 7 in 1 USB Hub from Noise.",
+      "description": "Noise Power 7 in 1 USB Hub, sold and supported by Noise.",
+      "highlights": [
+        "new offer widget hide",
+        "override global cart",
+        "pdptext Get it at ₹2374 and a complimentary 65W Type C charging cable worth ₹499 at checkout",
+        "ptag Free 65W Type C Cable"
+      ],
+      "specs": {
+        "Color": "Grey",
+        "Product type": "Power Series",
+        "Brand": "Noise",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Grey"
+      ],
+      "price": 29.99,
+      "compareAtPrice": null,
+      "currency": "USD",
+      "rating": 4.6,
+      "reviewCount": 1515,
+      "stock": 35,
+      "tags": [],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/noise-power-7-in-1-usb-hub-1.png",
+          "alt": "Noise Power 7 in 1 USB Hub — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Frame64_result.webp?v=1784713259"
+        },
+        {
+          "url": "/images/products/noise-power-7-in-1-usb-hub-2.png",
+          "alt": "Noise Power 7 in 1 USB Hub — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Cable_3__result_-_Copy.webp?v=1780580404"
+        },
+        {
+          "url": "/images/products/noise-power-7-in-1-usb-hub-3.png",
+          "alt": "Noise Power 7 in 1 USB Hub — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Frame68_result.webp?v=1784713259"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "noise-master-buds",
+      "sku": "NOV-NOIS-MASTER-BUDS-0B14",
+      "name": "Noise Master Buds",
+      "brand": "Noise",
+      "category": "audio",
+      "shortDescription": "High-quality, expertly tuned audio with Sound by Bose brings you an unmatched sound experience. They showcase excellent aesthetics, merging form with function.",
+      "description": "High-quality, expertly tuned audio with Sound by Bose brings you an unmatched sound experience. They showcase excellent aesthetics, merging form with function.",
+      "highlights": [
+        "anc collection",
+        "bestseller gadget",
+        "bestseller gadgets",
+        "bestseller gadgets notifyme"
+      ],
+      "specs": {
+        "Color": "Espresso Bronze, Titanium, Onyx, Silver",
+        "Product type": "Wireless Earbuds",
+        "Brand": "Noise",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Espresso Bronze",
+        "Titanium",
+        "Onyx",
+        "Silver",
+        "Copper Rose"
+      ],
+      "price": 69.99,
+      "compareAtPrice": 109.99,
+      "currency": "USD",
+      "rating": 4.5,
+      "reviewCount": 2507,
+      "stock": 67,
+      "tags": [],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/noise-master-buds-1.png",
+          "alt": "Noise Master Buds — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/2_result_0e065f7a-0036-487d-9150-dcc39f2cfd2b.webp?v=1780051647"
+        },
+        {
+          "url": "/images/products/noise-master-buds-2.png",
+          "alt": "Noise Master Buds — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/1_result_5360b340-1bba-4295-862d-9adfe98980fa.webp?v=1780051647"
+        },
+        {
+          "url": "/images/products/noise-master-buds-3.png",
+          "alt": "Noise Master Buds — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/3_result_d1933cdf-f2ab-4057-861e-2d970a764fc5.webp?v=1780051647"
+        }
+      ],
+      "imageSource": "shopify"
+    },
+    {
+      "slug": "noise-noisefit-halo-smartwatch",
+      "sku": "NOV-NOIS-NOISEFIT-HALO-SM-5302",
+      "name": "Noise NoiseFit Halo Smartwatch",
+      "brand": "Noise",
+      "category": "wearables",
+      "shortDescription": "Experience the NoiseFit Halo Smartwatch with a vivid 1.43\" Amoled Display, Round Dial, convenient BT Calling, 100 Sports modes, 150+ watch faces and many more. ✯ Fre",
+      "description": "Experience the NoiseFit Halo Smartwatch with a vivid 1.43\" Amoled Display, Round Dial, convenient BT Calling, 100 Sports modes, 150+ watch faces and many more. ✯ Free Shipping ✯ Shop now!",
+      "highlights": [
+        " ct product type wearable device ",
+        " sms ct NoiseFit Halo ",
+        " title ct NoiseFit Halo",
+        "above 999"
+      ],
+      "specs": {
+        "Color": "Midnight Alloy, Jade Alloy, Forest Green, Vintage Brown",
+        "Product type": "Smart Watches",
+        "Brand": "Noise",
+        "Warranty": "1 year manufacturer warranty"
+      },
+      "colors": [
+        "Midnight Alloy",
+        "Jade Alloy",
+        "Forest Green",
+        "Vintage Brown",
+        "Olive Green"
+      ],
+      "price": 49.99,
+      "compareAtPrice": 94.99,
+      "currency": "USD",
+      "rating": 4.1,
+      "reviewCount": 811,
+      "stock": 51,
+      "tags": [
+        "deal"
+      ],
+      "freeShipping": false,
+      "deliveryDays": 4,
+      "images": [
+        {
+          "url": "/images/products/noise-noisefit-halo-smartwatch-1.png",
+          "alt": "Noise NoiseFit Halo Smartwatch — view 1",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Halo_LE_Vintage_Brown_Buds_N1.png?v=1784538951"
+        },
+        {
+          "url": "/images/products/noise-noisefit-halo-smartwatch-2.png",
+          "alt": "Noise NoiseFit Halo Smartwatch — view 2",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Halo_LE_Green_Buds_N1.png?v=1784538951"
+        },
+        {
+          "url": "/images/products/noise-noisefit-halo-smartwatch-3.png",
+          "alt": "Noise NoiseFit Halo Smartwatch — view 3",
+          "sourceUrl": "https://cdn.shopify.com/s/files/1/0997/6284/files/Halo_Hoop_Buds_N1.png?v=1784538950"
+        }
+      ],
+      "imageSource": "shopify"
+    }
+  ]
+}
