@@ -1,4 +1,4 @@
-name: nova-commerce
+name: E-commerce
 
 services:
   mongo:

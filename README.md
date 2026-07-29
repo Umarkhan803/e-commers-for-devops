@@ -1,11 +1,11 @@
-# Nova Commerce
+# E Commerce
 
 Full-stack premium e-commerce storefront with a React + Vite frontend, Express + MongoDB + Redis
 API, and Nginx reverse proxy. Product imagery is real Apple, Samsung, boAt and Noise catalogue
 photos downloaded locally and served by the API.
 
 ```
-nova-commerce/
+E-commerce/
 ├── frontend/          React 19 + Vite + Tailwind CSS v4 SPA
 ├── backend/           Express API, Mongoose models, Redis cache, seed scripts
 ├── nginx/             SPA + /api + /images reverse proxy

@@ -45,9 +45,13 @@ export function CatalogProvider({ children }) {
       error,
       reload,
       // Round the slider bounds outward so the handles sit on tidy numbers.
+      // An empty catalogue reports max=0 — keep a usable default so the slider
+      // does not collapse to $0–$0 before seed data is loaded.
       priceBounds: {
         min: 0,
-        max: Math.ceil((metadata.price?.max ?? FALLBACK.price.max) / 100) * 100,
+        max: Math.ceil(
+          ((metadata.price?.max > 0 ? metadata.price.max : FALLBACK.price.max) / 100),
+        ) * 100,
       },
       categoryName: (slug) =>
         metadata.categories.find((category) => category.slug === slug)?.name ?? slug,
