@@ -1,49 +1,6 @@
 name: E-commerce
 
 services:
-  mongo:
-    image: mongo:7
-    restart: unless-stopped
-    # Single-node replica set, so the API can use transactions when placing orders.
-    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
-    environment:
-      MONGO_INITDB_DATABASE: nova_commerce
-    volumes:
-      - mongo-data:/data/db
-    ports:
-      - "27017:27017"
-    healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-
-  mongo-init:
-  
-    image: mongo:7
-    restart: "no"
-    depends_on:
-      mongo:
-        condition: service_healthy
-    entrypoint: ["bash", "-c"]
-    command:
-      - |
-        mongosh --host mongo:27017 --quiet --eval '
-          try {
-            rs.status()
-            print("replica set already initialised")
-          } catch (error) {
-            print("initiating replica set rs0")
-            rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] })
-          }
-        '
-        echo "waiting for PRIMARY"
-        until [ "$$(mongosh --host mongo:27017 --quiet --eval 'rs.status().myState')" = "1" ]; do
-          sleep 1
-        done
-        echo "replica set rs0 is ready"
-
   redis:
     image: redis:7-alpine
     restart: unless-stopped
@@ -65,40 +22,20 @@ services:
       context: ./backend
     restart: unless-stopped
     depends_on:
-      mongo:
-        condition: service_healthy
-      mongo-init:
-        condition: service_completed_successfully
       redis:
         condition: service_healthy
     environment:
       NODE_ENV: production
       PORT: 4000
       API_PREFIX: /api/v1
-      MONGO_URI: mongodb+srv://mohammedumarkhan803_db_user:L4qgi3xkmcF9sX3d@cluster0.peqhc1o.mongodb.net/nova_commerce
+      MONGO_URI: ${MONGO_URI}
       REDIS_URL: redis://redis:6379
-      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-compose-access-secret-change-me}
-      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-compose-refresh-secret-change-me}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
       CORS_ORIGINS: http://localhost:8081,http://localhost:8080,http://localhost:5173
     ports:
       # Exposed directly so the API can be exercised with curl during development.
       - "4000:4000"
-
-  seed:
-    build:
-      context: ./backend
-    profiles: ["seed"]
-    depends_on:
-      api:
-        condition: service_healthy
-    environment:
-      NODE_ENV: production
-      MONGO_URI: mongodb+srv://mohammedumarkhan803_db_user:L4qgi3xkmcF9sX3d@cluster0.peqhc1o.mongodb.net/nova_commerce
-      REDIS_URL: redis://redis:6379
-      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-compose-access-secret-change-me}
-      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-compose-refresh-secret-change-me}
-    command: ["node", "src/seed/seed.js"]
-    restart: "no"
 
   web:
     build:
@@ -109,8 +46,7 @@ services:
       api:
         condition: service_healthy
     ports:
-      - "8081:80"
+      - "3000:80"
 
 volumes:
-  mongo-data:
   redis-data:

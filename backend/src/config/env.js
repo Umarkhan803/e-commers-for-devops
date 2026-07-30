@@ -15,7 +15,7 @@ export const env = {
   port: Number(process.env.PORT ?? 4000),
   apiPrefix: process.env.API_PREFIX ?? "/api/v1",
 
-  mongoUri: required("MONGO_URI", "mongodb://127.0.0.1:27017/nova_commerce"),
+  mongoUri: required("MONGO_URI"),
   redisUrl: required("REDIS_URL", "redis://127.0.0.1:6379"),
 
   jwt: {
