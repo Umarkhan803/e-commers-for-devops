@@ -11,7 +11,7 @@ data:
   MONGO_URI: "mongodb://mongo:27017/nova_commerce"
   # Or Atlas instead:
   # MONGO_URI: "mongodb+srv://user:pass@cluster.mongodb.net/nova_commerce"
-  CORS_ORIGINS: "http://localhost:31000"
+  CORS_ORIGINS: "*"
   JWT_ACCESS_TTL: "15m"
   JWT_REFRESH_TTL: "30d"
   JWT_REFRESH_TTL_SECONDS: "2592000"

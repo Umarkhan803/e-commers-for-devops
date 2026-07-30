@@ -32,7 +32,7 @@ services:
       REDIS_URL: redis://redis:6379
       JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
-      CORS_ORIGINS: http://localhost:8081,http://localhost:8080,http://localhost:5173
+      CORS_ORIGINS: "*"
     ports:
       # Exposed directly so the API can be exercised with curl during development.
       - "4000:4000"
