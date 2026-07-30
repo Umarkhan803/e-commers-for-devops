@@ -7,10 +7,7 @@ data:
   PORT: "4000"
   API_PREFIX: "/api/v1"
   REDIS_URL: "redis://redis:6379"
-  # In-cluster Mongo (your mongo Service name):
-  MONGO_URI: "mongodb://mongo:27017/nova_commerce"
-  # Or Atlas instead:
-  # MONGO_URI: "mongodb+srv://user:pass@cluster.mongodb.net/nova_commerce"
+  # MONGO_URI lives in api-secret (Atlas). Do not set mongodb://mongo here.
   CORS_ORIGINS: "*"
   JWT_ACCESS_TTL: "15m"
   JWT_REFRESH_TTL: "30d"
