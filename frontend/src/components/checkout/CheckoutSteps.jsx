@@ -33,7 +33,7 @@ export default function CheckoutSteps({ current, onNavigate, className }) {
                   'grid size-9 shrink-0 place-items-center rounded-full text-sm font-bold transition-all duration-300',
                   isComplete && 'bg-emerald-500 text-white',
                   isCurrent &&
-                    'bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-[0_0_0_4px_rgba(99,102,241,0.18)]',
+                    'bg-brand-600 text-white shadow-[0_0_0_4px_rgba(63,81,181,0.18)]',
                   !isComplete && !isCurrent && 'bg-ink-100 text-ink-400',
                 )}
               >

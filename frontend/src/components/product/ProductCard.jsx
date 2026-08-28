@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import Paper from '@mui/material/Paper'
+import IconButton from '@mui/material/IconButton'
 import { Eye, Heart, ShoppingBag, Truck, Zap } from 'lucide-react'
 import Badge from '../ui/Badge'
 import Button from '../ui/Button'
@@ -11,14 +13,14 @@ import { cn, discountPercent } from '../../lib/utils'
 
 function StockLine({ product }) {
   if (!product.inStock) {
-    return <span className="text-xs font-semibold text-rose-600">Out of stock</span>
+    return <span className="text-xs font-medium text-rose-700">Out of stock</span>
   }
   if (product.lowStock) {
     return (
-      <span className="text-xs font-semibold text-amber-600">Only {product.stock} left in stock</span>
+      <span className="text-xs font-medium text-amber-700">Only {product.stock} left in stock</span>
     )
   }
-  return <span className="text-xs font-semibold text-emerald-600">In stock</span>
+  return <span className="text-xs font-medium text-emerald-700">In stock</span>
 }
 
 /**
@@ -59,13 +61,16 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
   }
 
   return (
-    <article
+    <Paper
+      component="article"
+      elevation={1}
       style={style}
-      className={cn(
-        'group relative flex overflow-hidden rounded-[1.25rem] border border-ink-100 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-lift',
-        isList ? 'flex-row' : 'flex-col',
-        className,
-      )}
+      className={cn('group relative flex overflow-hidden', isList ? 'flex-row' : 'flex-col', className)}
+      sx={{
+        borderRadius: 1,
+        transition: 'box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+        '&:hover': { boxShadow: 6 },
+      }}
     >
       <Link
         to={`/product/${product.slug}`}
@@ -80,14 +85,11 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
           alt={product.name}
           loading="lazy"
           className={cn(
-            // Real product photography arrives in mixed aspect ratios, so contain
-            // on white shows the whole product rather than cropping into it.
-            'size-full bg-white object-contain p-4 transition-transform duration-500 ease-out group-hover:scale-[1.07]',
+            'size-full bg-white object-contain p-4 transition-transform duration-500 ease-out group-hover:scale-[1.04]',
             !product.inStock && 'opacity-60 saturate-50',
           )}
         />
 
-        {/* At most two badges — a taller stack starts competing with the artwork. */}
         <div className="pointer-events-none absolute left-3 top-3 flex flex-col items-start gap-1.5">
           {percent > 0 ? <Badge tone="sale">-{percent}%</Badge> : null}
           {product.tags?.includes('new') ? (
@@ -99,33 +101,32 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
           ) : null}
         </div>
 
-        {/* Hover actions — always reachable on touch, revealed on hover for pointers. */}
-        <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-100 transition-all duration-300 sm:translate-x-3 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100">
-          <button
-            type="button"
+        <div className="absolute right-2 top-2 flex flex-col gap-1 opacity-100 transition-opacity duration-200 sm:opacity-0 sm:group-hover:opacity-100">
+          <IconButton
+            size="small"
             onClick={handleWishlist}
             aria-label={wishlist.has(product.id) ? 'Remove from wishlist' : 'Save to wishlist'}
             aria-pressed={wishlist.has(product.id)}
-            className="grid size-9 place-items-center rounded-full bg-white/95 text-ink-500 shadow-soft backdrop-blur transition hover:scale-105 hover:text-rose-500"
+            sx={{ bgcolor: 'background.paper', '&:hover': { bgcolor: 'grey.100' } }}
           >
             <Heart
-              className={cn('size-4', wishlist.has(product.id) && 'fill-rose-500 text-rose-500')}
+              className={cn('size-4', wishlist.has(product.id) && 'fill-rose-600 text-rose-600')}
             />
-          </button>
+          </IconButton>
           {onQuickView ? (
-            <button
-              type="button"
+            <IconButton
+              size="small"
               onClick={handleQuickView}
               aria-label={`Quick view ${product.name}`}
-              className="grid size-9 place-items-center rounded-full bg-white/95 text-ink-500 shadow-soft backdrop-blur transition hover:scale-105 hover:text-brand-600"
+              sx={{ bgcolor: 'background.paper', '&:hover': { bgcolor: 'grey.100' } }}
             >
               <Eye className="size-4" />
-            </button>
+            </IconButton>
           ) : null}
         </div>
 
         {product.freeShipping && product.inStock ? (
-          <span className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[0.6875rem] font-semibold text-ink-600 shadow-soft backdrop-blur">
+          <span className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-1 rounded bg-white/95 px-2 py-0.5 text-[0.6875rem] font-medium text-ink-700 shadow-soft">
             <Truck className="size-3" aria-hidden="true" />
             Free delivery
           </span>
@@ -134,13 +135,13 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
 
       <div className={cn('flex flex-1 flex-col p-4', isList && 'sm:p-5')}>
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-brand-600">
+          <span className="text-[0.6875rem] font-medium uppercase tracking-wider text-brand-700">
             {product.brand}
           </span>
-          <span className="text-[0.6875rem] font-medium text-ink-400">{product.categoryName}</span>
+          <span className="text-[0.6875rem] font-medium text-ink-500">{product.categoryName}</span>
         </div>
 
-        <h3 className="mt-1.5 text-[0.9375rem] font-bold leading-snug text-ink-900">
+        <h3 className="mt-1.5 text-[0.9375rem] font-medium leading-snug text-ink-900">
           <Link to={`/product/${product.slug}`} className="hover:text-brand-700">
             <span className={cn(isList ? '' : 'line-clamp-2')}>{product.name}</span>
           </Link>
@@ -151,7 +152,7 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
         </div>
 
         {isList ? (
-          <p className="mt-2.5 line-clamp-2 text-sm leading-relaxed text-ink-500">
+          <p className="mt-2.5 line-clamp-2 text-sm leading-relaxed text-ink-600">
             {product.shortDescription}
           </p>
         ) : null}
@@ -172,7 +173,7 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
                 onClick={handleAdd}
                 disabled={!product.inStock}
                 aria-label={`Add ${product.name} to cart`}
-                className="relative shrink-0 sm:hidden"
+                sx={{ display: { xs: 'inline-flex', sm: 'none' } }}
               >
                 <ShoppingBag className="size-4" />
               </Button>
@@ -190,9 +191,7 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
               <ShoppingBag className="size-4" />
               {product.inStock ? 'Add to cart' : 'Notify me'}
               {inCart > 0 ? (
-                <span className="ml-0.5 rounded-full bg-white/25 px-1.5 text-[0.6875rem]">
-                  {inCart}
-                </span>
+                <span className="ml-0.5 rounded bg-white/25 px-1.5 text-[0.6875rem]">{inCart}</span>
               ) : null}
             </Button>
             {isList ? (
@@ -203,6 +202,6 @@ export default function ProductCard({ product, onQuickView, layout = 'grid', cla
           </div>
         </div>
       </div>
-    </article>
+    </Paper>
   )
 }

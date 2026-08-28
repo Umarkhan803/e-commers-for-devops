@@ -43,7 +43,7 @@ export default function Rating({
           {[0, 1, 2, 3, 4].map((index) => (
             <Star
               key={index}
-              className={cn(starClass, 'shrink-0 text-amber-400')}
+              className={cn(starClass, 'shrink-0 text-[#ed6c02]')}
               fill="currentColor"
             />
           ))}

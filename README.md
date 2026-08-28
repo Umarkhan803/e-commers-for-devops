@@ -80,6 +80,21 @@ npm run catalogue:fetch
 npm run seed:fresh
 ```
 
+## CI/CD & GitOps
+
+End-to-end pipeline (GitHub Actions → SonarQube → Trivy → Docker Hub → Argo CD):
+
+| Stage | What it does |
+| ----- | ------------ |
+| Quality | `npm ci` / frontend build / backend syntax checks |
+| SonarQube | Static analysis + quality gate (opt-in via `ENABLE_SONARQUBE`) |
+| Build + Trivy | Build API & web images, fail on CRITICAL/HIGH CVEs, push to Docker Hub |
+| GitOps | Commit image tags under `kubernetes/`; Argo CD syncs the cluster |
+
+Full walkthrough (architecture diagram, secrets, Argo setup, failure modes): **[docs/CICD.md](docs/CICD.md)**.
+
+Workflow: [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml) · Argo app: [`argocd/application.yaml`](argocd/application.yaml)
+
 ## Architecture
 
 ```

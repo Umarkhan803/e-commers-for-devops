@@ -41,7 +41,7 @@ export function FormSection({ title, description, icon: Icon, children, classNam
           </span>
         ) : null}
         <div className="min-w-0">
-          <h2 className="text-base font-extrabold text-ink-900">{title}</h2>
+          <h2 className="text-base font-medium text-ink-900">{title}</h2>
           {description ? <p className="mt-0.5 text-sm text-ink-500">{description}</p> : null}
         </div>
       </div>
@@ -232,7 +232,7 @@ export function PaymentStep({ values, errors, onField, onRawField, sameAsShippin
         </div>
 
         {values.paymentMethod === 'card' ? (
-          <div className="mt-5 grid gap-4 rounded-2xl border border-ink-100 bg-ink-50/60 p-4 animate-fade-in">
+          <div className="mt-5 grid gap-4 rounded-lg border border-ink-200 bg-ink-50 p-4 animate-fade-in">
             <TextField
               label="Name on card"
               autoComplete="cc-name"

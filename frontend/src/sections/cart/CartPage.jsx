@@ -78,7 +78,7 @@ export default function CartPage() {
           </nav>
           <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-ink-900 sm:text-4xl">
+              <h1 className="text-3xl font-medium tracking-tight text-ink-900 sm:text-4xl">
                 Your cart
               </h1>
               <p className="mt-1.5 text-sm text-ink-500">

@@ -16,7 +16,7 @@ export default function QuantityStepper({
   return (
     <div
       className={cn(
-        'inline-flex items-center rounded-full border border-ink-200 bg-white shadow-soft',
+        'inline-flex items-center overflow-hidden rounded-lg border border-ink-300 bg-white',
         compact ? 'h-9' : 'h-11',
         className,
       )}
@@ -27,7 +27,7 @@ export default function QuantityStepper({
         disabled={value <= min}
         aria-label={`Decrease ${label.toLowerCase()}`}
         className={cn(
-          'grid place-items-center rounded-l-full text-ink-500 transition hover:bg-ink-100 hover:text-ink-900 disabled:opacity-35 disabled:hover:bg-transparent',
+          'grid place-items-center text-ink-600 transition hover:bg-ink-100 hover:text-ink-900 disabled:opacity-35 disabled:hover:bg-transparent',
           compact ? 'size-9' : 'size-11',
         )}
       >
@@ -44,7 +44,7 @@ export default function QuantityStepper({
           if (!Number.isNaN(parsed)) set(parsed)
         }}
         className={cn(
-          'border-x border-ink-100 bg-transparent text-center font-semibold text-ink-900 focus:outline-none',
+          'border-x border-ink-200 bg-transparent text-center font-medium text-ink-900 focus:outline-none',
           compact ? 'h-9 w-9 text-xs' : 'h-11 w-11 text-sm',
         )}
       />
@@ -55,7 +55,7 @@ export default function QuantityStepper({
         disabled={value >= max}
         aria-label={`Increase ${label.toLowerCase()}`}
         className={cn(
-          'grid place-items-center rounded-r-full text-ink-500 transition hover:bg-ink-100 hover:text-ink-900 disabled:opacity-35 disabled:hover:bg-transparent',
+          'grid place-items-center text-ink-600 transition hover:bg-ink-100 hover:text-ink-900 disabled:opacity-35 disabled:hover:bg-transparent',
           compact ? 'size-9' : 'size-11',
         )}
       >

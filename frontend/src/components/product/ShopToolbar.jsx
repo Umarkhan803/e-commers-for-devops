@@ -17,7 +17,7 @@ export function ShopSearchField({ value, onChange, resultCount, isLoading, class
         onChange={(event) => onChange(event.target.value)}
         placeholder="Search within these results"
         aria-label="Search products"
-        className="h-12 w-full rounded-full border border-ink-200 bg-white pl-11 pr-28 text-sm shadow-soft placeholder:text-ink-400 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/10 [&::-webkit-search-cancel-button]:hidden"
+        className="h-12 w-full rounded-lg border border-ink-300 bg-white pl-11 pr-28 text-sm shadow-soft placeholder:text-ink-400 focus:border-brand-600 focus:outline-none focus:shadow-[inset_0_0_0_1px_var(--color-brand-600)] [&::-webkit-search-cancel-button]:hidden"
       />
       <span className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-2">
         {value ? (
@@ -25,7 +25,7 @@ export function ShopSearchField({ value, onChange, resultCount, isLoading, class
             type="button"
             onClick={() => onChange('')}
             aria-label="Clear search"
-            className="rounded-full p-1 text-ink-400 transition hover:bg-ink-100 hover:text-ink-800"
+            className="rounded-lg p-1 text-ink-400 transition hover:bg-ink-100 hover:text-ink-800"
           >
             <X className="size-4" />
           </button>
@@ -56,7 +56,7 @@ export function SortBar({
   return (
     <div
       className={cn(
-        'flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-ink-100 bg-white px-3.5 py-3 shadow-soft',
+        'flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white px-3.5 py-3 shadow-soft',
         className,
       )}
     >
@@ -69,7 +69,7 @@ export function SortBar({
         <button
           type="button"
           onClick={onOpenFilters}
-          className="inline-flex items-center gap-2 rounded-full border border-ink-200 px-3.5 py-2 text-sm font-semibold text-ink-700 transition hover:border-brand-300 hover:text-brand-700 lg:hidden"
+          className="inline-flex items-center gap-2 rounded-lg border border-ink-300 px-3.5 py-2 text-sm font-medium text-ink-700 transition hover:border-brand-400 hover:bg-brand-50 hover:text-brand-800 lg:hidden"
         >
           <SlidersHorizontal className="size-4" />
           Filters
@@ -89,7 +89,7 @@ export function SortBar({
             value={filters.sort}
             onChange={(event) => onChange({ sort: event.target.value })}
             aria-label="Sort products"
-            className="h-10 appearance-none rounded-full border border-ink-200 bg-white pl-9 pr-8 text-sm font-semibold text-ink-800 transition hover:border-brand-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/10"
+            className="h-10 appearance-none rounded-lg border border-ink-300 bg-white pl-9 pr-8 text-sm font-medium text-ink-800 transition hover:border-brand-400 focus:border-brand-600 focus:outline-none"
           >
             {sortOptions.map((option) => (
               <option key={option.id} value={option.id}>
@@ -99,7 +99,7 @@ export function SortBar({
           </select>
         </div>
 
-        <div className="hidden items-center gap-1 rounded-full border border-ink-200 p-1 sm:flex">
+        <div className="hidden items-center gap-0.5 rounded-lg border border-ink-300 p-0.5 sm:flex">
           {[
             { id: 'grid', icon: LayoutGrid, label: 'Grid view' },
             { id: 'list', icon: List, label: 'List view' },
@@ -111,10 +111,10 @@ export function SortBar({
               aria-label={option.label}
               aria-pressed={layout === option.id}
               className={cn(
-                'grid size-8 place-items-center rounded-full transition',
+                'grid size-8 place-items-center rounded-md transition',
                 layout === option.id
-                  ? 'bg-ink-900 text-white'
-                  : 'text-ink-400 hover:bg-ink-100 hover:text-ink-700',
+                  ? 'bg-brand-600 text-white'
+                  : 'text-ink-500 hover:bg-ink-100 hover:text-ink-800',
               )}
             >
               <option.icon className="size-4" />
@@ -188,7 +188,7 @@ export function ActiveFilterChips({ filters, onChange, onReset, className }) {
           key={chip.key}
           type="button"
           onClick={chip.clear}
-          className="group inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:border-brand-300 hover:bg-brand-100"
+          className="group inline-flex items-center gap-1.5 rounded border border-brand-200 bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-800 transition hover:bg-brand-100"
         >
           {chip.label}
           <X className="size-3.5 opacity-60 transition group-hover:opacity-100" />
@@ -197,7 +197,7 @@ export function ActiveFilterChips({ filters, onChange, onReset, className }) {
       <button
         type="button"
         onClick={onReset}
-        className="rounded-full px-2.5 py-1.5 text-xs font-semibold text-ink-500 underline underline-offset-4 transition hover:text-rose-600"
+        className="rounded px-2.5 py-1.5 text-xs font-medium text-ink-600 underline underline-offset-4 transition hover:text-rose-700"
       >
         Clear all
       </button>

@@ -46,7 +46,7 @@ export default function QuickViewModal({ product, open, onClose }) {
     <Modal open={open} onClose={onClose} size="xl">
       <div className="grid gap-0 lg:grid-cols-2">
         <div className="relative bg-ink-50 p-5 sm:p-7">
-          <div className="overflow-hidden rounded-2xl bg-white shadow-soft">
+          <div className="overflow-hidden rounded-lg bg-white shadow-soft">
             <img
               src={product.gallery[activeImage]}
               alt={product.name}
@@ -81,7 +81,7 @@ export default function QuickViewModal({ product, open, onClose }) {
             {product.tags?.includes('new') ? <Badge tone="new">New</Badge> : null}
           </div>
 
-          <h2 className="mt-3 text-2xl font-extrabold leading-tight text-ink-900">{product.name}</h2>
+          <h2 className="mt-3 text-2xl font-medium leading-tight text-ink-900">{product.name}</h2>
 
           <div className="mt-2.5">
             <Rating value={product.rating} reviewCount={product.reviewCount} size="md" />

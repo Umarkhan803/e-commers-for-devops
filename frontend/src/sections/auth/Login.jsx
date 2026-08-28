@@ -121,7 +121,7 @@ export default function Login() {
           {isPending ? null : <ArrowRight className="size-4" />}
         </Button>
 
-        <p className="rounded-xl bg-ink-50 px-3.5 py-2.5 text-xs leading-relaxed text-ink-500">
+        <p className="rounded-lg bg-ink-50 px-3.5 py-2.5 text-xs leading-relaxed text-ink-600">
           This is a UI demo — any valid email with a password of 6 or more characters will sign you
           in.
         </p>
@@ -140,7 +140,7 @@ export default function Login() {
             key={provider.id}
             type="button"
             onClick={() => toast(`${provider.label} sign-in is not wired up in this demo`, { tone: 'info' })}
-            className="flex h-11 items-center justify-center gap-2 rounded-xl border border-ink-200 bg-white text-sm font-semibold text-ink-700 transition hover:border-brand-300 hover:bg-brand-50/50 hover:text-brand-700"
+            className="flex h-11 items-center justify-center gap-2 rounded-lg border border-ink-300 bg-white text-sm font-medium text-ink-700 transition hover:border-brand-400 hover:bg-brand-50 hover:text-brand-800"
           >
             <span aria-hidden="true" className="text-base">
               {provider.glyph}

@@ -1,10 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import AppBar from '@mui/material/AppBar'
+import IconButton from '@mui/material/IconButton'
+import MuiBadge from '@mui/material/Badge'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Divider from '@mui/material/Divider'
+import ListItemIcon from '@mui/material/ListItemIcon'
 import {
   ChevronRight,
   Heart,
   LogOut,
-  Menu,
+  Menu as MenuIcon,
   Package,
   Search,
   ShoppingBag,
@@ -39,17 +46,17 @@ function AnnouncementBar() {
   const item = ANNOUNCEMENTS[index]
 
   return (
-    <div className="bg-ink-950 text-white">
+    <div className="bg-brand-800 text-white">
       <div className="container-page flex h-9 items-center justify-between gap-4 text-xs">
         <p key={index} className="flex items-center gap-2 font-medium animate-fade-in">
-          <item.icon className="size-3.5 text-accent-400" aria-hidden="true" />
+          <item.icon className="size-3.5 text-brand-200" aria-hidden="true" />
           {item.text}
         </p>
-        <div className="hidden items-center gap-4 text-ink-300 sm:flex">
+        <div className="hidden items-center gap-4 text-brand-100 sm:flex">
           <Link to="/shop?sort=discount" className="transition hover:text-white">
             Today&apos;s deals
           </Link>
-          <span className="text-ink-700">|</span>
+          <span className="text-brand-400">|</span>
           <span>Ships to India</span>
         </div>
       </div>
@@ -65,7 +72,7 @@ function Logo({ onClick }) {
       className="flex shrink-0 items-center gap-2.5"
       aria-label="Nova home"
     >
-      <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 shadow-[0_8px_18px_-8px_rgba(79,70,229,0.8)]">
+      <span className="grid size-9 place-items-center rounded bg-brand-600 text-white shadow-soft">
         <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
           <path
             d="M7 17V7l10 10V7"
@@ -77,7 +84,7 @@ function Logo({ onClick }) {
           />
         </svg>
       </span>
-      <span className="text-xl font-extrabold tracking-tight text-ink-900">
+      <span className="text-xl font-medium tracking-tight text-ink-900">
         Nova
         <span className="ml-0.5 text-brand-600">.</span>
       </span>
@@ -87,21 +94,13 @@ function Logo({ onClick }) {
 
 function AccountMenu() {
   const { user, isAuthenticated, logout } = useAuth()
-  const [open, setOpen] = useState(false)
-  const ref = useRef(null)
+  const [anchorEl, setAnchorEl] = useState(null)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const onPointerDown = (event) => {
-      if (!ref.current?.contains(event.target)) setOpen(false)
-    }
-    document.addEventListener('mousedown', onPointerDown)
-    return () => document.removeEventListener('mousedown', onPointerDown)
-  }, [])
+  const open = Boolean(anchorEl)
 
   if (!isAuthenticated) {
     return (
-      <div className="hidden items-center gap-2 lg:flex">
+      <div className="hidden items-center gap-1 lg:flex">
         <Button as={Link} to="/login" variant="ghost" size="sm">
           Log in
         </Button>
@@ -113,65 +112,67 @@ function AccountMenu() {
   }
 
   return (
-    <div ref={ref} className="relative hidden lg:block">
+    <div className="hidden lg:block">
       <button
         type="button"
-        onClick={() => setOpen((current) => !current)}
+        onClick={(event) => setAnchorEl(event.currentTarget)}
         aria-expanded={open}
         aria-haspopup="menu"
-        className="flex items-center gap-2 rounded-full border border-ink-200 bg-white py-1 pl-1 pr-3 transition hover:border-brand-300 hover:shadow-soft"
+        className="flex items-center gap-2 rounded-lg border border-ink-200 bg-white py-1 pl-1 pr-3 transition hover:border-brand-300 hover:bg-ink-50"
       >
-        <span className="grid size-8 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-xs font-bold text-white">
+        <span className="grid size-8 place-items-center rounded-full bg-brand-600 text-xs font-medium text-white">
           {user.initials}
         </span>
-        <span className="max-w-[7rem] truncate text-sm font-semibold text-ink-800">
+        <span className="max-w-[7rem] truncate text-sm font-medium text-ink-800">
           {user.name.split(' ')[0]}
         </span>
       </button>
 
-      {open ? (
-        <div
-          role="menu"
-          className="absolute right-0 top-[calc(100%+0.5rem)] w-64 overflow-hidden rounded-2xl border border-ink-100 bg-white shadow-pop animate-scale-in"
-        >
-          <div className="border-b border-ink-100 bg-ink-50/60 px-4 py-3">
-            <p className="truncate text-sm font-bold text-ink-900">{user.name}</p>
-            <p className="truncate text-xs text-ink-500">{user.email}</p>
-            <span className="mt-2 inline-flex rounded-full bg-brand-100 px-2 py-0.5 text-[0.6875rem] font-bold text-brand-700">
-              {user.tier}
-            </span>
-          </div>
-          <div className="p-1.5">
-            {[
-              { label: 'Your orders', icon: Package, to: '/shop' },
-              { label: 'Wishlist', icon: Heart, to: '/shop' },
-              { label: 'Account settings', icon: User, to: '/shop' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-ink-700 transition hover:bg-ink-50"
-              >
-                <item.icon className="size-4 text-ink-400" />
-                {item.label}
-              </Link>
-            ))}
-            <button
-              type="button"
-              onClick={() => {
-                logout()
-                setOpen(false)
-                navigate('/')
-              }}
-              className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50"
-            >
-              <LogOut className="size-4" />
-              Sign out
-            </button>
-          </div>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={() => setAnchorEl(null)}
+        slotProps={{ paper: { sx: { width: 256, mt: 1 } } }}
+      >
+        <div className="border-b border-ink-100 px-4 py-3">
+          <p className="truncate text-sm font-medium text-ink-900">{user.name}</p>
+          <p className="truncate text-xs text-ink-600">{user.email}</p>
+          <span className="mt-2 inline-flex rounded bg-brand-50 px-2 py-0.5 text-[0.6875rem] font-medium text-brand-800">
+            {user.tier}
+          </span>
         </div>
-      ) : null}
+        {[
+          { label: 'Your orders', icon: Package, to: '/shop' },
+          { label: 'Wishlist', icon: Heart, to: '/shop' },
+          { label: 'Account settings', icon: User, to: '/shop' },
+        ].map((item) => (
+          <MenuItem
+            key={item.label}
+            component={Link}
+            to={item.to}
+            onClick={() => setAnchorEl(null)}
+          >
+            <ListItemIcon>
+              <item.icon className="size-4" />
+            </ListItemIcon>
+            {item.label}
+          </MenuItem>
+        ))}
+        <Divider />
+        <MenuItem
+          onClick={() => {
+            logout()
+            setAnchorEl(null)
+            navigate('/')
+          }}
+          sx={{ color: 'error.main' }}
+        >
+          <ListItemIcon>
+            <LogOut className="size-4 text-rose-600" />
+          </ListItemIcon>
+          Sign out
+        </MenuItem>
+      </Menu>
     </div>
   )
 }
@@ -185,29 +186,24 @@ function MobileMenu({ open, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[65] lg:hidden">
-      <div className="absolute inset-0 bg-ink-950/50 backdrop-blur-sm animate-fade-in" onClick={onClose} />
+      <div className="absolute inset-0 bg-ink-950/50 animate-fade-in" onClick={onClose} />
       <div className="absolute inset-y-0 left-0 flex w-[85%] max-w-sm flex-col bg-white shadow-pop animate-slide-right">
-        <div className="flex items-center justify-between border-b border-ink-100 px-5 py-4">
+        <div className="flex items-center justify-between border-b border-ink-200 px-5 py-3">
           <Logo onClick={onClose} />
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close menu"
-            className="rounded-full p-2 text-ink-400 transition hover:bg-ink-100"
-          >
+          <IconButton onClick={onClose} aria-label="Close menu" size="small">
             <X className="size-5" />
-          </button>
+          </IconButton>
         </div>
 
         <div className="flex-1 overflow-y-auto px-5 py-5">
           {isAuthenticated ? (
-            <div className="mb-5 flex items-center gap-3 rounded-2xl border border-ink-100 bg-ink-50/60 p-3.5">
-              <span className="grid size-10 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-sm font-bold text-white">
+            <div className="mb-5 flex items-center gap-3 rounded-lg bg-ink-50 p-3.5">
+              <span className="grid size-10 place-items-center rounded-full bg-brand-600 text-sm font-medium text-white">
                 {user.initials}
               </span>
               <div className="min-w-0">
-                <p className="truncate text-sm font-bold text-ink-900">{user.name}</p>
-                <p className="truncate text-xs text-ink-500">{user.tier}</p>
+                <p className="truncate text-sm font-medium text-ink-900">{user.name}</p>
+                <p className="truncate text-xs text-ink-600">{user.tier}</p>
               </div>
             </div>
           ) : (
@@ -221,38 +217,38 @@ function MobileMenu({ open, onClose }) {
             </div>
           )}
 
-          <p className="mb-2.5 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-400">
+          <p className="mb-2.5 text-[0.6875rem] font-medium uppercase tracking-wider text-ink-600">
             Shop by category
           </p>
-          <nav className="space-y-1">
+          <nav className="space-y-0.5">
             <Link
               to="/shop"
               onClick={onClose}
-              className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-800 transition hover:bg-brand-50 hover:text-brand-700"
+              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-800 transition hover:bg-brand-50 hover:text-brand-800"
             >
               All products
-              <ChevronRight className="size-4 text-ink-300" />
+              <ChevronRight className="size-4 text-ink-400" />
             </Link>
             {categories.map((category) => (
               <Link
                 key={category.slug}
                 to={`/shop?category=${category.slug}`}
                 onClick={onClose}
-                className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-700"
+                className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-brand-50 hover:text-brand-800"
               >
                 <span>
                   {category.name}
-                  <span className="block text-xs text-ink-400">{category.blurb}</span>
+                  <span className="block text-xs font-normal text-ink-500">{category.blurb}</span>
                 </span>
-                <ChevronRight className="size-4 text-ink-300" />
+                <ChevronRight className="size-4 text-ink-400" />
               </Link>
             ))}
           </nav>
 
-          <p className="mb-2.5 mt-6 text-[0.6875rem] font-bold uppercase tracking-wider text-ink-400">
+          <p className="mb-2.5 mt-6 text-[0.6875rem] font-medium uppercase tracking-wider text-ink-600">
             Quick links
           </p>
-          <nav className="space-y-1">
+          <nav className="space-y-0.5">
             {[
               { label: "Today's deals", to: '/shop?sort=discount' },
               { label: 'New arrivals', to: '/shop?sort=newest' },
@@ -262,7 +258,7 @@ function MobileMenu({ open, onClose }) {
                 key={link.label}
                 to={link.to}
                 onClick={onClose}
-                className="block rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-ink-50"
+                className="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 transition hover:bg-ink-50"
               >
                 {link.label}
               </Link>
@@ -276,7 +272,7 @@ function MobileMenu({ open, onClose }) {
                 logout()
                 onClose()
               }}
-              className="mt-6 flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-rose-600 transition hover:bg-rose-50"
+              className="mt-6 flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-rose-700 transition hover:bg-rose-50"
             >
               <LogOut className="size-4" />
               Sign out
@@ -309,7 +305,6 @@ export default function Navbar() {
     setMobileSearchOpen(false)
   }, [location.pathname])
 
-  // "/" focuses search the way most storefronts and docs sites do.
   useEffect(() => {
     const onKeyDown = (event) => {
       if (event.key !== '/' || event.metaKey || event.ctrlKey) return
@@ -327,21 +322,16 @@ export default function Navbar() {
       <header className="sticky top-0 z-50">
         <AnnouncementBar />
 
-        <div
-          className={cn(
-            'border-b bg-white/85 backdrop-blur-xl transition-shadow duration-300',
-            elevated ? 'border-ink-100 shadow-soft' : 'border-transparent',
-          )}
-        >
+        <AppBar position="static" color="inherit" elevation={elevated ? 4 : 1}>
           <div className="container-page flex h-16 items-center gap-3 sm:gap-5">
-            <button
-              type="button"
+            <IconButton
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
-              className="-ml-2 rounded-xl p-2 text-ink-700 transition hover:bg-ink-100 lg:hidden"
+              edge="start"
+              sx={{ display: { lg: 'none' } }}
             >
-              <Menu className="size-5" />
-            </button>
+              <MenuIcon className="size-5" />
+            </IconButton>
 
             <Logo />
 
@@ -349,42 +339,31 @@ export default function Navbar() {
               <SearchBar />
             </div>
 
-            <div className="ml-auto flex items-center gap-1 sm:gap-1.5">
-              <button
-                type="button"
+            <div className="ml-auto flex items-center gap-0.5">
+              <IconButton
                 onClick={() => setMobileSearchOpen((current) => !current)}
                 aria-label="Search"
-                className="rounded-xl p-2.5 text-ink-700 transition hover:bg-ink-100 md:hidden"
+                sx={{ display: { md: 'none' } }}
               >
                 <Search className="size-5" />
-              </button>
+              </IconButton>
 
-              <Link
+              <IconButton
+                component={Link}
                 to="/shop"
                 aria-label={`Wishlist, ${wishlist.count} saved`}
-                className="relative hidden rounded-xl p-2.5 text-ink-700 transition hover:bg-ink-100 sm:block"
+                sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
               >
-                <Heart className="size-5" />
-                {wishlist.count > 0 ? (
-                  <span className="absolute right-1 top-1 grid size-4 place-items-center rounded-full bg-rose-500 text-[0.625rem] font-bold text-white">
-                    {wishlist.count}
-                  </span>
-                ) : null}
-              </Link>
+                <MuiBadge badgeContent={wishlist.count} color="error" max={99}>
+                  <Heart className="size-5" />
+                </MuiBadge>
+              </IconButton>
 
-              <button
-                type="button"
-                onClick={openDrawer}
-                aria-label={`Open cart, ${totals.itemCount} items`}
-                className="relative rounded-xl p-2.5 text-ink-700 transition hover:bg-ink-100"
-              >
-                <ShoppingBag className="size-5" />
-                {totals.itemCount > 0 ? (
-                  <span className="absolute -right-0.5 top-0.5 grid min-w-5 place-items-center rounded-full bg-brand-600 px-1 text-[0.6875rem] font-bold text-white shadow-[0_2px_8px_rgba(79,70,229,0.5)] animate-scale-in">
-                    {totals.itemCount}
-                  </span>
-                ) : null}
-              </button>
+              <IconButton onClick={openDrawer} aria-label={`Open cart, ${totals.itemCount} items`}>
+                <MuiBadge badgeContent={totals.itemCount} color="primary" max={99}>
+                  <ShoppingBag className="size-5" />
+                </MuiBadge>
+              </IconButton>
 
               <span className="mx-1 hidden h-6 w-px bg-ink-200 lg:block" />
               <AccountMenu />
@@ -397,21 +376,17 @@ export default function Navbar() {
             </div>
           ) : null}
 
-          {/* Category rail — the primary browse entry point on desktop. */}
-          <nav
-            aria-label="Product categories"
-            className="hidden border-t border-ink-100 lg:block"
-          >
-            <div className="container-page flex h-11 items-center gap-1 overflow-x-auto no-scrollbar">
+          <nav aria-label="Product categories" className="hidden border-t border-ink-200 lg:block">
+            <div className="container-page flex h-12 items-center gap-1 overflow-x-auto no-scrollbar">
               <NavLink
                 to="/shop"
                 end
                 className={({ isActive }) =>
                   cn(
-                    'shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition',
+                    'relative shrink-0 px-3 py-3 text-sm font-medium transition',
                     isActive
-                      ? 'bg-ink-900 text-white'
-                      : 'text-ink-700 hover:bg-ink-100 hover:text-ink-900',
+                      ? 'text-brand-700 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:bg-brand-600'
+                      : 'text-ink-700 hover:bg-ink-50 hover:text-ink-900',
                   )
                 }
               >
@@ -421,7 +396,7 @@ export default function Navbar() {
                 <Link
                   key={category.slug}
                   to={`/shop?category=${category.slug}`}
-                  className="shrink-0 rounded-full px-3.5 py-1.5 text-sm font-medium text-ink-600 transition hover:bg-ink-100 hover:text-ink-900"
+                  className="shrink-0 px-3 py-3 text-sm font-medium text-ink-600 transition hover:bg-ink-50 hover:text-ink-900"
                 >
                   {category.name}
                 </Link>
@@ -429,19 +404,19 @@ export default function Navbar() {
               <span className="mx-1 h-5 w-px shrink-0 bg-ink-200" />
               <Link
                 to="/shop?sort=discount"
-                className="shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold text-rose-600 transition hover:bg-rose-50"
+                className="shrink-0 px-3 py-3 text-sm font-medium text-rose-700 transition hover:bg-rose-50"
               >
                 Deals
               </Link>
               <Link
                 to="/shop?sort=newest"
-                className="shrink-0 rounded-full px-3.5 py-1.5 text-sm font-medium text-ink-600 transition hover:bg-ink-100 hover:text-ink-900"
+                className="shrink-0 px-3 py-3 text-sm font-medium text-ink-600 transition hover:bg-ink-50 hover:text-ink-900"
               >
                 New arrivals
               </Link>
             </div>
           </nav>
-        </div>
+        </AppBar>
       </header>
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />

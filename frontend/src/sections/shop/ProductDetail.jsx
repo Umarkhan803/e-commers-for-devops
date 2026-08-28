@@ -46,7 +46,7 @@ function Gallery({ product }) {
 
   return (
     <div className="lg:sticky lg:top-[10.5rem]">
-      <div className="group relative overflow-hidden rounded-[1.5rem] border border-ink-100 bg-white shadow-soft">
+      <div className="group relative overflow-hidden rounded-lg bg-white shadow-soft">
         <img
           src={product.gallery[active]}
           alt={product.name}
@@ -69,7 +69,7 @@ function Gallery({ product }) {
             aria-label={`View image ${index + 1} of ${product.gallery.length}`}
             aria-current={active === index}
             className={cn(
-              'overflow-hidden rounded-xl border-2 bg-white transition',
+              'overflow-hidden rounded-lg border-2 bg-white transition',
               active === index
                 ? 'border-brand-500 shadow-soft'
                 : 'border-ink-100 opacity-70 hover:opacity-100',
@@ -253,7 +253,7 @@ export default function ProductDetail() {
               ) : null}
             </div>
 
-            <h1 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-4xl">
+            <h1 className="mt-3 text-3xl font-medium leading-tight tracking-tight text-ink-900 sm:text-4xl">
               {product.name}
             </h1>
 
@@ -275,7 +275,7 @@ export default function ProductDetail() {
               {product.shortDescription}
             </p>
 
-            <div className="mt-6 rounded-2xl border border-ink-100 bg-white p-5 shadow-soft">
+            <div className="mt-6 rounded-lg bg-white p-5 shadow-soft">
               <PriceTag price={product.price} compareAt={product.compareAt} size="lg" />
               <p className="mt-1.5 text-xs text-ink-500">
                 Inclusive of all taxes · EMI from{' '}
@@ -301,10 +301,10 @@ export default function ProductDetail() {
                         type="button"
                         onClick={() => setColor(option)}
                         className={cn(
-                          'inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition',
+                          'inline-flex items-center gap-1.5 rounded border px-4 py-2 text-sm font-medium transition',
                           color === option
-                            ? 'border-brand-500 bg-brand-50 text-brand-700 shadow-[0_0_0_3px_rgba(99,102,241,0.1)]'
-                            : 'border-ink-200 text-ink-600 hover:border-ink-300',
+                            ? 'border-brand-600 bg-brand-50 text-brand-800 shadow-[inset_0_0_0_1px_var(--color-brand-600)]'
+                            : 'border-ink-300 text-ink-700 hover:border-ink-500',
                         )}
                       >
                         {color === option ? <Check className="size-3.5" /> : null}
@@ -433,7 +433,7 @@ export default function ProductDetail() {
             {activeTab === 'overview' ? (
               <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
                 <div>
-                  <h2 className="text-lg font-extrabold text-ink-900">About this product</h2>
+                  <h2 className="text-lg font-medium text-ink-900">About this product</h2>
                   <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-600">
                     {product.description}
                   </p>
@@ -447,7 +447,7 @@ export default function ProductDetail() {
                     ].map((entry) => (
                       <li
                         key={entry}
-                        className="flex items-center gap-2 rounded-xl border border-ink-100 bg-white px-3.5 py-2.5 text-sm text-ink-700"
+                        className="flex items-center gap-2 rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-700"
                       >
                         <Check className="size-3.5 shrink-0 text-emerald-600" strokeWidth={3} />
                         <span className="truncate">{entry}</span>
@@ -544,7 +544,7 @@ export default function ProductDetail() {
                   },
                 ].map((card) => (
                   <div key={card.title} className="surface-card p-6">
-                    <span className="grid size-11 place-items-center rounded-2xl bg-brand-50 text-brand-600">
+                    <span className="grid size-11 place-items-center rounded-lg bg-brand-50 text-brand-600">
                       <card.icon className="size-5" aria-hidden="true" />
                     </span>
                     <h3 className="mt-4 text-base font-bold text-ink-900">{card.title}</h3>

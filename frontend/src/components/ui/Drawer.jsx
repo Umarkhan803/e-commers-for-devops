@@ -51,7 +51,7 @@ export default function Drawer({
             type="button"
             onClick={close}
             aria-label="Close panel"
-            className="-mr-1 rounded-full p-2 text-ink-400 transition hover:bg-ink-100 hover:text-ink-800"
+            className="-mr-1 rounded-lg p-2 text-ink-500 transition hover:bg-ink-100 hover:text-ink-800"
           >
             <X className="size-5" />
           </button>

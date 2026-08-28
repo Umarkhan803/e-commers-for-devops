@@ -268,7 +268,7 @@ export default function Checkout() {
         <div className="container-page py-7">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-extrabold tracking-tight text-ink-900 sm:text-3xl">
+              <h1 className="text-2xl font-medium tracking-tight text-ink-900 sm:text-3xl">
                 Secure checkout
               </h1>
               <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-500">
@@ -288,7 +288,7 @@ export default function Checkout() {
 
       <div className="container-page py-8">
         {!isAuthenticated ? (
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-brand-200 bg-brand-50/70 px-5 py-4">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-lg bg-brand-50 px-5 py-4">
             <p className="flex items-center gap-2.5 text-sm text-brand-900">
               <UserCheck className="size-5 shrink-0 text-brand-600" aria-hidden="true" />
               <span>

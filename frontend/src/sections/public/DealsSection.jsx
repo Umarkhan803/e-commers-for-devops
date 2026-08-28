@@ -33,7 +33,7 @@ function msUntilMidnight() {
 function TimeBlock({ value, label }) {
   return (
     <div className="flex flex-col items-center">
-      <span className="grid min-w-[2.75rem] place-items-center rounded-xl bg-ink-950 px-2 py-1.5 font-display text-lg font-extrabold tabular-nums text-white">
+      <span className="grid min-w-[2.75rem] place-items-center rounded-lg bg-ink-900 px-2 py-1.5 text-lg font-medium tabular-nums text-white">
         {value}
       </span>
       <span className="mt-1 text-[0.625rem] font-bold uppercase tracking-wider text-ink-400">
@@ -55,18 +55,18 @@ export default function DealsSection({ onQuickView }) {
   const deals = data?.items ?? []
 
   return (
-    <section className="border-y border-ink-100 bg-gradient-to-b from-white to-ink-50/60 py-14 sm:py-16">
+    <section className="border-y border-ink-200 bg-ink-50 py-14 sm:py-16">
       <div className="container-page">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-rose-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-rose-700">
+            <p className="mb-2 inline-flex items-center gap-1.5 rounded bg-rose-50 px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-rose-800">
               <Flame className="size-3.5" aria-hidden="true" />
               Flash deals
             </p>
-            <h2 className="text-2xl font-extrabold text-ink-900 sm:text-3xl">
+            <h2 className="text-2xl font-medium text-ink-900 sm:text-3xl">
               Today&apos;s biggest price drops
             </h2>
-            <p className="mt-2 max-w-xl text-[0.9375rem] text-ink-500">
+            <p className="mt-2 max-w-xl text-[0.9375rem] text-ink-600">
               Discounts reset at midnight. Stock on flash deals is limited to what we have on hand.
             </p>
           </div>
@@ -77,7 +77,12 @@ export default function DealsSection({ onQuickView }) {
               <TimeBlock value={countdown.minutes} label="Min" />
               <TimeBlock value={countdown.seconds} label="Sec" />
             </div>
-            <Button as={Link} to="/shop?sort=discount" variant="outline" className="hidden sm:inline-flex">
+            <Button
+              as={Link}
+              to="/shop?sort=discount"
+              variant="outline"
+              sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+            >
               All deals
               <ArrowRight className="size-4" />
             </Button>
@@ -100,7 +105,13 @@ export default function DealsSection({ onQuickView }) {
               ))}
         </div>
 
-        <Button as={Link} to="/shop?sort=discount" variant="outline" fullWidth className="mt-4 sm:hidden">
+        <Button
+          as={Link}
+          to="/shop?sort=discount"
+          variant="outline"
+          fullWidth
+          sx={{ mt: 2, display: { sm: 'none' } }}
+        >
           See all deals
           <ArrowRight className="size-4" />
         </Button>

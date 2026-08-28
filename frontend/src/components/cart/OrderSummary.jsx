@@ -27,7 +27,7 @@ function Row({ label, value, tone = "default", hint }) {
         className={cn(
           "shrink-0 font-semibold tabular-nums text-ink-900",
           tone === "positive" && "text-emerald-600",
-          tone === "total" && "text-lg font-extrabold",
+          tone === "total" && "text-lg font-medium",
         )}
       >
         {value}
@@ -51,7 +51,7 @@ export function FreeShippingMeter({ className }) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-ink-100 bg-white p-3.5",
+        "rounded-lg bg-white p-3.5 shadow-soft",
         className,
       )}
     >
@@ -73,7 +73,7 @@ export function FreeShippingMeter({ className }) {
       </p>
       <div className="mt-2.5 h-2 overflow-hidden rounded-full bg-ink-100">
         <div
-          className="h-full rounded-full bg-gradient-to from-brand-500 to-accent-500 transition-all duration-500"
+          className="h-full rounded-full bg-brand-600 transition-all duration-500"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -104,7 +104,7 @@ export function PromoInput({ className }) {
     return (
       <div
         className={cn(
-          "flex items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3.5 py-2.5",
+          "flex items-center justify-between gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3.5 py-2.5",
           className,
         )}
       >
@@ -146,7 +146,7 @@ export function PromoInput({ className }) {
           onChange={(event) => setCode(event.target.value)}
           placeholder="Promo code"
           aria-label="Promo code"
-          className="h-11 w-full rounded-xl border border-ink-200 bg-white pl-10 pr-3 text-sm uppercase placeholder:normal-case placeholder:text-ink-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/10"
+          className="h-11 w-full rounded-lg border border-ink-300 bg-white pl-10 pr-3 text-sm uppercase placeholder:normal-case placeholder:text-ink-400 focus:border-brand-600 focus:outline-none"
         />
       </div>
       <Button type="submit" variant="outline" className="shrink-0">
@@ -172,7 +172,7 @@ export default function OrderSummary({
   return (
     <div className={cn("surface-card overflow-hidden", className)}>
       <div className="border-b border-ink-100 px-5 py-4">
-        <h2 className="text-base font-extrabold text-ink-900">Order summary</h2>
+        <h2 className="text-base font-medium text-ink-900">Order summary</h2>
         <p className="mt-0.5 text-xs text-ink-500">
           {totals.itemCount} {totals.itemCount === 1 ? "item" : "items"}
           {variant === "checkout" ? ` · ${shippingMethod.label} delivery` : ""}

@@ -76,10 +76,10 @@ export default function SearchBar({ className, autoFocus = false, onNavigate }) 
     <div ref={containerRef} className={cn('relative', className)}>
       <div
         className={cn(
-          'flex h-11 items-center gap-2 rounded-full border bg-white px-4 transition-all duration-200',
+          'flex h-11 items-center gap-2 rounded-lg border bg-ink-50 px-3.5 transition-all duration-150',
           open
-            ? 'border-brand-400 shadow-[0_0_0_4px_rgba(99,102,241,0.12)]'
-            : 'border-ink-200 hover:border-ink-300',
+            ? 'border-brand-600 bg-white shadow-[inset_0_0_0_1px_var(--color-brand-600)]'
+            : 'border-transparent hover:bg-ink-100',
         )}
       >
         <Search className="size-4 shrink-0 text-ink-400" aria-hidden="true" />
@@ -112,7 +112,7 @@ export default function SearchBar({ className, autoFocus = false, onNavigate }) 
               inputRef.current?.focus()
             }}
             aria-label="Clear search"
-            className="rounded-full p-1 text-ink-400 transition hover:bg-ink-100 hover:text-ink-700"
+            className="rounded-lg p-1 text-ink-400 transition hover:bg-ink-100 hover:text-ink-700"
           >
             <X className="size-3.5" />
           </button>
@@ -127,7 +127,7 @@ export default function SearchBar({ className, autoFocus = false, onNavigate }) 
         <div
           id="search-suggestions"
           role="listbox"
-          className="absolute inset-x-0 top-[calc(100%+0.5rem)] z-50 overflow-hidden rounded-2xl border border-ink-100 bg-white shadow-pop animate-scale-in"
+          className="absolute inset-x-0 top-[calc(100%+0.5rem)] z-50 overflow-hidden rounded-lg bg-white shadow-pop animate-scale-in"
         >
           {query.trim().length === 0 ? (
             <div className="p-4">
@@ -141,7 +141,7 @@ export default function SearchBar({ className, autoFocus = false, onNavigate }) 
                     key={term}
                     type="button"
                     onClick={() => go(`/shop?q=${encodeURIComponent(term)}`)}
-                    className="rounded-full border border-ink-200 px-3 py-1.5 text-xs font-medium text-ink-600 transition hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+                    className="rounded-lg border border-ink-200 px-3 py-1.5 text-xs font-medium text-ink-700 transition hover:border-brand-400 hover:bg-brand-50 hover:text-brand-800"
                   >
                     {term}
                   </button>

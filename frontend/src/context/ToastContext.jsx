@@ -11,9 +11,9 @@ const ICONS = {
 }
 
 const TONES = {
-  success: 'border-emerald-200 bg-emerald-50 text-emerald-900',
-  error: 'border-rose-200 bg-rose-50 text-rose-900',
-  info: 'border-brand-200 bg-brand-50 text-brand-900',
+  success: 'border-emerald-200 bg-white text-emerald-900',
+  error: 'border-rose-200 bg-white text-rose-900',
+  info: 'border-brand-200 bg-white text-brand-900',
 }
 
 export function ToastProvider({ children }) {
@@ -59,7 +59,7 @@ export function ToastProvider({ children }) {
               key={item.id}
               role="status"
               className={cn(
-                'pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl border px-4 py-3 shadow-lift backdrop-blur animate-scale-in',
+                'pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg border px-4 py-3 shadow-lift animate-scale-in',
                 TONES[item.tone] ?? TONES.info,
               )}
             >
@@ -74,7 +74,7 @@ export function ToastProvider({ children }) {
                 type="button"
                 onClick={() => dismiss(item.id)}
                 aria-label="Dismiss notification"
-                className="rounded-full p-1 opacity-60 transition hover:bg-black/5 hover:opacity-100"
+                className="rounded-lg p-1 opacity-60 transition hover:bg-black/5 hover:opacity-100"
               >
                 <X className="size-4" />
               </button>

@@ -114,7 +114,7 @@ export default function Shop() {
 
           <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-ink-900 sm:text-4xl">
+              <h1 className="text-3xl font-medium tracking-tight text-ink-900 sm:text-4xl">
                 {heading}
               </h1>
               <p className="mt-2 max-w-2xl text-[0.9375rem] text-ink-500">
@@ -138,8 +138,8 @@ export default function Shop() {
               onClick={() => updateFilters({ categories: [] })}
               className={
                 filters.categories.length === 0
-                  ? 'shrink-0 rounded-full bg-ink-900 px-3.5 py-1.5 text-sm font-semibold text-white'
-                  : 'shrink-0 rounded-full border border-ink-200 bg-white px-3.5 py-1.5 text-sm font-medium text-ink-600 transition hover:border-brand-300 hover:text-brand-700'
+                  ? 'shrink-0 rounded bg-brand-600 px-3.5 py-1.5 text-sm font-medium text-white shadow-soft'
+                  : 'shrink-0 rounded border border-ink-300 bg-white px-3.5 py-1.5 text-sm font-medium text-ink-700 transition hover:border-brand-400 hover:bg-brand-50 hover:text-brand-800'
               }
             >
               All
@@ -153,8 +153,8 @@ export default function Shop() {
                   onClick={() => updateFilters({ categories: selected ? [] : [category.slug] })}
                   className={
                     selected
-                      ? 'shrink-0 rounded-full bg-ink-900 px-3.5 py-1.5 text-sm font-semibold text-white'
-                      : 'shrink-0 rounded-full border border-ink-200 bg-white px-3.5 py-1.5 text-sm font-medium text-ink-600 transition hover:border-brand-300 hover:text-brand-700'
+                      ? 'shrink-0 rounded bg-brand-600 px-3.5 py-1.5 text-sm font-medium text-white shadow-soft'
+                      : 'shrink-0 rounded border border-ink-300 bg-white px-3.5 py-1.5 text-sm font-medium text-ink-700 transition hover:border-brand-400 hover:bg-brand-50 hover:text-brand-800'
                   }
                 >
                   {category.name}
@@ -193,7 +193,7 @@ export default function Shop() {
             />
 
             {error ? (
-              <div className="mt-6 flex flex-col items-center gap-3 rounded-2xl border border-red-200 bg-red-50/60 px-6 py-10 text-center">
+              <div className="mt-6 flex flex-col items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-6 py-10 text-center">
                 <AlertCircle className="size-6 text-red-500" aria-hidden="true" />
                 <p className="text-sm font-semibold text-ink-900">Could not load products</p>
                 <p className="max-w-sm text-xs text-ink-500">{error.message}</p>
@@ -232,7 +232,7 @@ export default function Shop() {
             ) : null}
 
             {products.length > 0 && !hasNextPage ? (
-              <div className="mt-10 flex flex-col items-center gap-3 rounded-2xl border border-dashed border-ink-200 bg-white/60 px-6 py-8 text-center">
+              <div className="mt-10 flex flex-col items-center gap-3 rounded-lg border border-dashed border-ink-300 bg-white px-6 py-8 text-center">
                 <Sparkles className="size-5 text-brand-500" aria-hidden="true" />
                 <p className="text-sm font-semibold text-ink-800">
                   That is everything matching your filters

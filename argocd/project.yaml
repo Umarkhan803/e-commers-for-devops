@@ -1,0 +1,29 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: nova-commerce
+  namespace: argocd
+spec:
+  description: Nova Commerce e-commerce workloads
+
+  sourceRepos:
+    - https://github.com/Umarkhan803/e-commers-for-devops.git
+
+  destinations:
+    - namespace: nova-commerce
+      server: https://kubernetes.default.svc
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: "*"
+    - group: apps
+      kind: "*"
+    - group: networking.k8s.io
+      kind: "*"

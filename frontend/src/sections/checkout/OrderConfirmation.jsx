@@ -96,10 +96,10 @@ export default function OrderConfirmation() {
       <div className="relative overflow-hidden border-b border-ink-100 bg-white">
         <div className="gradient-mesh absolute inset-0" aria-hidden="true" />
         <div className="container-page relative py-14 text-center">
-          <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-emerald-100 text-emerald-600 animate-scale-in">
+          <span className="mx-auto grid size-16 place-items-center rounded-lg bg-emerald-100 text-emerald-700 animate-scale-in">
             <CheckCircle2 className="size-9" aria-hidden="true" />
           </span>
-          <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-ink-900 sm:text-4xl">
+          <h1 className="mt-5 text-3xl font-medium tracking-tight text-ink-900 sm:text-4xl">
             Thank you, {address.fullName.split(' ')[0]} — your order is confirmed
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-[0.9375rem] leading-relaxed text-ink-600">
@@ -108,11 +108,11 @@ export default function OrderConfirmation() {
             a tracking link as soon as the parcel leaves our hub.
           </p>
 
-          <div className="mt-7 inline-flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-ink-200 bg-white px-5 py-3.5 shadow-soft">
+          <div className="mt-7 inline-flex flex-wrap items-center justify-center gap-3 rounded-lg bg-white px-5 py-3.5 shadow-soft">
             <span className="text-xs font-semibold uppercase tracking-wide text-ink-400">
               Order reference
             </span>
-            <span className="font-display text-lg font-extrabold tracking-tight text-ink-900">
+            <span className="font-display text-lg font-medium tracking-tight text-ink-900">
               {order.reference}
             </span>
             <button
@@ -134,7 +134,7 @@ export default function OrderConfirmation() {
         <div className="grid gap-7 lg:grid-cols-[1fr_22rem]">
           <div className="space-y-6">
             <section className="surface-card p-6">
-              <h2 className="text-base font-extrabold text-ink-900">Delivery progress</h2>
+              <h2 className="text-base font-medium text-ink-900">Delivery progress</h2>
               <ol className="mt-5 space-y-5">
                 {TIMELINE.map((entry, index) => (
                   <li key={entry.label} className="relative flex gap-4">
@@ -178,7 +178,7 @@ export default function OrderConfirmation() {
 
             <section className="surface-card overflow-hidden">
               <header className="border-b border-ink-100 px-6 py-4">
-                <h2 className="text-base font-extrabold text-ink-900">
+                <h2 className="text-base font-medium text-ink-900">
                   Items in this order ({order.items.length})
                 </h2>
               </header>
@@ -214,7 +214,7 @@ export default function OrderConfirmation() {
 
             <div className="grid gap-6 sm:grid-cols-2">
               <section className="surface-card p-6">
-                <h2 className="flex items-center gap-2 text-sm font-extrabold text-ink-900">
+                <h2 className="flex items-center gap-2 text-sm font-medium text-ink-900">
                   <MapPin className="size-4 text-brand-600" aria-hidden="true" />
                   Shipping to
                 </h2>
@@ -231,7 +231,7 @@ export default function OrderConfirmation() {
               </section>
 
               <section className="surface-card p-6">
-                <h2 className="flex items-center gap-2 text-sm font-extrabold text-ink-900">
+                <h2 className="flex items-center gap-2 text-sm font-medium text-ink-900">
                   <Mail className="size-4 text-brand-600" aria-hidden="true" />
                   Payment
                 </h2>
@@ -259,7 +259,7 @@ export default function OrderConfirmation() {
           <div className="lg:sticky lg:top-[10.5rem] lg:self-start">
             <div className="surface-card overflow-hidden">
               <header className="border-b border-ink-100 px-5 py-4">
-                <h2 className="text-base font-extrabold text-ink-900">Payment summary</h2>
+                <h2 className="text-base font-medium text-ink-900">Payment summary</h2>
               </header>
               <div className="space-y-3 px-5 py-4 text-sm">
                 <div className="flex justify-between">
@@ -292,7 +292,7 @@ export default function OrderConfirmation() {
                 </div>
                 <div className="flex justify-between border-t border-dashed border-ink-200 pt-3">
                   <span className="font-bold text-ink-900">Total paid</span>
-                  <span className="text-lg font-extrabold tabular-nums text-ink-900">
+                  <span className="text-lg font-medium tabular-nums text-ink-900">
                     {formatPrice(order.totals.total)}
                   </span>
                 </div>

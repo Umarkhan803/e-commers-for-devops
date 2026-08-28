@@ -42,7 +42,7 @@ export default function Modal({
         aria-modal="true"
         aria-label={title}
         className={cn(
-          'relative z-10 flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-pop animate-scale-in sm:rounded-3xl',
+          'relative z-10 flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-lg bg-white shadow-pop animate-scale-in sm:rounded-lg',
           WIDTHS[size],
           className,
         )}
@@ -57,7 +57,7 @@ export default function Modal({
               type="button"
               onClick={close}
               aria-label="Close dialog"
-              className="-mr-1 rounded-full p-2 text-ink-400 transition hover:bg-ink-100 hover:text-ink-800"
+              className="-mr-1 rounded-lg p-2 text-ink-500 transition hover:bg-ink-100 hover:text-ink-800"
             >
               <X className="size-5" />
             </button>
@@ -67,7 +67,7 @@ export default function Modal({
             type="button"
             onClick={close}
             aria-label="Close dialog"
-            className="absolute right-3 top-3 z-20 rounded-full bg-white/90 p-2 text-ink-500 shadow-soft transition hover:text-ink-900"
+            className="absolute right-3 top-3 z-20 rounded-lg bg-white p-2 text-ink-500 shadow-soft transition hover:bg-ink-100 hover:text-ink-900"
           >
             <X className="size-5" />
           </button>

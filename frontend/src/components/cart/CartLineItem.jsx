@@ -19,7 +19,7 @@ export default function CartLineItem({ item, compact = false, onNavigate }) {
   return (
     <article
       className={cn(
-        'flex gap-3.5 rounded-2xl border border-ink-100 bg-white p-3 transition hover:border-ink-200',
+        'flex gap-3.5 rounded-lg bg-white p-3 shadow-soft',
         compact ? '' : 'sm:gap-5 sm:p-4',
       )}
     >
@@ -27,7 +27,7 @@ export default function CartLineItem({ item, compact = false, onNavigate }) {
         to={`/product/${product.slug}`}
         onClick={onNavigate}
         className={cn(
-          'shrink-0 overflow-hidden rounded-xl border border-ink-100 bg-ink-50',
+          'shrink-0 overflow-hidden rounded-lg border border-ink-200 bg-ink-50',
           compact ? 'size-20' : 'size-24 sm:size-28',
         )}
       >

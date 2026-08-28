@@ -1,34 +1,44 @@
 import { forwardRef } from 'react'
-import { Loader2 } from 'lucide-react'
+import MuiButton from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import CircularProgress from '@mui/material/CircularProgress'
 import { cn } from '../../lib/utils'
 
-const VARIANTS = {
-  primary:
-    'bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-[0_8px_20px_-8px_rgba(79,70,229,0.7)] hover:from-brand-500 hover:to-brand-700 hover:shadow-[0_12px_26px_-10px_rgba(79,70,229,0.8)] active:translate-y-px',
-  secondary:
-    'bg-ink-900 text-white shadow-[0_8px_20px_-10px_rgba(20,26,44,0.8)] hover:bg-ink-800 active:translate-y-px',
-  outline:
-    'border border-ink-200 bg-white text-ink-800 shadow-soft hover:border-brand-300 hover:bg-brand-50/60 hover:text-brand-700',
-  ghost: 'text-ink-600 hover:bg-ink-100/80 hover:text-ink-900',
-  subtle: 'bg-brand-50 text-brand-700 hover:bg-brand-100',
-  danger: 'bg-rose-600 text-white shadow-soft hover:bg-rose-700',
+const VARIANT = {
+  primary: { variant: 'contained', color: 'primary' },
+  secondary: { variant: 'contained', color: 'inherit' },
+  outline: { variant: 'outlined', color: 'primary' },
+  ghost: { variant: 'text', color: 'inherit' },
+  subtle: { variant: 'contained', color: 'primary' },
+  danger: { variant: 'contained', color: 'error' },
 }
 
-const SIZES = {
-  sm: 'h-9 gap-1.5 px-3.5 text-[0.8125rem]',
-  md: 'h-11 gap-2 px-5 text-sm',
-  lg: 'h-12 gap-2 px-6 text-[0.9375rem]',
-  icon: 'size-10 justify-center',
-  'icon-sm': 'size-9 justify-center',
+const SIZE = {
+  sm: 'small',
+  md: 'medium',
+  lg: 'large',
+}
+
+const SECONDARY_SX = {
+  bgcolor: 'grey.900',
+  color: 'common.white',
+  '&:hover': { bgcolor: 'grey.800' },
+}
+
+const SUBTLE_SX = {
+  bgcolor: 'rgba(63, 81, 181, 0.08)',
+  color: 'primary.dark',
+  boxShadow: 'none',
+  '&:hover': { bgcolor: 'rgba(63, 81, 181, 0.16)', boxShadow: 'none' },
 }
 
 /**
- * Primary interactive control. Pass `as={Link}` (or any component) to keep the
- * visual treatment while changing the rendered element.
+ * Storefront button. Visuals come from MUI (ripple, elevation, contained /
+ * outlined / text). `as={Link}` still works so existing call sites stay intact.
  */
 const Button = forwardRef(function Button(
   {
-    as: Component = 'button',
+    as,
     variant = 'primary',
     size = 'md',
     className,
@@ -36,30 +46,70 @@ const Button = forwardRef(function Button(
     disabled,
     fullWidth = false,
     children,
+    sx,
     ...props
   },
   ref,
 ) {
   const isDisabled = disabled || loading
+  const isIcon = size === 'icon' || size === 'icon-sm'
+  const mapped = VARIANT[variant] ?? VARIANT.primary
+  const spinner = <CircularProgress color="inherit" size={16} />
+
+  const extraSx = {
+    ...(variant === 'secondary' ? SECONDARY_SX : null),
+    ...(variant === 'subtle' ? SUBTLE_SX : null),
+    ...sx,
+  }
+
+  if (isIcon) {
+    return (
+      <IconButton
+        ref={ref}
+        component={as && as !== 'button' ? as : undefined}
+        color={mapped.color === 'inherit' ? 'default' : mapped.color}
+        size={size === 'icon-sm' ? 'small' : 'medium'}
+        disabled={isDisabled}
+        className={className}
+        aria-disabled={isDisabled || undefined}
+        sx={{
+          ...(variant === 'primary' && {
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
+            '&:hover': { bgcolor: 'primary.dark' },
+          }),
+          ...(variant === 'secondary' && SECONDARY_SX),
+          ...(variant === 'outline' && {
+            border: '1px solid',
+            borderColor: 'primary.main',
+            color: 'primary.main',
+          }),
+          ...sx,
+        }}
+        {...props}
+      >
+        {loading ? spinner : children}
+      </IconButton>
+    )
+  }
 
   return (
-    <Component
+    <MuiButton
       ref={ref}
-      disabled={Component === 'button' ? isDisabled : undefined}
+      component={as && as !== 'button' ? as : undefined}
+      variant={mapped.variant}
+      color={mapped.color}
+      size={SIZE[size] ?? 'medium'}
+      fullWidth={fullWidth}
+      disabled={isDisabled}
       aria-disabled={isDisabled || undefined}
-      className={cn(
-        'inline-flex select-none items-center justify-center rounded-full font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500',
-        'disabled:pointer-events-none disabled:opacity-55',
-        VARIANTS[variant],
-        SIZES[size],
-        fullWidth && 'w-full',
-        className,
-      )}
+      className={cn(className)}
+      startIcon={loading ? spinner : undefined}
+      sx={extraSx}
       {...props}
     >
-      {loading ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
       {children}
-    </Component>
+    </MuiButton>
   )
 })
 

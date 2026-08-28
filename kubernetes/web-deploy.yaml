@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web
+  namespace: nova-commerce
   labels:
     app: web
 spec:
@@ -16,8 +17,26 @@ spec:
     spec:
       containers:
         - name: web
-          image: umarkhan803/e-commerce-web
+          image: umarkhan803/e-commerce-web:latest
           ports:
             - containerPort: 80
               name: web
-      
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20

@@ -43,7 +43,7 @@ export default function FeaturedTabs({ onQuickView }) {
       <div
         role="tablist"
         aria-label="Featured product collections"
-        className="mt-7 flex gap-2 overflow-x-auto pb-1 no-scrollbar"
+        className="mt-7 flex gap-1 overflow-x-auto border-b border-ink-200 pb-0 no-scrollbar"
       >
         {TABS.map((tab) => (
           <button
@@ -53,10 +53,10 @@ export default function FeaturedTabs({ onQuickView }) {
             aria-selected={activeTab === tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={cn(
-              'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200',
+              'relative shrink-0 px-4 py-2 text-sm font-medium transition-colors',
               activeTab === tab.id
-                ? 'bg-ink-900 text-white shadow-[0_8px_18px_-10px_rgba(20,26,44,0.9)]'
-                : 'border border-ink-200 bg-white text-ink-600 hover:border-brand-300 hover:text-brand-700',
+                ? 'text-brand-700 after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:bg-brand-600'
+                : 'text-ink-600 hover:bg-ink-50 hover:text-ink-900',
             )}
           >
             {tab.label}

@@ -30,7 +30,7 @@ export function ReviewSummary({ product, className }) {
   return (
     <div className={cn('grid gap-8 sm:grid-cols-[auto_1fr]', className)}>
       <div className="text-center sm:text-left">
-        <p className="text-5xl font-extrabold tracking-tight text-ink-900">
+        <p className="text-5xl font-medium tracking-tight text-ink-900">
           {product.rating.toFixed(1)}
         </p>
         <div className="mt-2 flex justify-center sm:justify-start">
@@ -50,7 +50,7 @@ export function ReviewSummary({ product, className }) {
             <span className="w-12 shrink-0 text-xs font-semibold text-ink-600">{row.stars} star</span>
             <span className="h-2 flex-1 overflow-hidden rounded-full bg-ink-100">
               <span
-                className="block h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-500 transition-all duration-700"
+                className="block h-full rounded-full bg-amber-500 transition-all duration-700"
                 style={{ width: `${(row.count / max) * 100}%` }}
               />
             </span>
@@ -71,7 +71,7 @@ export function ReviewList({ reviews, className }) {
         <li key={review.id} className="surface-card p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-center gap-3">
-              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-sm font-bold text-white">
+              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-medium text-white">
                 {review.author
                   .split(' ')
                   .slice(0, 2)

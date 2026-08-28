@@ -47,7 +47,7 @@ function PriceRange({ min, max, bounds, onChange }) {
       <div className="relative h-6">
         <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-ink-200" />
         <div
-          className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-gradient-to-r from-brand-500 to-accent-500"
+          className="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-brand-600"
           style={{ left: `${left}%`, right: `${100 - right}%` }}
         />
         <input
@@ -73,14 +73,14 @@ function PriceRange({ min, max, bounds, onChange }) {
       </div>
 
       <div className="flex items-center gap-2">
-        <div className="flex-1 rounded-xl border border-ink-200 bg-white px-3 py-2">
+        <div className="flex-1 rounded-lg border border-ink-300 bg-white px-3 py-2">
           <span className="block text-[0.625rem] font-semibold uppercase tracking-wide text-ink-400">
             Min
           </span>
           <span className="text-sm font-bold text-ink-900">{formatPrice(min)}</span>
         </div>
         <span className="text-ink-300">—</span>
-        <div className="flex-1 rounded-xl border border-ink-200 bg-white px-3 py-2">
+        <div className="flex-1 rounded-lg border border-ink-300 bg-white px-3 py-2">
           <span className="block text-[0.625rem] font-semibold uppercase tracking-wide text-ink-400">
             Max
           </span>
@@ -167,7 +167,7 @@ export default function FilterPanel({ filters, onChange, onReset, showHeader = t
     <aside className={cn('surface-card p-5', className)} aria-label="Product filters">
       {showHeader ? (
         <div className="flex items-center justify-between gap-2 pb-1">
-          <h2 className="text-base font-extrabold text-ink-900">
+          <h2 className="text-base font-medium text-ink-900">
             Filters
             {activeCount ? (
               <span className="ml-2 rounded-full bg-brand-600 px-2 py-0.5 text-xs font-bold text-white">
@@ -225,7 +225,7 @@ export default function FilterPanel({ filters, onChange, onReset, showHeader = t
             onChange={(event) => setBrandQuery(event.target.value)}
             placeholder="Find a brand"
             aria-label="Search brands"
-            className="h-9 w-full rounded-lg border border-ink-200 bg-white pl-9 pr-3 text-sm placeholder:text-ink-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/10"
+            className="h-9 w-full rounded-lg border border-ink-300 bg-white pl-9 pr-3 text-sm placeholder:text-ink-400 focus:border-brand-600 focus:outline-none"
           />
         </div>
         <div className="max-h-52 space-y-2.5 overflow-y-auto pr-1">
@@ -330,7 +330,7 @@ export default function FilterPanel({ filters, onChange, onReset, showHeader = t
           onClick={() => onChange({ freeShippingOnly: !filters.freeShippingOnly })}
           aria-pressed={filters.freeShippingOnly}
           className={cn(
-            'flex w-full items-center justify-between gap-3 rounded-xl border p-3 text-left transition',
+            'flex w-full items-center justify-between gap-3 rounded-lg border p-3 text-left transition',
             filters.freeShippingOnly
               ? 'border-brand-500 bg-brand-50/70'
               : 'border-ink-200 hover:border-brand-300',

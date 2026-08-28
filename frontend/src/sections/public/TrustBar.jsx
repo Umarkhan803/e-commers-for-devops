@@ -25,16 +25,16 @@ const PERKS = [
 
 export default function TrustBar() {
   return (
-    <section className="border-b border-ink-100 bg-white">
+    <section className="border-b border-ink-200 bg-white">
       <div className="container-page grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
         {PERKS.map((perk) => (
           <div key={perk.title} className="flex items-start gap-3.5">
-            <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-600 ring-1 ring-brand-100">
+            <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700">
               <perk.icon className="size-5" aria-hidden="true" />
             </span>
             <div>
-              <h3 className="text-sm font-bold text-ink-900">{perk.title}</h3>
-              <p className="mt-0.5 text-xs leading-relaxed text-ink-500">{perk.detail}</p>
+              <h3 className="text-sm font-medium text-ink-900">{perk.title}</h3>
+              <p className="mt-0.5 text-xs leading-relaxed text-ink-600">{perk.detail}</p>
             </div>
           </div>
         ))}
