@@ -1,0 +1,60 @@
+backend:
+  replicaCount: 3
+  image:
+    repository:  905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/backend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: NodePort
+    port: 4000
+    targetPort: 4000
+
+  resources:
+    requests:
+     cpu: "100m"
+     memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+frontend:
+  replicaCount: 3
+
+  image:
+    repository:  905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/frontend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: NodePort
+    port: 8081
+    targetPort: 80
+    nodePort: 31000
+
+  resources:
+    requests:
+     cpu: "100m"
+     memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+redis:
+  replicaCount: 1
+
+  image:
+    repository:  redis
+    tag: "7-alpine"
+    pullPolicy: IfNotPresent
+    
+  service:
+    port: 6379
+
+  persistence:
+   enabled: true
+   size: 1Gi
+   storageClass: local-path
+
+
+ 
