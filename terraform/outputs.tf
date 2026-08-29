@@ -1,29 +1,44 @@
-output "instance_id" {
-  description = "EC2 instance ID"
-  value       = aws_instance.app.id
+
+# ecr output
+output "backend_ecr_repository_url" {
+  description = "ECR repository url for backend"
+  value       = aws_ecr_repository.backend.repository_url
+}
+output "frontend_ecr_repository_url" {
+  description = "ECR repository url for backend"
+  value       = aws_ecr_repository.frontend.repository_url
 }
 
-output "public_ip" {
-  description = "Elastic IP of the instance"
-  value       = aws_eip.app.public_ip
+# iam roles 
+
+output "github_action_role_arn" {
+  description = "IAM role ARN used by github Action"
+  value       = aws_iam_role.github_actions.arn
+
 }
 
-output "ssh_command" {
-  description = "SSH into the instance (generated key is written next to these files)"
-  value       = "ssh -i ${var.public_key_path == "" ? "${path.module}/${var.key_name}.pem" : "<your-private-key>"} ubuntu@${aws_eip.app.public_ip}"
-}
+# eks cluster
+output "eks_cluster_name" {
+  description = "Name of the cluster"
+  value       = aws_eks_cluster.main.name
 
-output "storefront_url" {
-  description = "Docker Compose storefront (host 3000 → container 80)"
-  value       = "http://${aws_eip.app.public_ip}:3000"
 }
+output "eks_cluster_endpoint" {
+  description = "endpoint of the eks"
+  value       = aws_eks_cluster.main.endpoint
 
-output "api_url" {
-  description = "Express API"
-  value       = "http://${aws_eip.app.public_ip}:4000/api/v1"
 }
+output "eks_cluster_version" {
+  description = "eks version"
+  value       = aws_eks_cluster.main.version
+}
+output "eks_cluster_arn" {
+  description = "arn of the eks"
+  value       = aws_eks_cluster.main.arn
 
-output "k8s_web_url" {
-  description = "Kubernetes web NodePort"
-  value       = "http://${aws_eip.app.public_ip}:31000"
+}
+# cluster nodes
+output "eks_node_group_name" {
+  description = "name of the eks manger node group"
+  value       = aws_eks_node_group.main.node_group_name
 }

@@ -3,336 +3,99 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: ["main"]
+    branches: 
+        - "main"
 
   pull_request:
     branches: ["main"]
-  workflow_dispatch:
 
-concurrency:
-  group: cicd-${{ github.ref }}
-  cancel-in-progress: true
 
 env:
-  REGISTRY: docker.io
+  AWS_REGION: ${{secrets.AWS_REGION}}
+  AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+  ECR_REGISTRY: ${{secrets.ECR_REGISTRY}}
   NODE_VERSION: "22"
 
-permissions:
-  contents: read
-  security-events: write
-  pull-requests: write
+
 
 jobs:
-  quality:
-    name: Build & Validate
-    runs-on: self-hosted
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
+    ci:
+     name: CI pipeline
+     runs-on: ubuntu-latest
+     steps:
+        # get check out code
+      - name: Checkout code 
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+        # setup node
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
-          cache-dependency-path: |
-            frontend/package-lock.json
-            backend/package-lock.json
-
-      - name: Install frontend dependencies
+          node-version: ${{ env.NODE_VERSION }}            
+        # installing frontend dependencies
+      - name: building frontend dependencies
         working-directory: frontend
-        run: npm ci
+        run: |
+         npm ci
+         npm run build
 
-      - name: Build frontend
-        working-directory: frontend
-        env:
-          VITE_API_BASE_URL: /api/v1
-        run: npm run build
-
+        # installing backend dependencies
       - name: Install backend dependencies
         working-directory: backend
-        run: npm ci
-
-      - name: Validate backend entrypoints
-        working-directory: backend
+        
         run: |
+          npm ci
           node --check src/server.js
           node --check src/app.js
           echo "Backend syntax validation passed"
 
-      - name: Upload frontend build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-dist
-          path: frontend/dist
-          retention-days: 3
-
-  sonarqube:
-    name: SonarQube Analysis
-    runs-on: self-hosted
-    needs: quality
-    if: ${{ vars.ENABLE_SONARQUBE == 'true' }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
-          cache-dependency-path: |
-            frontend/package-lock.json
-            backend/package-lock.json
-
-      - name: Install dependencies (analysis context)
-        run: |
-          npm ci --prefix frontend
-          npm ci --prefix backend
-
-      - name: SonarQube Scan
+        # scan build using sonar qube
+      - name: Sonar Qube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: SonarQube Quality Gate
+      - name: Sonar Qube quality gate
         uses: SonarSource/sonarqube-quality-gate-action@v1
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  build-scan-push:
-    name: Build · Scan · Push (${{ matrix.name }})
-    runs-on: self-hosted
-    needs: [quality, sonarqube]
-    if: |
-      always() &&
-      needs.quality.result == 'success' &&
-      (needs.sonarqube.result == 'success' || needs.sonarqube.result == 'skipped')
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: api
-            context: ./backend
-            dockerfile: ./backend/Dockerfile
-            image: e-commerce-api
-          - name: web
-            context: .
-            dockerfile: ./nginx/Dockerfile
-            image: e-commerce-web
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set image tag
-        id: tag
+          # build backend image
+      - name: build backend docker image
         run: |
-          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
-          echo "Image tag: sha-${SHORT_SHA}"
+          docker build \
+            -t nove-commerce-backend:${{github.sha}} \
+            -f backend/Dockerfile \
+            ./backend
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to Docker Hub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+     # scan backend docker image using trivy
+      - name: scan backend image
+        uses: aquasecurity/trivy-action@0.28.0 
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+         image-ref: nove-commerce-backend:${{github.sha}} 
+         formate: table
+         exit-code: 1
+         severity: HIGH,CRITICAL
+         ignore-unfixed: true
 
-      - name: Extract metadata (tags, labels)
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}
-          tags: |
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=sha,prefix=sha-
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-
-      - name: Build image (load locally for Trivy)
-        uses: docker/build-push-action@v6
-        with:
-          context: ${{ matrix.context }}
-          file: ${{ matrix.dockerfile }}
-          push: false
-          load: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ matrix.name }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
-
-      - name: Resolve image ref for Trivy
-        id: image-ref
+        # build frontend image
+      - name: build frontend docker image
         run: |
-          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-          REF="${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}:sha-${SHORT_SHA}"
-          if ! docker image inspect "$REF" >/dev/null 2>&1; then
-            REF=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
-          fi
-          echo "ref=${REF}" >> "$GITHUB_OUTPUT"
-          echo "Scanning: ${REF}"
-
-      - name: Trivy vulnerability scan (table)
-        uses: aquasecurity/trivy-action@0.28.0
+          docker build \
+            -t nove-commerce-frontend:${{github.sha}} \
+            -f nginx/Dockerfile \
+            .
+ 
+      # scan frontend docker image using trivy
+      - name: scan frontend image
+        uses: aquasecurity/trivy-action@0.28.0 
         with:
-          image-ref: ${{ steps.image-ref.outputs.ref }}
-          format: table
-          exit-code: "1"
-          severity: CRITICAL,HIGH
+          image-ref: nove-commerce-frontend:${{github.sha}} 
+          formate: table
+          exit-code: 1
+          severity: HIGH,CRITICAL
           ignore-unfixed: true
-          vuln-type: os,library
-
-      - name: Trivy vulnerability scan (SARIF)
-        if: always()
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: ${{ steps.image-ref.outputs.ref }}
-          format: sarif
-          output: trivy-${{ matrix.name }}.sarif
-          severity: CRITICAL,HIGH,MEDIUM
-          ignore-unfixed: true
-
-      - name: Upload Trivy SARIF to GitHub Security
-        if: always()
-        continue-on-error: true
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: trivy-${{ matrix.name }}.sarif
-          category: trivy-${{ matrix.name }}
-
-      - name: Push image to Docker Hub
-        if: github.event_name != 'pull_request'
-        uses: docker/build-push-action@v6
-        with:
-          context: ${{ matrix.context }}
-          file: ${{ matrix.dockerfile }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ matrix.name }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
-
-  gitops-update:
-    name: GitOps Manifest Update
-    runs-on: self-hosted
-    needs: build-scan-push
-    if: |
-      github.event_name != 'pull_request' &&
-      github.ref == 'refs/heads/main' &&
-      needs.build-scan-push.result == 'success'
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Compute image tag
-        id: meta
-        run: |
-          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-          echo "tag=sha-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
-          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
-          echo "Deploying tag: sha-${SHORT_SHA}"
-
-      - name: Update Kubernetes image tags
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          TAG: ${{ steps.meta.outputs.tag }}
-        run: |
-          set -euo pipefail
-          API_IMAGE="${DOCKER_USER}/e-commerce-api:${TAG}"
-          WEB_IMAGE="${DOCKER_USER}/e-commerce-web:${TAG}"
-
-          python3 <<'PY'
-          import os
-          import pathlib
-          import re
-
-          user = os.environ["DOCKER_USER"]
-          tag = os.environ["TAG"]
-          api = f"{user}/e-commerce-api:{tag}"
-          web = f"{user}/e-commerce-web:{tag}"
-
-          def patch_deploy(path: pathlib.Path, full_image: str, needle: str) -> None:
-              text = path.read_text(encoding="utf-8")
-              updated = re.sub(
-                  rf"image:\s*\S*{re.escape(needle)}\S*",
-                  f"image: {full_image}",
-                  text,
-              )
-              path.write_text(updated, encoding="utf-8")
-              print(f"Updated {path} -> {full_image}")
-
-          patch_deploy(pathlib.Path("kubernetes/api-deploy.yaml"), api, "e-commerce-api")
-          patch_deploy(pathlib.Path("kubernetes/web-deploy.yaml"), web, "e-commerce-web")
-
-          kust = pathlib.Path("kubernetes/kustomization.yaml")
-          if kust.exists():
-              text = kust.read_text(encoding="utf-8")
-              text = re.sub(
-                  r"name:\s*\S*e-commerce-api",
-                  f"name: {user}/e-commerce-api",
-                  text,
-              )
-              text = re.sub(
-                  r"name:\s*\S*e-commerce-web",
-                  f"name: {user}/e-commerce-web",
-                  text,
-              )
-              # Replace newTag after each image name block
-              def replace_tag(match: re.Match[str]) -> str:
-                  block = match.group(0)
-                  return re.sub(r"(newTag:\s*)\S+", rf"\g<1>{tag}", block)
-
-              text = re.sub(
-                  r"- name: [^\n]*e-commerce-api\n(?:[ \t]+[^\n]*\n)*",
-                  replace_tag,
-                  text,
-              )
-              text = re.sub(
-                  r"- name: [^\n]*e-commerce-web\n(?:[ \t]+[^\n]*\n)*",
-                  replace_tag,
-                  text,
-              )
-              kust.write_text(text, encoding="utf-8")
-              print("Updated kustomization.yaml")
-              print(kust.read_text(encoding="utf-8"))
-          PY
-
-      - name: Commit and push GitOps changes
-        env:
-          SHORT_SHA: ${{ steps.meta.outputs.short_sha }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add kubernetes/api-deploy.yaml kubernetes/web-deploy.yaml
-          if [ -f kubernetes/kustomization.yaml ]; then
-            git add kubernetes/kustomization.yaml
-          fi
-
-          if git diff --staged --quiet; then
-            echo "No manifest changes to commit"
-            exit 0
-          fi
-
-          git commit -m "$(cat <<EOF
-          chore(gitops): deploy images sha-${SHORT_SHA} [skip ci]
-
-          Update api/web image tags for Argo CD sync.
-          EOF
-          )"
-          git push
