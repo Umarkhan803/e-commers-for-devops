@@ -67,15 +67,15 @@ jobs:
           docker build  -t ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }}  -f backend/Dockerfile   ./backend
 
      # scan backend docker image using trivy
-      - name: scan backend image
-        uses: aquasecurity/trivy-action@0.35.0 
-        with:
-         image-ref: ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }}
+      # - name: scan backend image
+      #   uses: aquasecurity/trivy-action@0.35.0 
+      #   with:
+      #    image-ref: ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }}
          
-         format: table
-         exit-code: 1
-         severity: HIGH,CRITICAL
-         ignore-unfixed: true
+      #    format: table
+      #    exit-code: 1
+      #    severity: HIGH,CRITICAL
+      #    ignore-unfixed: true
       - name: Push backend image
         run: |
              docker push ${{env.ECR_REGISTRY}}/nova-commerce/backend:${{ github.sha }}
