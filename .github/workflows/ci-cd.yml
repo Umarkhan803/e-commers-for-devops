@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}   
-          cache: "npm"         
+          cache: npm       
         # installing frontend dependencies
       - name: building frontend dependencies
         working-directory: frontend
