@@ -78,6 +78,9 @@ jobs:
          exit-code: 1
          severity: HIGH,CRITICAL
          ignore-unfixed: true
+      - name: Push backend image
+        run: |
+             docker push ${{env.ECR_REGISTRY}}/nova-commerce/backend:${{ github.sha }}
 
         # build frontend image
       - name: build frontend docker image
@@ -96,3 +99,6 @@ jobs:
           exit-code: 1
           severity: HIGH,CRITICAL
           ignore-unfixed: true
+      - name: Push frontend image
+        run: |
+               docker push ${{env.ECR_REGISTRY}}/nova-commerce/frontend:${{ github.sha }}
