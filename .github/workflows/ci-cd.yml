@@ -11,7 +11,8 @@ on:
 
 
 env:
-
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
   NODE_VERSION: "22"
 
 
@@ -63,8 +64,8 @@ jobs:
           # build backend image
       - name: build backend docker image
         run: |
-          docker build \
-            -t${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }} \
+          docker build 
+            -t ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }} \
             -f backend/Dockerfile \
             ./backend
 
@@ -74,7 +75,7 @@ jobs:
         with:
          image-ref: ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }}
          
-         formate: table
+         format: table
          exit-code: 1
          severity: HIGH,CRITICAL
          ignore-unfixed: true
@@ -85,7 +86,7 @@ jobs:
         # build frontend image
       - name: build frontend docker image
         run: |
-          docker build \
+          docker build 
             -t ${{ env.ECR_REGISTRY }}/nova-commerce/frontend:${{ github.sha }} \
             -f nginx/Dockerfile \
             .
@@ -95,7 +96,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.35.0 
         with:
           image-ref: ${{ env.ECR_REGISTRY }}/nova-commerce/frontend:${{ github.sha }} 
-          formate: table
+          format: table
           exit-code: 1
           severity: HIGH,CRITICAL
           ignore-unfixed: true
