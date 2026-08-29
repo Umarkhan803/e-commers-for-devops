@@ -1,0 +1,59 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: nova_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: nova_redis
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: nova_app
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      API_PREFIX: /api/v1
+      MONGO_URI: mongodb://root:password@mongo:27017/nova_commerce?authSource=admin
+      REDIS_URL: redis://redis:6379
+      JWT_ACCESS_SECRET: dev-access-secret-change-me
+      JWT_REFRESH_SECRET: dev-refresh-secret-change-me
+      JWT_ACCESS_TTL: 15m
+      JWT_REFRESH_TTL: 30d
+      JWT_REFRESH_TTL_SECONDS: 2592000
+      CACHE_PRODUCT_LIST_TTL: 120
+      CACHE_PRODUCT_DETAIL_TTL: 300
+      CACHE_FILTER_TTL: 600
+      CACHE_SUGGEST_TTL: 60
+      RATE_LIMIT_WINDOW: 60
+      RATE_LIMIT_MAX: 300
+      RATE_LIMIT_AUTH_MAX: 12
+      CORS_ORIGINS: "*"
+      TAX_RATE: 0.08
+      FREE_SHIPPING_THRESHOLD: 100
+      STANDARD_SHIPPING_FEE: 9.99
+      EXPRESS_SHIPPING_FEE: 24.99
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./src:/app/src
+    develop:
+      watch:
+        - path: ./src
+          action: sync
+          target: /app/src
+
+volumes:
+  mongo_data:
