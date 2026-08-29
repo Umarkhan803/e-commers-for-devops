@@ -1,7 +1,9 @@
 
 
 FROM node:22-alpine AS frontend-build
+
 RUN apk update && apk upgrade --no-cache
+
 WORKDIR /build
 
 COPY frontend/package*.json ./
@@ -12,6 +14,8 @@ ENV VITE_API_BASE_URL=/api/v1
 RUN npm run build
 
 FROM nginx:1.30-alpine3.24 AS runtime
+
+RUN apk update && apk upgrade --no-cache
 
 RUN rm /etc/nginx/conf.d/default.conf
 
