@@ -10,7 +10,7 @@ COPY frontend/ ./
 ENV VITE_API_BASE_URL=/api/v1
 RUN npm run build
 
-FROM nginx:1.30-alpine3.24.1 AS runtime
+FROM nginx:1.30-alpine3.24 AS runtime
 
 RUN rm /etc/nginx/conf.d/default.conf
 
