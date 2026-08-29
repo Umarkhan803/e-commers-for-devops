@@ -72,7 +72,8 @@ jobs:
       - name: scan backend image
         uses: aquasecurity/trivy-action@0.35.0 
         with:
-         image-ref: nove-commerce-backend:${{github.sha}} 
+         image-ref: ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }}
+         
          formate: table
          exit-code: 1
          severity: HIGH,CRITICAL
