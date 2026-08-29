@@ -1,6 +1,7 @@
 
 
 FROM node:22-alpine AS frontend-build
+RUN apk update && apk upgrade --no-cache
 WORKDIR /build
 
 COPY frontend/package*.json ./
