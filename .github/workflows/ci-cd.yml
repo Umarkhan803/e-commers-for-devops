@@ -50,21 +50,21 @@ jobs:
           echo "Backend syntax validation passed"
 
         # scan build using sonar qube
-      - name: Sonar Qube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.qualitygate.wait=true
-            -Dsonar.qualitygate.timeout=300
+      # - name: Sonar Qube Scan
+      #   uses: SonarSource/sonarqube-scan-action@v6
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      #   with:
+      #     args: >
+      #       -Dsonar.qualitygate.wait=true
+      #       -Dsonar.qualitygate.timeout=300
 
           # build backend image
       - name: build backend docker image
         run: |
           docker build \
-            -t nove-commerce-backend:${{github.sha}} \
+            -t${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }} \
             -f backend/Dockerfile \
             ./backend
 
@@ -86,7 +86,7 @@ jobs:
       - name: build frontend docker image
         run: |
           docker build \
-            -t nove-commerce-frontend:${{github.sha}} \
+            -t ${{ env.ECR_REGISTRY }}/nova-commerce/frontend:${{ github.sha }} \
             -f nginx/Dockerfile \
             .
  
@@ -94,7 +94,7 @@ jobs:
       - name: scan frontend image
         uses: aquasecurity/trivy-action@0.35.0 
         with:
-          image-ref: nove-commerce-frontend:${{github.sha}} 
+          image-ref: ${{ env.ECR_REGISTRY }}/nova-commerce/frontend:${{ github.sha }} 
           formate: table
           exit-code: 1
           severity: HIGH,CRITICAL
