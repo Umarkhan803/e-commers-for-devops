@@ -74,7 +74,7 @@ jobs:
 
      # scan backend docker image using trivy
       - name: scan backend image
-        uses: aquasecurity/trivy-action@0.28.0 
+        uses: aquasecurity/trivy-action@0.35.0 
         with:
          image-ref: nove-commerce-backend:${{github.sha}} 
          formate: table
