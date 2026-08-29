@@ -51,6 +51,7 @@ jobs:
           node --check src/app.js
           echo "Backend syntax validation passed"
 
+        # scan build using sonar qube
       - name: Sonar Qube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
