@@ -1,4 +1,5 @@
 FROM node:22-alpine AS base
+RUN apk update && apk upgrade --no-cache
 WORKDIR /app
 ENV NODE_ENV=production
 
@@ -10,8 +11,8 @@ RUN npm ci --omit=dev
 
 FROM base AS runtime
 RUN apk add --no-cache curl && \
-    rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack && \
-    rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack
+  rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack && \
+  rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack
 COPY --from=deps /app/node_modules ./node_modules
 COPY package*.json ./
 COPY src ./src
