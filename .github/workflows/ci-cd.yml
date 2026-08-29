@@ -64,10 +64,7 @@ jobs:
           # build backend image
       - name: build backend docker image
         run: |
-          docker build 
-            -t ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }} \
-            -f backend/Dockerfile \
-            ./backend
+          docker build  -t ${{ env.ECR_REGISTRY }}/nova-commerce/backend:${{ github.sha }}  -f backend/Dockerfile   ./backend
 
      # scan backend docker image using trivy
       - name: scan backend image
@@ -85,11 +82,7 @@ jobs:
 
         # build frontend image
       - name: build frontend docker image
-        run: |
-          docker build 
-            -t ${{ env.ECR_REGISTRY }}/nova-commerce/frontend:${{ github.sha }} \
-            -f nginx/Dockerfile \
-            .
+        run:  docker build -t ${{ env.ECR_REGISTRY }}/nova-commerce/frontend:${{ github.sha }}  -f nginx/Dockerfile .
  
       # scan frontend docker image using trivy
       - name: scan frontend image
