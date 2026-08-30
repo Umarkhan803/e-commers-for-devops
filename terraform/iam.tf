@@ -114,3 +114,7 @@ resource "aws_iam_role_policy_attachment" "eks_container_registry_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks_node.name
 }
+resource "aws_iam_role_policy_attachment" "eks_container_registry_pull_only" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly"
+  role       = aws_iam_role.eks_node.name
+}
