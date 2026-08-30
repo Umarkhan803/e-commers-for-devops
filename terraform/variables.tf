@@ -45,7 +45,7 @@ variable "environment" {
 variable "eks_cluster_version" {
   description = "eks version"
   type        = string
-  default     = "1.33"
+  default     = "1.36"
 }
 variable "eks_node_instance_types" {
   description = "instance type for eks"
