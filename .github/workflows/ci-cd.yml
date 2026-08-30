@@ -105,3 +105,8 @@ jobs:
       - name: Push frontend image
         run: |
                docker push ${{env.ECR_REGISTRY}}/nova-commerce/frontend:${{ github.sha }}
+
+# name: CD pipeline
+
+#   on:
+#     workflows_run:
