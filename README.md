@@ -206,3 +206,59 @@ JWT_REFRESH_SECRET=replace-me-too
 - Card payments are simulated — only the last four digits are stored.
 - Redis is optional at runtime: if it is down, caching and rate limiting degrade gracefully.
 - Order placement prefers a MongoDB transaction (replica set) and falls back to sequential writes on a standalone `mongod`.
+
+## Project Structure & Identified Gaps
+
+### Current Structure
+The project follows a standard full-stack architecture:
+- **frontend/**: React 19 + Vite + Tailwind CSS SPA
+- **backend/**: Express API with MongoDB, Redis, Mongoose
+- **nginx/**: Reverse proxy configuration
+- **helm/**: Kubernetes Helm charts
+- **kubernetes/**: K8s manifests
+- **terraform/**: Infrastructure as Code
+- **docs/**: Additional documentation
+- **.github/**: GitHub Actions workflows
+
+### Identified Gaps & Areas for Improvement
+While the application covers core e-commerce functionality, the following areas represent opportunities for enhancement:
+
+1. **Testing**
+   - No test directories or test files visible in frontend or backend
+   - Recommended: Add unit/integration tests using Jest/Vitest for frontend and backend
+
+2. **Development Tooling**
+   - Missing ESLint, Prettier, and other linting/formatting configurations
+   - Recommended: Add `.eslintrc`, `.prettierrc`, and related config files
+
+3. **Documentation**
+   - Missing: `CONTRIBUTING.md`, `LICENSE`, `CHANGELOG.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`
+   - Recommended: Add standard open-source documentation files
+
+4. **Environment Management**
+   - Missing `.env.example` in project root (only present in backend/)
+   - Recommended: Add root-level `.env.example` with all required variables
+
+5. **API Documentation**
+   - While APIs are documented in README, consider adding formal OpenAPI/Swagger specification
+   - Recommended: Add `openapi.yaml` or `swagger.json` file
+
+6. **Administrative Features**
+   - No visible admin dashboard or routes for managing products, orders, users
+   - Consider adding `/admin` routes and UI for store management
+
+7. **Advanced Features**
+   - Email notification system
+   - Comprehensive analytics and reporting
+   - Internationalization (i18n) support
+   - Accessibility enhancements (WCAG compliance)
+   - Progressive Web App (PWA) features
+   - File upload management for product images
+
+8. **Observability**
+   - Enhanced logging infrastructure
+   - Performance monitoring and metrics
+   - Health check endpoints
+   - Distributed tracing
+
+These gaps represent opportunities to enhance the project's robustness, maintainability, and feature completeness while maintaining its current strong foundation.
