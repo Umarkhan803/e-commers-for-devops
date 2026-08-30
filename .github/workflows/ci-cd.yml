@@ -22,6 +22,9 @@ jobs:
     ci:
      name: CI pipeline
      runs-on: ubuntu-latest
+     outputs:
+      image_tag: ${{ steps.image-tag.outputs.image_tag }}
+
      steps:
         # get check out code
       - name: Checkout code 
@@ -106,7 +109,50 @@ jobs:
         run: |
                docker push ${{env.ECR_REGISTRY}}/nova-commerce/frontend:${{ github.sha }}
 
-# name: CD pipeline
+    deploy:
+      name: updating kubernetes manifests files
+      runs-on: ubuntu-latest
+      needs: ci
 
-#   on:
-#     workflows_run:
+      # steps for cd pipeline
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+
+
+        - name: updating backend docker image tag
+          run: |
+            sed -i \
+            "s|image: .*nova-commerce/backend:.*|image: $ECR_REGISTRY/nova-commerce/backend:${{ needs.ci.outputs.image_tag }}|" \
+            kubernetes/api-deploy.yaml
+
+
+        - name: updating frontend docker image tag
+          run: |
+            sed -i \
+            "s|image: .*nova-commerce/frontend:.*|image: $ECR_REGISTRY/nova-commerce/frontend:${{ needs.ci.outputs.image_tag }}|" \
+            kubernetes/web-deploy.yaml
+        - name: shows kubernetes changes
+          run: |
+            git diff -- kubernetes/api-deploy.yaml
+            git diff -- kubernetes/web-deploy.yaml
+
+        - name: commit kubernetes manifests files
+          run: |
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            git add .
+
+            if git diff --cached --quiet; then
+              echo "no changes to commit"
+              exit 0
+            fi
+
+            git commit -m "updated images to ${{ needs.ci.outputs.image_tag }}"
+
+        - name: pushing kubernetes changes in repo
+          run: |
+            git push
