@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api-monitor
+  namespace: nova-commerce
+  labels:
+    release: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: api
+
+  namespaceSelector:
+    matchNames:
+      - nova-commerce
+
+  endpoints:
+    - port: api
+      path: /metrics
+      interval: 15s
