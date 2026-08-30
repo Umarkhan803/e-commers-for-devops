@@ -38,7 +38,7 @@ export default function Hero() {
           <h1 className="mt-5 text-4xl font-medium leading-[1.15] tracking-tight text-ink-900 sm:text-5xl lg:text-[3.25rem]">
             Technology worth
             <br />
-            <span className="text-brand-700">keeping around.</span>
+            <span className="text-brand-700">keeping working for devops.</span>
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-600 sm:text-lg">

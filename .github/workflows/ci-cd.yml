@@ -27,6 +27,10 @@ jobs:
       image_tag: ${{ steps.image-tag.outputs.image_tag }}
 
      steps:
+      - name: Set image tag
+        id: image-tag
+        run: |
+            echo "image_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
         # get check out code
       - name: Checkout code 
         uses: actions/checkout@v4
