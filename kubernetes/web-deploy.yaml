@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: 905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/frontend:be7b38884a1d302471db76c220ae5980280c347c
+          image: 905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/frontend:7cc7e3d6036c091c90b84ce93dba33f643baa841
           ports:
             - containerPort: 80
               name: web
