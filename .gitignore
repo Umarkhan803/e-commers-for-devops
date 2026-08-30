@@ -51,4 +51,4 @@ logs/
 *.log
 
 # OS
-Thumbs.db
+Thumbs.db*.tgz
