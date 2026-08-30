@@ -37,8 +37,8 @@ spec:
         maxDuration: 3m
 
   # Ignore noisy fields that controllers rewrite (optional hardening)
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-        - /spec/replicas
+  # ignoreDifferences:
+  #   - group: apps
+  #     kind: Deployment
+  #     jsonPointers:
+  #       - /spec/replicas
