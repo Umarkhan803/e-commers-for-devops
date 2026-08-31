@@ -55,15 +55,15 @@ variable "eks_node_instance_types" {
 variable "eks_desired_nodes" {
   description = "desired worker node for eks"
   type        = number
-  default     = 2
+  default     = 3
 }
 variable "eks_min_nodes" {
   description = "min worker node for eks"
   type        = number
-  default     = 2
+  default     = 3
 }
 variable "eks_max_nodes" {
   description = "max worker node for eks"
   type        = number
-  default     = 4
+  default     = 6
 }
