@@ -59,7 +59,7 @@ jobs:
           node --check src/app.js
           echo "Backend syntax validation passed"
 
-          
+
         # scan build using sonar qube
       # - name: Sonar Qube Scan
       #   uses: SonarSource/sonarqube-scan-action@v6
@@ -180,10 +180,58 @@ jobs:
                 subject: "✅ Nova Commerce Pipeline is Successful"
                 to: ${{ secrets.MAIL_TO }}
                 from: GitHub Actions <${{ secrets.MAIL_USERNAME }}>
-                body: |
-                  Nova Commerce CI/CD pipeline completed successfully.
-      
-                  Repository: ${{ github.repository }}
-                  Branch: ${{ github.ref_name }}
-                  Commit: ${{ github.sha }}
-                  Workflow Run: ${{ github.run_number }}
+                html_body: |
+                  <!DOCTYPE html>
+                  <html>
+                  <body style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 30px;">
+
+                    <div style="max-width: 650px; margin: auto; background-color: #ffffff; border-radius: 10px; padding: 30px;">
+
+                      <h2 style="color: #2e7d32;">
+                        ✅ Nova Commerce CI/CD Pipeline Successfully
+                      </h2>
+
+                      <p style="font-size: 16px; color: #333333;">
+                        The Nova Commerce CI/CD pipeline has completed successfully.
+                      </p>
+
+                      <hr style="border: none; border-top: 1px solid #dddddd;">
+
+                      <h3>Pipeline Details</h3>
+
+                      <table style="width: 100%; border-collapse: collapse;">
+
+                        <tr>
+                          <td style="padding: 10px; font-weight: bold;">Repository</td>
+                          <td style="padding: 10px;">${{ github.repository }}</td>
+                        </tr>
+
+                        <tr>
+                          <td style="padding: 10px; font-weight: bold;">Branch</td>
+                          <td style="padding: 10px;">${{ github.ref_name }}</td>
+                        </tr>
+
+                        <tr>
+                          <td style="padding: 10px; font-weight: bold;">Commit</td>
+                          <td style="padding: 10px;">${{ github.sha }}</td>
+                        </tr>
+
+                        <tr>
+                          <td style="padding: 10px; font-weight: bold;">Workflow Run</td>
+                          <td style="padding: 10px;">#${{ github.run_number }}</td>
+                        </tr>
+
+                      </table>
+
+                      <hr style="border: none; border-top: 1px solid #dddddd;">
+
+                      <div style="background-color: #e8f5e9; padding: 15px; border-radius: 6px; margin-top: 20px;">
+                        <strong style="color: #2e7d32;">
+                          STATUS: SUCCESS
+                        </strong>
+                      </div>
+
+                    </div>
+
+                  </body>
+                  </html>
