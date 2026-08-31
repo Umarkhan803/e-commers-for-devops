@@ -34,13 +34,13 @@ resource "aws_lb_target_group" "frontend" {
 # Target Group for Backend
 resource "aws_lb_target_group" "backend" {
   name        = "${var.project_name}-backend-tg"
-  port        = 8080
+  port        = 4000
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "instance"
 
   health_check {
-    path                = "/health"
+    path                = "/api/v1/health"
     protocol            = "HTTP"
     matcher             = "200-399"
     interval            = 30

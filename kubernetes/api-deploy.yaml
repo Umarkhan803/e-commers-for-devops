@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: 905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/backend:dd9deb6e329adec7a36f47e396b544d67e37eb7d
+          image: 905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/backend:aabcc027beea39e8ff3fc7b3e5be91c8f73d2802
           ports:
             - containerPort: 4000
               name: api

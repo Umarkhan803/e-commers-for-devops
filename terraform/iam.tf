@@ -81,8 +81,44 @@ resource "aws_iam_role_policy" "github_actions_ecr" {
   policy = data.aws_iam_policy_document.github_actions_ecr.json
 }
 
-# EKS worker node IAM role
+/* Additional IAM role for EBS CSI Driver with IRSA */
+data "aws_iam_policy_document" "ebs_csi_driver_assume_role" {
+  statement {
+    effect = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    principals {
+      type = "Federated"
+      identifiers = [
+        aws_iam_openid_connect_provider.eks.arn
+      ]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+    condition {
+      test     = "StringLike"
+      variable = "${replace(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:sub"
+      values   = [
+        "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+      ]
+    }
+  }
+}
 
+resource "aws_iam_role" "ebs_csi_driver" {
+  name               = "${var.project_name}-ebs-csi-driver-role"
+  assume_role_policy = data.aws_iam_policy_document.ebs_csi_driver_assume_role.json
+  tags               = local.common_tags
+}
+
+resource "aws_iam_role_policy_attachment" "ebs_csi_driver" {
+  role       = aws_iam_role.ebs_csi_driver.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+}
+
+/* EKS worker node IAM role */
 data "aws_iam_policy_document" "eks_node_assume_role" {
   statement {
     effect  = "Allow"
@@ -114,6 +150,7 @@ resource "aws_iam_role_policy_attachment" "eks_container_registry_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks_node.name
 }
+
 resource "aws_iam_role_policy_attachment" "eks_container_registry_pull_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly"
   role       = aws_iam_role.eks_node.name
