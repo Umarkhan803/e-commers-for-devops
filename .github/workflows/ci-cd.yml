@@ -69,6 +69,7 @@ jobs:
       #     args: >
       #       -Dsonar.qualitygate.wait=true
       #       -Dsonar.qualitygate.timeout=300
+      
       - name:  Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
