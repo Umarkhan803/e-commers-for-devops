@@ -6,11 +6,10 @@ metadata:
   labels:
     app: web
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - name: web
-      port: 8081
+      port: 80
       targetPort: 80
-      nodePort: 31000
   selector:
     app: web
