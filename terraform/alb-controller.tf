@@ -105,32 +105,30 @@ resource "helm_release" "aws_load_balancer_controller" {
   wait    = true
   timeout = 600
 
-  set = [
-    {
-      name  = "clusterName"
-      value = aws_eks_cluster.main.name
-    },
+  set {
+    name  = "clusterName"
+    value = aws_eks_cluster.main.name
+  }
 
-    {
-      name  = "region"
-      value = var.aws_region
-    },
+  set {
+    name  = "region"
+    value = var.aws_region
+  }
 
-    {
-      name  = "vpcId"
-      value = aws_eks_cluster.main.vpc_config[0].vpc_id
-    },
+  set {
+    name  = "vpcId"
+    value = aws_eks_cluster.main.vpc_config[0].vpc_id
+  }
 
-    {
-      name  = "serviceAccount.create"
-      value = "false"
-    },
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
 
-    {
-      name  = "serviceAccount.name"
-      value = kubernetes_service_account_v1.aws_load_balancer_controller.metadata[0].name
-    }
-  ]
+  set {
+    name  = "serviceAccount.name"
+    value = kubernetes_service_account_v1.aws_load_balancer_controller.metadata[0].name
+  }
 
   depends_on = [
     kubernetes_service_account_v1.aws_load_balancer_controller,

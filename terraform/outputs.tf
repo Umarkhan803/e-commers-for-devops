@@ -51,8 +51,8 @@ output "monitoring_namespace" {
 }
 
 output "grafana_admin_password" {
-  description = "Grafana admin password (base64 encoded)"
-  value       = helm_release.kube_prometheus_stack.status[0].values[0].grafana.adminPassword
+  description = "Retrieval command for the Grafana admin password"
+  value       = "kubectl get secret --namespace monitoring kube-prometheus-stack-grafana -o jsonpath='{.data.admin-password}' | base64 --decode"
   sensitive   = true
 }
 
