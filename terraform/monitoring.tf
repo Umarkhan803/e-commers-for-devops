@@ -1,7 +1,7 @@
 # Monitoring Stack - kube-prometheus-stack Helm Release
 
 resource "helm_release" "kube_prometheus_stack" {
-  name       = "kube-prometheus-stack"
+  name       = "monitoring"
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   version    = "45.29.0"

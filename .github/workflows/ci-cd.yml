@@ -158,7 +158,7 @@ jobs:
           exit 0
           fi
 
-          git commit -m "deploy: update images to ${{ needs.ci.outputs.image_tag }}"
+            git commit -m "deploy: update images to ${{ needs.ci.outputs.image_tag }} [skip ci]"
         #  pushed in repo
       - name: pushing kubernetes changes in repo
         run: |

@@ -18,7 +18,7 @@ variable "vpc_cidr" {
 variable "availability_zones" {
   description = "Availability zone used by the vpc"
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
+  default     = ["us-east-1", "us-east-1a"]
 
 }
 variable "public_subnet_cidrs" {
@@ -45,7 +45,7 @@ variable "environment" {
 variable "eks_cluster_version" {
   description = "eks version"
   type        = string
-  default     = "1.36"
+  default     = "1.33"
 }
 variable "eks_node_instance_types" {
   description = "instance type for eks"

@@ -20,4 +20,4 @@ spec:
               service:
                 name: web
                 port:
-                  number: 8081
+                  number: 80

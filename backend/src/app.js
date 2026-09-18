@@ -29,12 +29,9 @@ export function createApp() {
     }),
   );
 
+  // --- Prometheus metrics ------------------------------------------------
   client.collectDefaultMetrics();
 
-  app.get("/metrics", async (req, res) => {
-    res.set("Content-Type", client.register.contentType);
-    res.end(await client.register.metrics());
-  });
   const httpRequestsTotal = new client.Counter({
     name: "http_requests_total",
     help: "Total number of HTTP requests",
@@ -47,67 +44,16 @@ export function createApp() {
     labelNames: ["method", "route", "status_code"],
     buckets: [0.05, 0.1, 0.25, 0.5, 1, 2, 5],
   });
-  app.use(env.apiPrefix, rateLimit(), routes);
-  app.use((req, res, next) => {
-    const start = process.hrtime.bigint();
 
-    res.on("finish", () => {
-      const duration = Number(process.hrtime.bigint() - start) / 1_000_000_000;
-
-      const route = req.route?.path || req.path;
-
-      const labels = {
-        method: req.method,
-        route,
-        status_code: String(res.statusCode),
-      };
-
-      httpRequestsTotal.inc(labels);
-      httpRequestDuration.observe(labels, duration);
-    });
-
-    next();
-  });
-  app.use(morgan(env.isProduction ? "combined" : "dev"));
-
-  app.use((req, _res, next) => {
-    req.sessionId = req.get("X-Session-Id") ?? null;
-    next();
+  // Scraped by Prometheus via the api-monitor ServiceMonitor.
+  app.get("/metrics", async (req, res) => {
+    res.set("Content-Type", client.register.contentType);
+    res.end(await client.register.metrics());
   });
 
-  app.use(
-    "/images",
-    express.static(path.join(HERE, "../public/images"), {
-      maxAge: env.isProduction ? "30d" : 0,
-      immutable: env.isProduction,
-      fallthrough: true,
-    }),
-  );
-
-  // Prometheus HTTP metrics
-  app.use((req, res, next) => {
-    const start = process.hrtime.bigint();
-
-    res.on("finish", () => {
-      const duration = Number(process.hrtime.bigint() - start) / 1_000_000_000;
-
-      const route = req.route?.path || req.path;
-
-      const labels = {
-        method: req.method,
-        route,
-        status_code: String(res.statusCode),
-      };
-
-      httpRequestsTotal.inc(labels);
-      httpRequestDuration.observe(labels, duration);
-    });
-
-    next();
-  });
-
-  app.use(env.apiPrefix, rateLimit(), routes);
-
+  // --- Body parsing & cross-cutting middleware ---------------------------
+  // These MUST run before the routes so handlers see a parsed req.body,
+  // cookies and CORS headers.
   app.use(
     cors({
       origin: true,
@@ -115,17 +61,35 @@ export function createApp() {
       exposedHeaders: ["X-Cache", "X-RateLimit-Remaining", "X-RateLimit-Limit"],
     }),
   );
-
   app.use(compression());
   app.use(express.json({ limit: "100kb" }));
   app.use(express.urlencoded({ extended: true, limit: "100kb" }));
   app.use(cookieParser());
-
   app.use(morgan(env.isProduction ? "combined" : "dev"));
 
   // Guest carts are keyed by a client-generated session id.
   app.use((req, _res, next) => {
     req.sessionId = req.get("X-Session-Id") ?? null;
+    next();
+  });
+
+  // Record HTTP metrics once each response finishes.
+  app.use((req, res, next) => {
+    const start = process.hrtime.bigint();
+
+    res.on("finish", () => {
+      const duration = Number(process.hrtime.bigint() - start) / 1_000_000_000;
+
+      const labels = {
+        method: req.method,
+        route: req.route?.path || req.path,
+        status_code: String(res.statusCode),
+      };
+
+      httpRequestsTotal.inc(labels);
+      httpRequestDuration.observe(labels, duration);
+    });
+
     next();
   });
 
