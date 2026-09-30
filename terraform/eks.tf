@@ -24,7 +24,17 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
 }
 
 # creating EKS cluster
+resource "aws_launch_template" "eks_nodes" {
+  name_prefix = "${var.project_name}-nodes-"
 
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "${var.project_name}-worker"
+    }
+  }
+}
 resource "aws_eks_cluster" "main" {
   name     = "${var.project_name}-cluster"
   role_arn = aws_iam_role.eks_cluster.arn

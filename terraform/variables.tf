@@ -91,5 +91,6 @@ variable "eks_admin_principal_arn" {
 variable "lbc_iam_policy_arn" {
   description = "Existing IAM policy ARN created from the official AWS Load Balancer Controller policy JSON"
   type        = string
+  default     = "arn:aws:iam::905418141604:policy/AWSLoadBalancerControllerIAMPolicy"
 }
 # 223.181.118.238

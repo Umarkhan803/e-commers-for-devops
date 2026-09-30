@@ -6,7 +6,6 @@ data "aws_iam_policy_document" "aws_load_balancer_controller_assume_role" {
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
-
     principals {
       type        = "Federated"
       identifiers = [aws_iam_openid_connect_provider.eks.arn]
@@ -64,10 +63,10 @@ resource "helm_release" "aws_load_balancer_controller" {
   name       = "aws-load-balancer-controller"
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
-  version    = "1.14.1"
+  version    = "3.5.0"
   namespace  = "kube-system"
   wait       = true
-  timeout    = 600
+  timeout    = 300
 
   set {
     name  = "clusterName"
