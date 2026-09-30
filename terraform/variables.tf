@@ -9,6 +9,7 @@ variable "project_name" {
   type        = string
   default     = "nova-commerce"
 }
+
 variable "vpc_cidr" {
   description = "cird block of the vpc"
   type        = string
@@ -18,7 +19,7 @@ variable "vpc_cidr" {
 variable "availability_zones" {
   description = "Availability zone used by the vpc"
   type        = list(string)
-  default     = ["us-east-1", "us-east-1a"]
+  default     = ["us-east-1a", "us-east-1b"]
 
 }
 variable "public_subnet_cidrs" {
@@ -45,7 +46,7 @@ variable "environment" {
 variable "eks_cluster_version" {
   description = "eks version"
   type        = string
-  default     = "1.33"
+  default     = "1.36"
 }
 variable "eks_node_instance_types" {
   description = "instance type for eks"
@@ -67,3 +68,28 @@ variable "eks_max_nodes" {
   type        = number
   default     = 6
 }
+variable "eks_public_access_cidrs" {
+  description = "CIDRs allowed to reach the public EKS API endpoint. Use your public IP/32; do not use 0.0.0.0/0."
+  type        = list(string)
+}
+
+variable "github_org" {
+  type    = string
+  default = "Umarkhan803"
+}
+
+variable "github_repo" {
+  type    = string
+  default = "e-commers-for-devops"
+}
+
+variable "eks_admin_principal_arn" {
+  description = "IAM role/user ARN that receives EKS cluster admin access"
+  type        = string
+}
+
+variable "lbc_iam_policy_arn" {
+  description = "Existing IAM policy ARN created from the official AWS Load Balancer Controller policy JSON"
+  type        = string
+}
+# 223.181.118.238

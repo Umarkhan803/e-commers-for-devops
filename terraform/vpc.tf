@@ -29,10 +29,10 @@ resource "aws_subnet" "public" {
   availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = true
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name                     = "${var.project_name}-public-${count.index + 1}"
     "kubernetes.io/role/elb" = "1"
-  }
+  })
 }
 
 # setting up private subnet 
@@ -45,10 +45,10 @@ resource "aws_subnet" "private" {
   availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = false
 
-  tags = {
+  tags = merge(local.common_tags, {
     Name                              = "${var.project_name}-private-${count.index + 1}"
     "kubernetes.io/role/internal-elb" = "1"
-  }
+  })
 }
 # setting up public route table
 
@@ -80,6 +80,7 @@ resource "aws_route_table_association" "public" {
 # elastic ip for nat gateway
 
 resource "aws_eip" "nat" {
+  count  = length(aws_subnet.public)
   domain = "vpc"
 
   tags = {
@@ -89,9 +90,9 @@ resource "aws_eip" "nat" {
 }
 
 resource "aws_nat_gateway" "main" {
-  allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public[0].id
-
+  count         = length(aws_subnet.public)
+  allocation_id = aws_eip.nat[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
   tags = {
     Name = "${var.project_name}-nat-gateway"
   }
@@ -101,6 +102,8 @@ resource "aws_nat_gateway" "main" {
 # setting up private route table
 
 resource "aws_route_table" "private" {
+  count = length(aws_subnet.private)
+
   vpc_id = aws_vpc.main.id
 
   tags = {
@@ -110,9 +113,11 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_route" "private_nat" {
-  route_table_id         = aws_route_table.private.id
+  count = length(aws_subnet.private)
+
+  route_table_id         = aws_route_table.private[count.index].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.main.id
+  nat_gateway_id         = aws_nat_gateway.main[count.index].id
 }
 # private route table associate 
 
@@ -120,6 +125,6 @@ resource "aws_route_table_association" "private" {
   count = length(aws_subnet.private)
 
   subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.private[count.index].id
 
 }

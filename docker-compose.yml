@@ -1,16 +1,23 @@
-name: E-commerce
-
+name: nova-commerce
 services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Set MONGO_ROOT_PASSWORD}
+    volumes: [mongo-data:/data/db]
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    # An LRU cap keeps the cache from growing without bound.
-    command:
-      ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
-    volumes:
-      - redis-data:/data
-    ports:
-      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes: [redis-data:/data]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -18,24 +25,26 @@ services:
       retries: 5
 
   api:
-    build:
-      context: ./backend
+    build: ./backend
     restart: unless-stopped
     depends_on:
-      redis:
-        condition: service_healthy
+      mongo: { condition: service_healthy }
+      redis: { condition: service_healthy }
     environment:
       NODE_ENV: production
       PORT: 4000
       API_PREFIX: /api/v1
-      MONGO_URI: ${MONGO_URI}
+      MONGO_URI: mongodb://root:${MONGO_ROOT_PASSWORD}@mongo:27017/nova_commerce?authSource=admin
       REDIS_URL: redis://redis:6379
-      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
-      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
-      CORS_ORIGINS: "*"
-    ports:
-      # Exposed directly so the API can be exercised with curl during development.
-      - "4000:4000"
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?Set JWT_ACCESS_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:?Set JWT_REFRESH_SECRET}
+      CORS_ORIGINS: http://localhost:3000
+    expose: ["4000"]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:4000/api/v1/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
 
   web:
     build:
@@ -43,10 +52,9 @@ services:
       dockerfile: nginx/Dockerfile
     restart: unless-stopped
     depends_on:
-      api:
-        condition: service_healthy
-    ports:
-      - "3000:80"
+      api: { condition: service_healthy }
+    ports: ["3000:8080"]
 
 volumes:
+  mongo-data:
   redis-data:

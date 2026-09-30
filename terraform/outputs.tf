@@ -38,12 +38,10 @@ output "eks_node_group_name" {
   value       = aws_eks_node_group.main.node_group_name
 }
 
-# alb
 output "alb_dns_name" {
   description = "The DNS name of the ALB"
   value       = aws_lb.alb.dns_name
 }
-
 # monitoring
 output "monitoring_namespace" {
   description = "Monitoring namespace"

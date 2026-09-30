@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "github_action_assume_role" {
       variable = "token.actions.githubusercontent.com:sub"
 
       values = [
-        "repo:Umarkhan803/*:ref:refs/heads/main"
+        "repo:${var.github_org}/${var.github_repo}:ref:refs/heads/main"
       ]
     }
   }
@@ -84,7 +84,7 @@ resource "aws_iam_role_policy" "github_actions_ecr" {
 /* Additional IAM role for EBS CSI Driver with IRSA */
 data "aws_iam_policy_document" "ebs_csi_driver_assume_role" {
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
     principals {
       type = "Federated"
@@ -100,7 +100,7 @@ data "aws_iam_policy_document" "ebs_csi_driver_assume_role" {
     condition {
       test     = "StringLike"
       variable = "${replace(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:sub"
-      values   = [
+      values = [
         "system:serviceaccount:kube-system:ebs-csi-controller-sa"
       ]
     }
@@ -148,10 +148,5 @@ resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
 
 resource "aws_iam_role_policy_attachment" "eks_container_registry_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eks_node.name
-}
-
-resource "aws_iam_role_policy_attachment" "eks_container_registry_pull_only" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly"
   role       = aws_iam_role.eks_node.name
 }

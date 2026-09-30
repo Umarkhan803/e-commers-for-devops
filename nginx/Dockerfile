@@ -10,6 +10,7 @@ COPY frontend/package*.json ./
 RUN npm ci
 
 COPY frontend/ ./
+
 ENV VITE_API_BASE_URL=/api/v1
 RUN npm run build
 

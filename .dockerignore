@@ -1,0 +1,34 @@
+# Repository metadata and CI
+.git
+.github
+
+# Infrastructure / deployment files
+terraform
+kubernetes
+argocd
+helm
+docs
+
+# Local configuration / secrets
+.env
+.env.*
+!**/.env.example
+
+# Dependencies and build artifacts
+node_modules
+**/node_modules
+dist
+**/dist
+
+# Local files
+*.tfstate
+*.tfstate.*
+*.log
+.git
+.github
+terraform
+k8s
+backend
+node_modules
+frontend/node_modules
+frontend/dist

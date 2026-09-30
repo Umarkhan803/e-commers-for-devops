@@ -7,26 +7,28 @@ Kubernetes and automated using a CI/CD workflow.
 
 The project demonstrates:
 
--   Application containerization with Docker
--   Amazon ECR for container image storage
--   Amazon EKS for Kubernetes deployment
--   Kubernetes manifests stored in the repository
--   GitHub Actions for CI/CD
--   Trivy container image security scanning
--   Argo CD for GitOps-based deployment
--   AWS Application Load Balancer (ALB) for external access
--   Prometheus for metrics collection
--   Grafana for metrics visualization
--   Kubernetes `ServiceMonitor` for application monitoring
+- Application containerization with Docker
+- Amazon ECR for container image storage
+- Amazon EKS for Kubernetes deployment
+- Kubernetes manifests stored in the repository
+- GitHub Actions for CI/CD
+- Trivy container image security scanning
+- Argo CD for GitOps-based deployment
+- AWS Application Load Balancer (ALB) for external access
+- Prometheus for metrics collection
+- Grafana for metrics visualization
+- Kubernetes `ServiceMonitor` for application monitoring
 
 The deployment approach uses **plain Kubernetes YAML manifests**, not
 Helm for the application deployment.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 2. High-Level Architecture
 
-``` mermaid
+```mermaid
 flowchart TB
 
     DEV[Developer] --> GH[GitHub Repository]
@@ -62,12 +64,18 @@ flowchart TB
     EKS --> SYS[System Logs]
 ```
 
-------------------------------------------------------------------------
+
+
+---
+
+
 
 # 3. Technology Stack
 
   Area                    Technology
-  ----------------------- ------------------------------------
+
+---
+
   Source Control          GitHub
   CI/CD                   GitHub Actions
   Containerization        Docker
@@ -86,13 +94,15 @@ flowchart TB
   Cache                   Redis
   Infrastructure          AWS
 
-------------------------------------------------------------------------
+---
+
+
 
 # 4. Repository Structure
 
 The important project structure is:
 
-``` text
+```text
 nova-commerce/
 │
 ├── .github/
@@ -129,7 +139,9 @@ nova-commerce/
 The exact filenames may differ if additional Kubernetes resources have
 been added.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 5. CI/CD Pipeline
 
@@ -138,7 +150,7 @@ jobs.
 
 The workflow is triggered by:
 
-``` yaml
+```yaml
 on:
   push:
     branches:
@@ -151,19 +163,23 @@ on:
 
 The pipeline is divided into:
 
-1.  CI
-2.  CD / Kubernetes manifest update
-3.  Argo CD synchronization
+1. CI
+2. CD / Kubernetes manifest update
+3. Argo CD synchronization
 
-------------------------------------------------------------------------
+---
+
+
 
 # 6. Continuous Integration
+
+
 
 ## 6.1 Checkout
 
 GitHub Actions checks out the repository:
 
-``` yaml
+```yaml
 - name: Checkout code
   uses: actions/checkout@v4
   with:
@@ -172,26 +188,30 @@ GitHub Actions checks out the repository:
 
 `fetch-depth: 0` allows the workflow to access the complete Git history.
 
-------------------------------------------------------------------------
+---
+
+
 
 ## 6.2 Node.js Setup
 
 The project uses Node.js 22:
 
-``` yaml
+```yaml
 - name: Setup Node.js
   uses: actions/setup-node@v4
   with:
     node-version: "22"
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ## 6.3 Frontend Validation
 
 Frontend dependencies are installed and the application is built:
 
-``` bash
+```bash
 npm ci
 npm run build
 ```
@@ -199,24 +219,28 @@ npm run build
 This validates that the frontend can be installed and successfully
 compiled.
 
-------------------------------------------------------------------------
+---
+
+
 
 ## 6.4 Backend Validation
 
 Backend dependencies are installed:
 
-``` bash
+```bash
 npm ci
 ```
 
 JavaScript syntax is validated:
 
-``` bash
+```bash
 node --check src/server.js
 node --check src/app.js
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 7. Docker Image Build
 
@@ -226,55 +250,59 @@ Two container images are produced.
 
 The backend image is built from:
 
-``` text
+```text
 backend/Dockerfile
 ```
 
 Example:
 
-``` bash
+```bash
 docker build \
   -t $ECR_REGISTRY/nova-commerce/backend:${GITHUB_SHA} \
   -f backend/Dockerfile \
   ./backend
 ```
 
+
+
 ## Frontend
 
 The frontend image is built using:
 
-``` text
+```text
 nginx/Dockerfile
 ```
 
 Example:
 
-``` bash
+```bash
 docker build \
   -t $ECR_REGISTRY/nova-commerce/frontend:${GITHUB_SHA} \
   -f nginx/Dockerfile \
   .
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 8. Image Tagging Strategy
 
 Images are tagged using the Git commit SHA:
 
-``` text
+```text
 <GITHUB_SHA>
 ```
 
 Example:
 
-``` text
+```text
 905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/backend:<commit-sha>
 ```
 
 This is preferable to relying on:
 
-``` text
+```text
 latest
 ```
 
@@ -283,37 +311,41 @@ application.
 
 Benefits:
 
--   Easy rollback
--   Traceability
--   Reproducibility
--   No ambiguity about which version is deployed
+- Easy rollback
+- Traceability
+- Reproducibility
+- No ambiguity about which version is deployed
 
-------------------------------------------------------------------------
+---
+
+
 
 # 9. Amazon ECR
 
 AWS credentials are configured in GitHub Actions:
 
-``` yaml
+```yaml
 - name: Configure AWS credentials
   uses: aws-actions/configure-aws-credentials@v4
 ```
 
 The workflow logs into ECR:
 
-``` yaml
+```yaml
 - name: Login to Amazon ECR
   uses: aws-actions/amazon-ecr-login@v2
 ```
 
 Images are pushed to:
 
-``` text
+```text
 nova-commerce/backend
 nova-commerce/frontend
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 10. Container Security with Trivy
 
@@ -321,7 +353,7 @@ Before images are pushed to ECR, they are scanned using Trivy.
 
 Example:
 
-``` yaml
+```yaml
 - name: Scan backend image
   uses: aquasecurity/trivy-action@0.35.0
   with:
@@ -339,13 +371,15 @@ detected.
 
 This creates a security gate before deployment.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 11. Continuous Deployment
 
 After CI succeeds:
 
-``` yaml
+```yaml
 deploy:
   needs: ci
 ```
@@ -355,35 +389,37 @@ with the new image tag.
 
 Backend:
 
-``` text
+```text
 kubernetes/api-deploy.yaml
 ```
 
 Frontend:
 
-``` text
+```text
 kubernetes/web-deploy.yaml
 ```
 
 The image reference is changed from an old version to:
 
-``` text
+```text
 <ECR_REGISTRY>/nova-commerce/backend:<GITHUB_SHA>
 ```
 
 and:
 
-``` text
+```text
 <ECR_REGISTRY>/nova-commerce/frontend:<GITHUB_SHA>
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 12. GitOps Deployment Flow
 
 The deployment flow is:
 
-``` text
+```text
 Developer
     |
     v
@@ -425,7 +461,9 @@ The important principle is:
 Argo CD continuously compares the desired state in Git with the live
 state in Kubernetes.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 13. Argo CD
 
@@ -433,13 +471,13 @@ Argo CD is configured to monitor the repository.
 
 The application is:
 
-``` text
+```text
 nova-commerce
 ```
 
 Important configuration:
 
-``` text
+```text
 Repository:
 https://github.com/Umarkhan803/e-commers-for-devops.git
 
@@ -463,13 +501,15 @@ Argo CD then reconciles the Kubernetes cluster.
 
 This removes the need for GitHub Actions to directly run:
 
-``` bash
+```bash
 kubectl apply
 ```
 
 The Git repository remains the deployment source of truth.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 14. Kubernetes
 
@@ -481,7 +521,7 @@ The Kubernetes directory contains the desired resources.
 
 Typical resources include:
 
-``` text
+```text
 Deployment
 Service
 Ingress
@@ -490,41 +530,45 @@ StorageClass
 ServiceMonitor
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 15. Backend Deployment
 
 The backend is deployed using:
 
-``` text
+```text
 kubernetes/api-deploy.yaml
 ```
 
 The application listens on:
 
-``` text
+```text
 4000
 ```
 
 The Kubernetes container port is:
 
-``` yaml
+```yaml
 containerPort: 4000
 ```
 
 The backend service exposes:
 
-``` text
+```text
 4000
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 16. Frontend Deployment
 
 The frontend is deployed using:
 
-``` text
+```text
 kubernetes/web-deploy.yaml
 ```
 
@@ -532,7 +576,9 @@ The frontend is served through Nginx.
 
 The frontend container is exposed through its Kubernetes Service.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 17. Kubernetes Services
 
@@ -541,7 +587,7 @@ connectivity.
 
 Example:
 
-``` yaml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -557,19 +603,21 @@ spec:
 
 The Service selects pods using:
 
-``` yaml
+```yaml
 selector:
   app: api
 ```
 
 This means Kubernetes sends traffic to pods having:
 
-``` yaml
+```yaml
 labels:
   app: api
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 18. AWS Application Load Balancer
 
@@ -577,7 +625,7 @@ External traffic is handled through an AWS Application Load Balancer.
 
 The Kubernetes Ingress uses:
 
-``` yaml
+```yaml
 ingressClassName: alb
 ```
 
@@ -585,7 +633,7 @@ The ALB is internet-facing.
 
 The architecture is:
 
-``` text
+```text
 Internet
    |
    v
@@ -601,37 +649,39 @@ AWS ALB
 The ALB provides the external entry point while Kubernetes Services
 provide internal routing.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 19. Grafana Through ALB
 
 Grafana was exposed through an ALB path:
 
-``` text
+```text
 /grafana
 ```
 
 The Grafana service is:
 
-``` text
+```text
 monitoring-grafana
 ```
 
 The service listens on:
 
-``` text
+```text
 80
 ```
 
 and forwards to the Grafana pod on:
 
-``` text
+```text
 3000
 ```
 
 The Grafana ingress uses:
 
-``` yaml
+```yaml
 alb.ingress.kubernetes.io/backend-protocol: HTTP
 alb.ingress.kubernetes.io/target-type: ip
 alb.ingress.kubernetes.io/scheme: internet-facing
@@ -639,17 +689,19 @@ alb.ingress.kubernetes.io/scheme: internet-facing
 
 Health checking was configured using:
 
-``` text
+```text
 /api/health
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 20. Monitoring Architecture
 
 The monitoring stack uses Prometheus and Grafana.
 
-``` text
+```text
 Kubernetes Cluster
         |
         +-------------------+
@@ -669,7 +721,9 @@ Kubernetes Cluster
                     Dashboards
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 21. Prometheus
 
@@ -677,25 +731,27 @@ Prometheus is deployed in the `monitoring` namespace.
 
 The Prometheus resource is:
 
-``` text
+```text
 monitoring-kube-prometheus-prometheus
 ```
 
 Prometheus was verified as ready using:
 
-``` bash
+```bash
 kubectl get prometheus -n monitoring
 ```
 
 The Prometheus server returned:
 
-``` text
+```text
 Prometheus Server is Ready.
 ```
 
 This confirms that the Prometheus server itself is running correctly.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 22. ServiceMonitor
 
@@ -704,19 +760,19 @@ Kubernetes services that expose metrics.
 
 The project includes:
 
-``` text
+```text
 kubernetes/api-servicemonitor.yaml
 ```
 
 The resource:
 
-``` text
+```text
 api-monitor
 ```
 
 exists in the:
 
-``` text
+```text
 nova-commerce
 ```
 
@@ -725,7 +781,9 @@ namespace.
 It is intended to configure Prometheus to scrape the backend application
 metrics endpoint.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 23. Application Metrics
 
@@ -733,32 +791,34 @@ The backend uses a Prometheus Node.js client library.
 
 The project installed:
 
-``` bash
+```bash
 npm install prom-client
 ```
 
 The installed version during implementation was:
 
-``` text
+```text
 prom-client@15.1.3
 ```
 
 The npm output indicated that `prom-client` has been replaced by:
 
-``` text
+```text
 @prometheus-io/client
 ```
 
 For future maintenance, the project should evaluate migrating to the
 current package.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 24. Recommended Application Metrics
 
 The backend should expose a metrics endpoint:
 
-``` text
+```text
 /metrics
 ```
 
@@ -768,35 +828,43 @@ Useful application metrics include:
 
 ### Request count
 
-``` text
+```text
 http_requests_total
 ```
 
+
+
 ### Request duration
 
-``` text
+```text
 http_request_duration_seconds
 ```
+
+
 
 ### Request rate
 
 PromQL:
 
-``` promql
+```promql
 rate(http_requests_total[5m])
 ```
+
+
 
 ### Error rate
 
 For HTTP 5xx responses:
 
-``` promql
+```promql
 rate(http_requests_total{status_code=~"5.."}[5m])
 ```
 
+
+
 ### Average latency
 
-``` promql
+```promql
 rate(http_request_duration_seconds_sum[5m])
 /
 rate(http_request_duration_seconds_count[5m])
@@ -804,11 +872,13 @@ rate(http_request_duration_seconds_count[5m])
 
 These metrics satisfy the application monitoring requirements:
 
--   Request rate
--   Error rate
--   Latency
+- Request rate
+- Error rate
+- Latency
 
-------------------------------------------------------------------------
+---
+
+
 
 # 25. Infrastructure Metrics
 
@@ -817,19 +887,19 @@ kube-prometheus-stack components.
 
 Useful CPU query:
 
-``` promql
+```promql
 100 * (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m])))
 ```
 
 The PromQL syntax requires correct label matching:
 
-``` text
+```text
 {mode="idle"}
 ```
 
 not:
 
-``` text
+```text
 {mode:"idle"}
 ```
 
@@ -837,7 +907,7 @@ This was an issue encountered while creating the Grafana dashboard.
 
 Useful memory query:
 
-``` promql
+```promql
 100 *
 (
   1 -
@@ -849,7 +919,7 @@ Useful memory query:
 
 Useful disk usage query:
 
-``` promql
+```promql
 100 *
 (
   1 -
@@ -861,7 +931,9 @@ Useful disk usage query:
 
 Disk queries should normally exclude temporary and virtual filesystems.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 26. Database Metrics
 
@@ -871,13 +943,13 @@ Database monitoring should cover MongoDB and Redis.
 
 Recommended metrics:
 
--   Connections
--   Operations per second
--   Query latency
--   Memory usage
--   Disk usage
--   Replication status
--   Available connections
+- Connections
+- Operations per second
+- Query latency
+- Memory usage
+- Disk usage
+- Replication status
+- Available connections
 
 A MongoDB exporter can be used to expose MongoDB metrics to Prometheus.
 
@@ -885,12 +957,12 @@ A MongoDB exporter can be used to expose MongoDB metrics to Prometheus.
 
 Recommended metrics:
 
--   Connected clients
--   Memory usage
--   Commands per second
--   Cache hit/miss ratio
--   Evicted keys
--   Keyspace statistics
+- Connected clients
+- Memory usage
+- Commands per second
+- Cache hit/miss ratio
+- Evicted keys
+- Keyspace statistics
 
 A Redis exporter can be used to expose Redis metrics to Prometheus.
 
@@ -901,7 +973,9 @@ database-specific exporter metrics should be considered an additional
 implementation step if MongoDB and Redis metrics are not already
 exposed.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 27. Grafana
 
@@ -909,25 +983,27 @@ Grafana is used as the visualization layer.
 
 The Grafana service is:
 
-``` text
+```text
 monitoring-grafana
 ```
 
 The Grafana pod was verified as running:
 
-``` bash
+```bash
 kubectl get pods -n monitoring
 ```
 
 The Grafana pod was observed in:
 
-``` text
+```text
 Running
 ```
 
 Grafana is connected to Prometheus as a datasource.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 28. Grafana Dashboard 1 --- Infrastructure
 
@@ -935,21 +1011,23 @@ A meaningful infrastructure dashboard should contain at least:
 
 ### CPU Usage
 
-``` promql
+```promql
 100 * (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m])))
 ```
 
 Visualization:
 
-``` text
+```text
 Time series
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ### Memory Usage
 
-``` promql
+```promql
 100 *
 (
   1 -
@@ -959,11 +1037,13 @@ Time series
 )
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ### Disk Usage
 
-``` promql
+```promql
 100 *
 (
   1 -
@@ -973,17 +1053,21 @@ Time series
 )
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ### Node Availability
 
-``` promql
+```promql
 up{job=~".*node.*"}
 ```
 
 This dashboard provides visibility into infrastructure health.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 29. Grafana Dashboard 2 --- Application
 
@@ -993,39 +1077,47 @@ Recommended panels:
 
 ### Request Rate
 
-``` promql
+```promql
 sum(rate(http_requests_total[5m]))
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ### Error Rate
 
-``` promql
+```promql
 sum(rate(http_requests_total{status_code=~"5.."}[5m]))
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ### Average Latency
 
-``` promql
+```promql
 rate(http_request_duration_seconds_sum[5m])
 /
 rate(http_request_duration_seconds_count[5m])
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ### Backend Availability
 
-``` promql
+```promql
 up{job=~".*api.*"}
 ```
 
 This dashboard provides application-level visibility.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 30. Centralized Logging
 
@@ -1035,23 +1127,27 @@ Centralized logging should collect three categories.
 
 Backend application logs:
 
-``` text
+```text
 Node.js application
 ```
 
 Frontend/application access logs:
 
-``` text
+```text
 Nginx
 ```
+
+
 
 ## System Logs
 
 Kubernetes node/system logs should be collected from:
 
-``` text
+```text
 /var/log
 ```
+
+
 
 ## Access Logs
 
@@ -1059,7 +1155,7 @@ Ingress / ALB / Nginx access logs can be used for traffic analysis.
 
 A production implementation can use a logging stack such as:
 
-``` text
+```text
 Fluent Bit
     |
     v
@@ -1071,7 +1167,7 @@ Kibana / OpenSearch Dashboards
 
 or a Loki-based design:
 
-``` text
+```text
 Fluent Bit / Promtail
         |
         v
@@ -1080,6 +1176,8 @@ Fluent Bit / Promtail
         v
      Grafana
 ```
+
+
 
 ### Current project status
 
@@ -1091,7 +1189,9 @@ log aggregation backend has not yet been deployed.
 Do not claim centralized logging is complete until logs can be searched
 from the centralized logging system.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 31. Health Checks
 
@@ -1099,13 +1199,13 @@ The backend Kubernetes deployment contains health probes.
 
 The health endpoint used by the application is:
 
-``` text
+```text
 /api/v1/health
 ```
 
 Example readiness configuration:
 
-``` yaml
+```yaml
 readinessProbe:
   httpGet:
     path: /api/v1/health
@@ -1115,15 +1215,19 @@ readinessProbe:
 Health checks allow Kubernetes to determine whether a pod is ready to
 receive traffic.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 32. Troubleshooting Performed
+
+
 
 ## 32.1 ECR `latest` ImagePullBackOff
 
 An issue occurred where Kubernetes attempted to pull:
 
-``` text
+```text
 nova-commerce/backend:latest
 ```
 
@@ -1131,26 +1235,28 @@ The image did not exist in ECR.
 
 The correct approach is to use the Git SHA tag:
 
-``` text
+```text
 nova-commerce/backend:<GITHUB_SHA>
 ```
 
 The CI/CD workflow was updated to write the SHA into the Kubernetes
 deployment manifest.
 
-------------------------------------------------------------------------
+---
+
+
 
 ## 32.2 GitHub Actions Push Permission Error
 
 GitHub Actions initially failed with:
 
-``` text
+```text
 Permission to ... denied to github-actions[bot]
 ```
 
 The workflow was updated with:
 
-``` yaml
+```yaml
 permissions:
   contents: write
 ```
@@ -1161,13 +1267,15 @@ manifest changes.
 Repository permissions must also allow GitHub Actions to write to
 repository contents.
 
-------------------------------------------------------------------------
+---
+
+
 
 ## 32.3 Git Pull Conflict
 
 Local Kubernetes changes prevented:
 
-``` bash
+```bash
 git pull
 ```
 
@@ -1175,7 +1283,7 @@ from completing.
 
 Git reported:
 
-``` text
+```text
 Your local changes ... would be overwritten by merge
 ```
 
@@ -1183,7 +1291,7 @@ The changes were handled with Git stash operations.
 
 The correct workflow is:
 
-``` bash
+```bash
 git status
 git stash
 git pull
@@ -1192,19 +1300,21 @@ git stash pop
 
 Only use this when the local changes are intentionally preserved.
 
-------------------------------------------------------------------------
+---
+
+
 
 ## 32.4 Argo CD YAML Parsing Error
 
 Argo CD reported:
 
-``` text
+```text
 failed to unmarshal "api-deploy.yaml"
 ```
 
 and:
 
-``` text
+```text
 yaml: line 20: mapping values are not allowed in this context
 ```
 
@@ -1212,113 +1322,117 @@ The deployment manifest was inspected and corrected.
 
 The image line must remain valid YAML:
 
-``` yaml
+```yaml
 image: 905418141604.dkr.ecr.us-east-1.amazonaws.com/nova-commerce/backend:<tag>
 ```
 
 A malformed image value or indentation can cause Argo CD manifest
 generation to fail.
 
-------------------------------------------------------------------------
+---
+
+
 
 ## 32.5 Grafana Port Forwarding
 
 Grafana was initially tested with:
 
-``` bash
+```bash
 kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80
 ```
 
 The port-forward reported:
 
-``` text
+```text
 Forwarding from 127.0.0.1:3000 -> 3000
 ```
 
 If the browser reports:
 
-``` text
+```text
 ERR_CONNECTION_REFUSED
 ```
 
 the most common causes are:
 
--   Port forwarding process stopped
--   Browser opened a different environment
--   CloudShell/remote environment is being used
--   Local browser cannot access the remote localhost
--   The port-forward terminal was closed
+- Port forwarding process stopped
+- Browser opened a different environment
+- CloudShell/remote environment is being used
+- Local browser cannot access the remote localhost
+- The port-forward terminal was closed
 
 The ALB ingress provides a more appropriate external access method for
 the deployed environment.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 33. Important Kubernetes Debugging Commands
 
 Check all pods:
 
-``` bash
+```bash
 kubectl get pods -A
 ```
 
 Check application pods:
 
-``` bash
+```bash
 kubectl get pods -n nova-commerce
 ```
 
 Check monitoring pods:
 
-``` bash
+```bash
 kubectl get pods -n monitoring
 ```
 
 Check services:
 
-``` bash
+```bash
 kubectl get svc -A
 ```
 
 Check ingress:
 
-``` bash
+```bash
 kubectl get ingress -A
 ```
 
 Describe a resource:
 
-``` bash
+```bash
 kubectl describe pod <pod-name> -n <namespace>
 ```
 
 Check pod logs:
 
-``` bash
+```bash
 kubectl logs <pod-name> -n <namespace>
 ```
 
 Check deployment:
 
-``` bash
+```bash
 kubectl get deployment -n nova-commerce
 ```
 
 Check ServiceMonitor:
 
-``` bash
+```bash
 kubectl get servicemonitor -n nova-commerce
 ```
 
 Check Prometheus:
 
-``` bash
+```bash
 kubectl get prometheus -n monitoring
 ```
 
 Check Prometheus targets:
 
-``` bash
+```bash
 kubectl run curl-prometheus --rm -it \
   --image=curlimages/curl \
   --restart=Never \
@@ -1327,82 +1441,90 @@ kubectl run curl-prometheus --rm -it \
 
 Then:
 
-``` bash
+```bash
 curl http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090/-/ready
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 34. Git Commands
 
 Check changes:
 
-``` bash
+```bash
 git status
 ```
 
 View manifest changes:
 
-``` bash
+```bash
 git diff -- kubernetes/api-deploy.yaml
 git diff -- kubernetes/web-deploy.yaml
 ```
 
 Stage changes:
 
-``` bash
+```bash
 git add .
 ```
 
 Commit:
 
-``` bash
+```bash
 git commit -m "deploy: update Kubernetes images"
 ```
 
 Push:
 
-``` bash
+```bash
 git push
 ```
 
 Pull:
 
-``` bash
+```bash
 git pull
 ```
 
 Stash local changes:
 
-``` bash
+```bash
 git stash
 ```
 
 Restore stash:
 
-``` bash
+```bash
 git stash pop
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 35. Best Practices
+
+
 
 ## Use immutable image tags
 
 Preferred:
 
-``` text
+```text
 backend:git-sha
 ```
 
 Avoid production deployments based only on:
 
-``` text
+```text
 backend:latest
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ## Keep Git as the source of truth
 
@@ -1410,19 +1532,21 @@ Argo CD should deploy what exists in Git.
 
 Avoid manually changing production resources with:
 
-``` bash
+```bash
 kubectl edit
 ```
 
 because those changes can be overwritten by GitOps reconciliation.
 
-------------------------------------------------------------------------
+---
+
+
 
 ## Separate CI and CD responsibilities
 
 CI should:
 
-``` text
+```text
 Build
 Test
 Scan
@@ -1432,13 +1556,15 @@ Push
 
 CD should:
 
-``` text
+```text
 Update desired state
 Commit desired state
 Allow Argo CD to reconcile
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 ## Do not store AWS credentials in Git
 
@@ -1446,13 +1572,15 @@ Use GitHub Actions Secrets or preferably OIDC-based authentication.
 
 The following values should never be committed:
 
-``` text
+```text
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_SESSION_TOKEN
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 36. Recommended AWS Authentication Improvement
 
@@ -1460,7 +1588,7 @@ The current workflow uses AWS access keys from GitHub Secrets.
 
 A stronger production design is:
 
-``` text
+```text
 GitHub Actions
       |
       v
@@ -1478,32 +1606,36 @@ This removes long-lived AWS access keys from GitHub Secrets.
 For a production-grade implementation, GitHub Actions should assume an
 IAM role using OIDC.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 37. Kubernetes Security Best Practices
 
 Recommended improvements:
 
--   Use namespaces
--   Use RBAC
--   Use least-privilege service accounts
--   Avoid privileged containers
--   Use non-root containers where possible
--   Define CPU/memory requests
--   Define CPU/memory limits
--   Use network policies
--   Store secrets in Kubernetes Secrets or an external secret manager
--   Do not hard-code passwords
--   Scan container images
--   Keep images updated
+- Use namespaces
+- Use RBAC
+- Use least-privilege service accounts
+- Avoid privileged containers
+- Use non-root containers where possible
+- Define CPU/memory requests
+- Define CPU/memory limits
+- Use network policies
+- Store secrets in Kubernetes Secrets or an external secret manager
+- Do not hard-code passwords
+- Scan container images
+- Keep images updated
 
-------------------------------------------------------------------------
+---
+
+
 
 # 38. Kubernetes Resource Management
 
 Deployments should define:
 
-``` yaml
+```yaml
 resources:
   requests:
     cpu: "100m"
@@ -1517,13 +1649,15 @@ Requests help Kubernetes schedule workloads.
 
 Limits prevent a container from consuming unlimited resources.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 39. High Availability
 
 The backend deployment uses multiple replicas:
 
-``` yaml
+```yaml
 replicas: 3
 ```
 
@@ -1531,7 +1665,7 @@ This provides basic application redundancy.
 
 With multiple replicas:
 
-``` text
+```text
         Service
            |
      +-----+-----+
@@ -1543,7 +1677,9 @@ With multiple replicas:
 If one pod fails, Kubernetes can continue routing traffic to healthy
 replicas.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 40. Persistent Storage
 
@@ -1556,34 +1692,39 @@ data must survive pod recreation.
 
 For example:
 
-``` text
+```text
 MongoDB
 Redis (when persistence is required)
 ```
 
 The StorageClass uses:
 
-``` text
+```text
 gp3
 ```
 
 with:
 
-``` text
+```text
 ext4
 ```
 
 as the filesystem.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 41. Monitoring Checklist
 
 The assignment monitoring requirements can be tracked as follows:
 
-  -----------------------------------------------------------------------
+---
+
   Requirement                         Status
-  ----------------------------------- -----------------------------------
+
+---
+
   Prometheus deployed                 Done
 
   Grafana deployed                    Done
@@ -1623,16 +1764,17 @@ The assignment monitoring requirements can be tracked as follows:
 
   Infrastructure dashboard            Created/started
 
-  Application dashboard               Recommended/started
-  -----------------------------------------------------------------------
+##   Application dashboard               Recommended/started
 
-------------------------------------------------------------------------
+---
+
+
 
 # 42. Production-Grade Target Architecture
 
 The final production-oriented architecture should look like:
 
-``` text
+```text
                          Internet
                             |
                             v
@@ -1703,7 +1845,9 @@ Application / System Logs
       Grafana
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 43. Deployment Sequence
 
@@ -1711,22 +1855,26 @@ A normal application release follows this process:
 
 ### Step 1 --- Developer changes code
 
-``` text
+```text
 backend/
 frontend/
 ```
 
+
+
 ### Step 2 --- Push to `main`
 
-``` bash
+```bash
 git push origin main
 ```
+
+
 
 ### Step 3 --- GitHub Actions starts
 
 The workflow performs:
 
-``` text
+```text
 Checkout
     ↓
 Node.js setup
@@ -1744,31 +1892,39 @@ Trivy scan
 Push images to ECR
 ```
 
+
+
 ### Step 4 --- Kubernetes manifests are updated
 
 The workflow replaces the image tag with:
 
-``` text
+```text
 GITHUB_SHA
 ```
+
+
 
 ### Step 5 --- Commit is pushed
 
 Example:
 
-``` text
+```text
 deploy: update images to <commit-sha>
 ```
+
+
 
 ### Step 6 --- Argo CD detects Git change
 
 Argo CD compares:
 
-``` text
+```text
 Git desired state
         vs
 Kubernetes live state
 ```
+
+
 
 ### Step 7 --- Argo CD synchronizes
 
@@ -1786,7 +1942,9 @@ Prometheus collects metrics.
 
 Grafana visualizes metrics.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 44. Rollback Strategy
 
@@ -1795,7 +1953,7 @@ straightforward.
 
 For example:
 
-``` text
+```text
 backend:commit-A
 backend:commit-B
 backend:commit-C
@@ -1803,14 +1961,14 @@ backend:commit-C
 
 If `commit-C` is broken, Kubernetes can be pointed back to:
 
-``` text
+```text
 backend:commit-B
 ```
 
 The preferred GitOps approach is to revert the Kubernetes manifest
 commit:
 
-``` bash
+```bash
 git revert <bad-commit>
 git push
 ```
@@ -1818,37 +1976,39 @@ git push
 Argo CD then reconciles the repository back to the previous desired
 state.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 45. Operational Verification
 
 After deployment, verify:
 
-``` bash
+```bash
 kubectl get pods -n nova-commerce
 ```
 
 All expected application pods should be:
 
-``` text
+```text
 Running
 ```
 
 Verify services:
 
-``` bash
+```bash
 kubectl get svc -n nova-commerce
 ```
 
 Verify ingress:
 
-``` bash
+```bash
 kubectl get ingress -A
 ```
 
 Verify Argo CD:
 
-``` text
+```text
 Application: nova-commerce
 Status: Synced
 Health: Healthy
@@ -1856,35 +2016,40 @@ Health: Healthy
 
 Verify monitoring:
 
-``` bash
+```bash
 kubectl get pods -n monitoring
 ```
 
 Verify Prometheus:
 
-``` bash
+```bash
 kubectl get prometheus -n monitoring
 ```
 
 Verify ServiceMonitor:
 
-``` bash
+```bash
 kubectl get servicemonitor -n nova-commerce
 ```
 
 Verify Grafana:
 
-``` text
+```text
 Grafana → Connections → Data sources → Prometheus
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 46. Common Problems and Solutions
 
-  ----------------------------------------------------------------------------------
+---
+
   Problem                 Likely Cause              Solution
-  ----------------------- ------------------------- --------------------------------
+
+---
+
   `ImagePullBackOff`      Wrong image tag           Verify ECR image and Kubernetes
                                                     tag
 
@@ -1909,58 +2074,63 @@ Grafana → Connections → Data sources → Prometheus
   `git pull` blocked      Local changes             Commit or stash changes
 
   Grafana path problems   Subpath configuration     Configure Grafana root
-                                                    URL/subpath correctly
-  ----------------------------------------------------------------------------------
+                                                URL/subpath correctly
 
-------------------------------------------------------------------------
+---
+
+---
+
+
 
 # 47. Validation Commands
 
 Validate Kubernetes YAML before committing:
 
-``` bash
+```bash
 kubectl apply --dry-run=client -f kubernetes/
 ```
 
 If the manifests contain cluster-specific resources, validate individual
 files:
 
-``` bash
+```bash
 kubectl apply --dry-run=client -f kubernetes/api-deploy.yaml
 ```
 
 Check Kubernetes events:
 
-``` bash
+```bash
 kubectl get events -A --sort-by=.lastTimestamp
 ```
 
 Check rollout:
 
-``` bash
+```bash
 kubectl rollout status deployment/api -n nova-commerce
 ```
 
 Check rollout history:
 
-``` bash
+```bash
 kubectl rollout history deployment/api -n nova-commerce
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 48. Documentation Best Practices
 
 Documentation should be updated whenever one of the following changes:
 
--   Application architecture
--   Kubernetes manifests
--   CI/CD pipeline
--   AWS resources
--   Monitoring
--   Logging
--   Deployment procedure
--   Security controls
+- Application architecture
+- Kubernetes manifests
+- CI/CD pipeline
+- AWS resources
+- Monitoring
+- Logging
+- Deployment procedure
+- Security controls
 
 Commands in documentation should be tested before being documented.
 
@@ -1968,7 +2138,7 @@ Secrets must never be included in the README.
 
 Use placeholders such as:
 
-``` text
+```text
 <YOUR_AWS_ACCOUNT_ID>
 <YOUR_REGION>
 <YOUR_ECR_REGISTRY>
@@ -1976,33 +2146,37 @@ Use placeholders such as:
 
 instead of real credentials.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 49. Security Checklist
 
 Before considering the project production-ready:
 
--   [x] Trivy image scanning
--   [x] ECR image registry
--   [x] GitHub Actions permissions configured
--   [x] GitOps deployment with Argo CD
--   [ ] GitHub OIDC instead of long-lived AWS keys
--   [ ] Kubernetes Secrets management
--   [ ] NetworkPolicies
--   [ ] Non-root containers
--   [ ] Resource requests and limits
--   [ ] Pod security configuration
--   [ ] Database authentication verification
--   [ ] Database encryption verification
--   [ ] TLS/HTTPS on ALB
--   [ ] Centralized log aggregation
--   [ ] Alerting
+- [x] Trivy image scanning
+- [x] ECR image registry
+- [x] GitHub Actions permissions configured
+- [x] GitOps deployment with Argo CD
+- [ ] GitHub OIDC instead of long-lived AWS keys
+- [ ] Kubernetes Secrets management
+- [ ] NetworkPolicies
+- [ ] Non-root containers
+- [ ] Resource requests and limits
+- [ ] Pod security configuration
+- [ ] Database authentication verification
+- [ ] Database encryption verification
+- [ ] TLS/HTTPS on ALB
+- [ ] Centralized log aggregation
+- [ ] Alerting
 
-------------------------------------------------------------------------
+---
+
+
 
 # 50. Final Project Flow
 
-``` text
+```text
                    ┌──────────────────┐
                    │    Developer     │
                    └────────┬─────────┘
@@ -2063,14 +2237,16 @@ Before considering the project production-ready:
                     Dashboards
 ```
 
-------------------------------------------------------------------------
+---
+
+
 
 # 51. Project Completion Summary
 
 The project demonstrates a complete DevOps workflow from source code to
 Kubernetes deployment:
 
-``` text
+```text
 Source Code
     ↓
 GitHub
@@ -2100,7 +2276,7 @@ Application
 
 Monitoring extends the architecture:
 
-``` text
+```text
 EKS
  ↓
 Prometheus
@@ -2112,17 +2288,19 @@ Infrastructure + Application Dashboards
 
 The next production-hardening steps are primarily:
 
-1.  Complete application `/metrics` instrumentation and verify the
-    ServiceMonitor target is `UP`.
-2.  Add MongoDB and Redis exporters if database metrics are required.
-3.  Complete centralized logging with Fluent Bit + Loki/OpenSearch.
-4.  Add Grafana alert rules.
-5.  Replace long-lived AWS access keys with GitHub OIDC.
-6.  Add HTTPS/TLS to the ALB.
-7.  Add Kubernetes resource limits, RBAC, NetworkPolicies, and stronger
-    secret management.
+1. Complete application `/metrics` instrumentation and verify the
+  ServiceMonitor target is `UP`.
+2. Add MongoDB and Redis exporters if database metrics are required.
+3. Complete centralized logging with Fluent Bit + Loki/OpenSearch.
+4. Add Grafana alert rules.
+5. Replace long-lived AWS access keys with GitHub OIDC.
+6. Add HTTPS/TLS to the ALB.
+7. Add Kubernetes resource limits, RBAC, NetworkPolicies, and stronger
+  secret management.
 
-------------------------------------------------------------------------
+---
+
+
 
 # 52. Implementation Evidence / Screenshots
 
@@ -2167,7 +2345,6 @@ application.
 
 ![Grafana Kubernetes dashboard](docs/images/grafana.png)
 ![Grafana Kubernetes cluster](docs/images/cluster.png)
-
 
 > **Evidence note:** These screenshots document the state of the
 > environment during the assignment. Application-level request-rate,

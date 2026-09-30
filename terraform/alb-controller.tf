@@ -2,108 +2,72 @@
 
 # Existing IAM policy
 
-data "aws_iam_policy" "aws_load_balancer_controller" {
-  arn = "arn:aws:iam::905418141604:policy/AWSLoadBalancerControllerIAMPolicy"
+data "aws_iam_policy_document" "aws_load_balancer_controller_assume_role" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.eks.arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:sub"
+      values   = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
+    }
+  }
 }
 
 
 # EKS OIDC Provider
 
-data "aws_iam_openid_connect_provider" "eks" {
-  url = aws_eks_cluster.main.identity[0].oidc[0].issuer
-
-  depends_on = [
-    aws_eks_cluster.main
-  ]
-}
-
 
 # IAM Role for AWS Load Balancer Controller
 
 resource "aws_iam_role" "aws_load_balancer_controller" {
-
-  name = "AWSLoadBalancerControllerIAMRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-
-    Statement = [
-      {
-        Effect = "Allow"
-
-        Principal = {
-          Federated = data.aws_iam_openid_connect_provider.eks.arn
-        }
-
-        Action = "sts:AssumeRoleWithWebIdentity"
-
-        Condition = {
-          StringEquals = {
-
-            "${replace(
-              aws_eks_cluster.main.identity[0].oidc[0].issuer,
-              "https://",
-              ""
-            )}:aud" = "sts.amazonaws.com"
-
-            "${replace(
-              aws_eks_cluster.main.identity[0].oidc[0].issuer,
-              "https://",
-              ""
-            )}:sub" = "system:serviceaccount:kube-system:aws-load-balancer-controller"
-          }
-        }
-      }
-    ]
-  })
+  name               = "${var.project_name}-aws-lbc"
+  assume_role_policy = data.aws_iam_policy_document.aws_load_balancer_controller_assume_role.json
+  tags               = local.common_tags
 }
 
+data "aws_iam_policy" "aws_load_balancer_controller" {
+  arn = var.lbc_iam_policy_arn
+}
 
-# Attach IAM Policy to Role
 resource "aws_iam_role_policy_attachment" "aws_load_balancer_controller" {
-
-  role = aws_iam_role.aws_load_balancer_controller.name
-
+  role       = aws_iam_role.aws_load_balancer_controller.name
   policy_arn = data.aws_iam_policy.aws_load_balancer_controller.arn
 }
 
-
-# Kubernetes Service Account
-
 resource "kubernetes_service_account_v1" "aws_load_balancer_controller" {
-
   metadata {
-
     name      = "aws-load-balancer-controller"
     namespace = "kube-system"
 
     annotations = {
       "eks.amazonaws.com/role-arn" = aws_iam_role.aws_load_balancer_controller.arn
     }
-
-    labels = {
-      "app.kubernetes.io/name" = "aws-load-balancer-controller"
-    }
   }
 
-  depends_on = [
-    aws_iam_role_policy_attachment.aws_load_balancer_controller
-  ]
+  depends_on = [aws_eks_access_policy_association.admin]
 }
 
-
-# AWS Load Balancer Controller Helm Release
-
 resource "helm_release" "aws_load_balancer_controller" {
-
   name       = "aws-load-balancer-controller"
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
-
-  namespace = "kube-system"
-
-  wait    = true
-  timeout = 600
+  version    = "1.14.1"
+  namespace  = "kube-system"
+  wait       = true
+  timeout    = 600
 
   set {
     name  = "clusterName"
@@ -117,7 +81,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "vpcId"
-    value = aws_eks_cluster.main.vpc_config[0].vpc_id
+    value = aws_vpc.main.id
   }
 
   set {
@@ -132,6 +96,6 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   depends_on = [
     kubernetes_service_account_v1.aws_load_balancer_controller,
-    aws_iam_role_policy_attachment.aws_load_balancer_controller
+    aws_iam_role_policy_attachment.aws_load_balancer_controller,
   ]
 }

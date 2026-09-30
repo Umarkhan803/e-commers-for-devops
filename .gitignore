@@ -1,34 +1,29 @@
-# node modules of tha app
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# build output folder 
+# Build output
 dist/
 dist-ssr/
 build/
-*.local
 
-# environment variables  and secrets
+# Secrets and local environment
 .env
 .env.*
 !.env.example
 !**/.env.example
 
-# kubernetes secrets (never commit live credentials)
-kubernetes/secret.yaml
+# Kubernetes secrets
 kubernetes/*secret*.yaml
-**/secret.yaml
-**/secrets.yaml
 **/*secret*.yaml
 
-# terraform files
+# Terraform local state and overrides
 .terraform/
 *.tfstate
 *.tfstate.*
 *.tfvars
-!example.tfvars
+!*.tfvars.example
 crash.log
 crash.*.log
 override.tf
@@ -36,19 +31,20 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Terraform generated private keys files
+# Keys / certificates
 *.pem
 *.key
 *.crt
 
-# IDE files
+# IDE / OS
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
 
-# logs file
+# Logs
 logs/
 *.log
 
-# OS
-Thumbs.db*.tgz
+# Git metadata must never be included in deployment archives
+.git/
